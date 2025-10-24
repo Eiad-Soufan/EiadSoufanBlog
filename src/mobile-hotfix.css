@@ -1,0 +1,74 @@
+/* ========= Mobile Hotfix Layer (safe to remove later) ========= */
+
+/* 0) منع أي تمرير أفقي بسبب عناصر عريضة أو ترجمات مطولة */
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* 1) الصور والفيديوهات والسفجيات تكون سائلة */
+img, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* 2) أي حاوية عريضة جدًا تتقلص على الموبايل */
+@media (max-width: 640px) {
+  /* حشوات الأقسام العامة */
+  section, main > section {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* عناوين ضخمة جدًا */
+  h1 { font-size: clamp(1.5rem, 6vw, 2rem) !important; line-height: 1.2 !important; }
+  h2 { font-size: clamp(1.25rem, 5.5vw, 1.5rem) !important; line-height: 1.25 !important; }
+
+  /* شبكات تتحول لعمود واحد إذا ما عليها كلاس Tailwind جاهز */
+  .grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* بطاقات/سلايدر يمنع خروجها عن العرض */
+  .card, .slide, .feature, .showcase, .post {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  /* نصوص طويلة (كلمات إنجليزية متصلة) ما تكسر التصميم */
+  p, .prose, .content, .subtitle, .description {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  /* مسافات طولية أصغر */
+  .mt-24, .my-24, .py-24 { margin-top: 2rem !important; margin-bottom: 2rem !important; padding-top: 2rem !important; padding-bottom: 2rem !important; }
+
+  /* الخلفيات المؤثرة الثقيلة (glow/blur) تُخفف أو تُخفى للموبايل */
+  .aurora, .neural-bg, .blur-blob, .glow-bg {
+    filter: blur(8px) saturate(100%) !important;
+    opacity: 0.35 !important;
+  }
+
+  /* جداول */
+  table { display: block; width: 100%; overflow-x: auto; }
+}
+
+/* 3) عناصر قد تسبب عرضًا أعرض من الشاشة بسبب transform أو translate */
+*[style*="translate3d"], *[style*="transform"] {
+  /* فقط لمنع خروج العناصر؛ لن يغيّر الأنيميشن بشكل ملحوظ */
+  max-width: 100%;
+}
+
+/* 4) أزرار وروابط لا تنضغط بسبب padding ضخم */
+@media (max-width: 640px) {
+  a, button {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+}
+
+/* 5) إصلاح سريع لأي overflow مخفي على حاويات عليا */
+#root, .app, .page {
+  overflow-x: hidden;
+}
