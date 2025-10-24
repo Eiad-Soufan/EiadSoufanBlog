@@ -264,24 +264,38 @@ export default function Header() {
             </div>
 
             {/* الناف */}
-            <nav className="hidden md:flex items-center gap-1">
-              {NAV.map((item) => (
-                <NavLink key={item.to} to={item.to} className={({ isActive }) => "relative"}>
-                  {({ isActive }) => (
-                    <span className="relative inline-flex items-center">
-                      <TabLink to={item.to}>{item.label}</TabLink>
-                      {isActive && (
-                        <motion.span
-                          layoutId="nav-underline"
-                          className="absolute left-2 right-2 -bottom-1 h-[2px] rounded bg-white/80"
-                          transition={{ type: "spring", stiffness: 500, damping: 40 }}
-                        />
-                      )}
-                    </span>
-                  )}
-                </NavLink>
-              ))}
-            </nav>
+{/* الناف — ظاهر على الموبايل كسطر قابل للتمرير، وبدون أي تغيير على الديسكتوب */}
+<nav
+  className="
+    mt-2 md:mt-0
+    flex items-center gap-1
+    overflow-x-auto md:overflow-visible
+    whitespace-nowrap md:whitespace-normal
+    scrollbar-none [-webkit-overflow-scrolling:touch]
+    -mx-2 px-2
+  "
+  aria-label="Primary"
+>
+  {NAV.map((item) => (
+    <NavLink key={item.to} to={item.to} className={({ isActive }) => "relative"}>
+      {({ isActive }) => (
+        <span className="relative inline-flex items-center">
+          {/* نفس تبويبك TabLink بلا أي تعديل بصري */}
+          <TabLink to={item.to}>{item.label}</TabLink>
+
+          {/* الخط السفلي النشط يبقى كما هو على الديسكتوب */}
+          <motion.span
+            layoutId="nav-underline"
+            className="hidden md:block absolute left-2 right-2 -bottom-1 h-[2px] rounded bg-white/80"
+            transition={{ type: "spring", stiffness: 500, damping: 40 }}
+            style={{ pointerEvents: "none" }}
+          />
+        </span>
+      )}
+    </NavLink>
+  ))}
+</nav>
+
           </div>
         </div>
       </motion.div>
@@ -291,3 +305,4 @@ export default function Header() {
     </header>
   );
 }
+
