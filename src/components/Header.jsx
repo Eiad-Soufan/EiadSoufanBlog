@@ -192,7 +192,8 @@ export default function Header() {
   const scrimOpacity = 0.30 + depth * 0.18; // ~0.30 → ~0.48
 
   return (
-    <header className="sticky top-0 z-50">
+    // رفعنا طبقة الهيدر وأضفنا isolate لضمان التصدّر فوق الخلفيات
+    <header className="sticky top-0 z-[200] isolate">
       <ScrollRestorer />
 
       {/* فاصل علوي رفيع */}
@@ -235,7 +236,7 @@ export default function Header() {
             <div className="flex items-center gap-3">
               <motion.img
                 src={logo}
-                alt="Eiad Abdulhadi Soufan — logo"   // كان "Logo"
+                alt="Eiad Abdulhadi Soufan — logo"
                 className="w-10 h-10 md:w-11 md:h-11 rounded-full object-cover"
                 whileHover={{ scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 400, damping: 28 }}
@@ -245,7 +246,7 @@ export default function Header() {
                   className="font-extrabold tracking-tight text-lg md:text-xl text-white filter drop-shadow-[0_1px_0_rgba(0,0,0,0.85)]"
                   style={{ lineHeight: 1.1 }}
                 >
-                  Eiad Abdulhadi Soufan      {/* كان: Eiad Soufan Blog */}
+                  Eiad Abdulhadi Soufan
                 </motion.h1>
                 <div className="mt-0.5">
                   <span
@@ -255,7 +256,7 @@ export default function Header() {
                ring-1 ring-white/15
                drop-shadow-[0_1px_0_rgba(0,0,0,0.85)]"
                   >
-                    React • Django • AI • Data • Teaching   {/* كان: Software • PM • Data • Teaching • Research */}
+                    React • Django • AI • Data • Teaching
                   </span>
                 </div>
 
