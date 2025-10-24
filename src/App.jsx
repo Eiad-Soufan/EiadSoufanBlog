@@ -1,4 +1,4 @@
-// App.jsx
+// src/App.jsx
 import { Route, Routes } from "react-router-dom";
 
 import Footer from "./components/Footer";
@@ -12,8 +12,8 @@ import WhyUs from "./pages/WhyUs";
 
 export default function App() {
   return (
-    // ⬇⬇⬇  استبدل الخلفية البيضاء بـ bg-app الداكنة
-    <div className="min-h-screen flex flex-col bg-app">
+    // غلاف رئيسي: منع أي overflow أفقي + إنشاء سياق عزل للطبقات
+    <div className="min-h-screen flex flex-col bg-app overflow-x-hidden isolate">
       {/* Accessible skip link (appears only on keyboard focus) */}
       <a
         href="#main-content"
@@ -28,13 +28,24 @@ export default function App() {
         id="main-content"
         role="main"
         tabIndex={-1}
-        className="flex-1 w-full px-0 outline-none"
+        className="flex-1 w-full px-0 outline-none overflow-x-hidden min-w-0"
       >
         <Routes>
+          {/* Home */}
           <Route path="/" element={<Home />} />
+
+          {/* About — دعم المسارين تحاشيًا لأي اختلاف في الروابط */}
+          <Route path="/about" element={<AboutUs />} />
           <Route path="/about-us" element={<AboutUs />} />
+
+          {/* Why Us — إضافة alias احتياطي */}
           <Route path="/why-us" element={<WhyUs />} />
+          <Route path="/whyus" element={<WhyUs />} />
+
+          {/* Contact */}
           <Route path="/contact" element={<Contact />} />
+
+          {/* 404 */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
