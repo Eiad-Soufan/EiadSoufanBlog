@@ -1,0 +1,273 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Base Rendering Quality ---------- */
+:root {
+  --radius: 1.25rem;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.06);
+  --shadow-md: 0 8px 24px rgba(0,0,0,.08);
+  --shadow-lg: 0 20px 50px rgba(0,0,0,.12);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  text-rendering: optimizeLegibility;
+  image-rendering: auto;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  -webkit-user-drag: none;
+}
+
+/* Focus visibility */
+:focus-visible {
+  outline: 2px solid rgb(59 130 246 / 0.6);
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+}
+
+/* Selection & scrollbars */
+::selection { background: rgba(168, 85, 247, 0.25); color: inherit; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: rgba(0,0,0,.15); border-radius: 999px; }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* Tailwind component presets */
+@layer components {
+  /* نُبقي .container-padded و .section لضمان التوافق */
+  .container-padded { @apply container mx-auto px-4 sm:px-6 lg:px-8; }
+  .section { @apply relative container-padded py-16 sm:py-20 lg:py-24; }
+}
+
+/* ========================================================= */
+/* ===== Home: Deluxe Glass + Aurora + Elegant Animations (sec 2 & 3) ===== */
+
+/* طبقة زجاج أساسية + حدود لامعة */
+#root main > section:nth-of-type(2),
+#root main > .section:nth-of-type(2),
+#root main > section:nth-of-type(3),
+#root main > .section:nth-of-type(3) {
+  position: relative;
+  border-radius: 1.25rem;
+  background: linear-gradient(180deg, rgba(255,255,255,.70), rgba(255,255,255,.52));
+  border: 1px solid rgba(255,255,255,.55);
+  box-shadow: 0 22px 60px rgba(0,0,0,.12);
+  backdrop-filter: blur(12px) saturate(125%);
+  -webkit-backdrop-filter: blur(12px) saturate(125%);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* اختلاف ناعم بين القسمين */
+#root main > section:nth-of-type(3),
+#root main > .section:nth-of-type(3) {
+  background: linear-gradient(180deg, rgba(255,255,255,.66), rgba(255,255,255,.48));
+  box-shadow: 0 26px 70px rgba(0,0,0,.14);
+}
+
+/* أورورا متحركة ناعمة */
+#root main > section:nth-of-type(2)::before,
+#root main > .section:nth-of-type(2)::before,
+#root main > section:nth-of-type(3)::before,
+#root main > .section:nth-of-type(3)::before {
+  content: "";
+  position: absolute; inset: -18%;
+  --a: rgba(56,189,248,.20);   /* sky-400 */
+  --b: rgba(168,85,247,.18);   /* violet-500 */
+  --c: rgba(244,63,94,.16);    /* rose-500 */
+  background:
+    radial-gradient(60% 60% at 85% 15%, var(--a) 0%, transparent 60%),
+    radial-gradient(70% 70% at 20% 80%, var(--b) 0%, transparent 65%),
+    radial-gradient(65% 65% at 60% 40%, var(--c) 0%, transparent 70%);
+  filter: blur(18px) saturate(105%);
+  animation: auroraDrift 24s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: -1;
+}
+#root main > section:nth-of-type(3)::before,
+#root main > .section:nth-of-type(3)::before {
+  --a: rgba(125,211,252,.18);  /* sky-300 */
+  --b: rgba(192,132,252,.18);  /* violet-300 */
+  --c: rgba(253,164,175,.16);  /* rose-300 */
+}
+
+/* شبكة زخرفية + حبيبات خفيفة */
+#root main > section:nth-of-type(2)::after,
+#root main > .section:nth-of-type(2)::after,
+#root main > section:nth-of-type(3)::after,
+#root main > .section:nth-of-type(3)::after {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to right, rgba(2,6,23,.06) 1px, transparent 1px) 0 0/28px 28px,
+    linear-gradient(to bottom, rgba(2,6,23,.06) 1px, transparent 1px) 0 0/28px 28px,
+    radial-gradient(2px 2px at 20% 30%, rgba(0,0,0,.05) 20%, transparent 21%) repeat;
+  opacity: .18;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ===== Reveal Animation (بدون تعديل JSX) ===== */
+#root main > section:nth-of-type(2) > *,
+#root main > .section:nth-of-type(2) > *,
+#root main > section:nth-of-type(3) > *,
+#root main > .section:nth-of-type(3) > * {
+  animation: revealUp .8s cubic-bezier(.2,.8,.2,1) both;
+  transform: translateY(12px);
+  opacity: 0;
+}
+
+/* تأخيرات متدرجة لأول 10 عناصر */
+#root main > section:nth-of-type(2) > *:nth-child(1),
+#root main > .section:nth-of-type(2) > *:nth-child(1),
+#root main > section:nth-of-type(3) > *:nth-child(1),
+#root main > .section:nth-of-type(3) > *:nth-child(1) { animation-delay: .04s; }
+#root main > section:nth-of-type(2) > *:nth-child(2),
+#root main > .section:nth-of-type(2) > *:nth-child(2),
+#root main > section:nth-of-type(3) > *:nth-child(2),
+#root main > .section:nth-of-type(3) > *:nth-child(2) { animation-delay: .10s; }
+#root main > section:nth-of-type(2) > *:nth-child(3),
+#root main > .section:nth-of-type(2) > *:nth-child(3),
+#root main > section:nth-of-type(3) > *:nth-child(3),
+#root main > .section:nth-of-type(3) > *:nth-child(3) { animation-delay: .16s; }
+#root main > section:nth-of-type(2) > *:nth-child(4),
+#root main > .section:nth-of-type(2) > *:nth-child(4),
+#root main > section:nth-of-type(3) > *:nth-child(4),
+#root main > .section:nth-of-type(3) > *:nth-child(4) { animation-delay: .22s; }
+#root main > section:nth-of-type(2) > *:nth-child(5),
+#root main > .section:nth-of-type(2) > *:nth-child(5),
+#root main > section:nth-of-type(3) > *:nth-child(5),
+#root main > .section:nth-of-type(3) > *:nth-child(5) { animation-delay: .28s; }
+#root main > section:nth-of-type(2) > *:nth-child(6),
+#root main > .section:nth-of-type(2) > *:nth-child(6),
+#root main > section:nth-of-type(3) > *:nth-child(6),
+#root main > .section:nth-of-type(3) > *:nth-child(6) { animation-delay: .34s; }
+#root main > section:nth-of-type(2) > *:nth-child(7),
+#root main > .section:nth-of-type(2) > *:nth-child(7),
+#root main > section:nth-of-type(3) > *:nth-child(7),
+#root main > .section:nth-of-type(3) > *:nth-child(7) { animation-delay: .40s; }
+#root main > section:nth-of-type(2) > *:nth-child(8),
+#root main > .section:nth-of-type(2) > *:nth-child(8),
+#root main > section:nth-of-type(3) > *:nth-child(8),
+#root main > .section:nth-of-type(3) > *:nth-child(8) { animation-delay: .46س; }
+#root main > section:nth-of-type(2) > *:nth-child(9),
+#root main > .section:nth-of-type(2) > *:nth-child(9),
+#root main > section:nth-of-type(3) > *:nth-child(9),
+#root main > .section:nth-of-type(3) > *:nth-child(9) { animation-delay: .52s; }
+#root main > section:nth-of-type(2) > *:nth-child(10),
+#root main > .section:nth-of-type(2) > *:nth-child(10),
+#root main > section:nth-of-type(3) > *:nth-child(10),
+#root main > .section:nth-of-type(3) > *:nth-child(10) { animation-delay: .58s; }
+
+@keyframes revealUp {
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* ===== Micro-interactions داخل القسمين ===== */
+#root main > section:nth-of-type(2) :is(article, [data-card]),
+#root main > .section:nth-of-type(2) :is(article, [data-card]),
+#root main > section:nth-of-type(3) :is(article, [data-card]),
+#root main > .section:nth-of-type(3) :is(article, [data-card]) {
+  border-radius: 1rem;
+  background: linear-gradient(180deg, rgba(255,255,255,.75), rgba(255,255,255,.6));
+  border: 1px solid rgba(255,255,255,.5);
+  box-shadow: 0 12px 34px rgba(0,0,0,.08);
+  transition: transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s cubic-bezier(.2,.8,.2,1), filter .25s;
+  will-change: transform, box-shadow, filter;
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+}
+#root main > section:nth-of-type(2) :is(article, [data-card]):hover,
+#root main > .section:nth-of-type(2) :is(article, [data-card]):hover,
+#root main > section:nth-of-type(3) :is(article, [data-card]):hover,
+#root main > .section:nth-of-type(3) :is(article, [data-card]):hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 46px rgba(0,0,0,.12);
+  filter: saturate(1.04) contrast(1.03);
+}
+
+/* أورورا: حركة خفيفة */
+@keyframes auroraDrift {
+  0%   { transform: translate3d(-4%, -2%, 0) rotate(0.2deg) scale(1.02); }
+  50%  { transform: translate3d(2%, 4%, 0) rotate(-0.2deg) scale(1.03); }
+  100% { transform: translate3d(4%, -3%, 0) rotate(0.1deg) scale(1.04); }
+}
+
+/* ==== App-wide dark background (safe add) ==== */
+@layer base {
+  .bg-app {
+    background: linear-gradient(180deg, #0b1020 0%, #141229 40%, #0f172a 100%);
+  }
+  body { background-color: #0b1020; }
+}
+
+/* ===== Clipped horizontal sheen (limited to title width) ===== */
+@keyframes title-shine-sweep {
+  0%   { transform: translateX(-110%); opacity: 0; }
+  15%  { opacity: 0.45; }
+  50%  { opacity: 0.35; }
+  100% { transform: translateX(120%); opacity: 0; }
+}
+
+.title-shine {
+  --shine-end-trim: 50%;
+  --shine-opacity-strong: 0.75;
+  --shine-opacity-soft: 0.35;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255,255,255,var(--shine-opacity-strong)) 12%,
+    rgba(255,255,255,var(--shine-opacity-soft)) 18%,
+    transparent 30%
+  );
+  mix-blend-mode: screen;
+  animation: title-shine-sweep 3.2s ease-in-out infinite;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    #000 0%,
+    #000 calc(100% - var(--shine-end-trim)),
+    transparent 100%
+  );
+          mask-image: linear-gradient(
+    to right,
+    #000 0%,
+    #000 calc(100% - var(--shine-end-trim)),
+    transparent 100%
+  );
+  top: 0; bottom: 0; left: -8%; right: 0;
+  pointer-events: none;
+}
+
+/* ---------- Reduced Motion (Unified) ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  #root main > section:nth-of-type(2)::before,
+  #root main > .section:nth-of-type(2)::before,
+  #root main > section:nth-of-type(3)::before,
+  #root main > .section:nth-of-type(3)::before {
+    animation: none !important;
+  }
+  #root main > section:nth-of-type(2) > *,
+  #root main > .section:nth-of-type(2) > *,
+  #root main > section:nth-of-type(3) > *,
+  #root main > .section:nth-of-type(3) > * {
+    animation: none !important; transform: none !important; opacity: 1 !important;
+  }
+}
