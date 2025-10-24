@@ -38,7 +38,6 @@ export default function RightShowcase() {
     return (
         <motion.div
             className="relative w-full h-[420px] sm:h-[500px] lg:h-[560px] xl:h-[600px] select-none"
-            aria-hidden="true"
             variants={parent}
             initial="initial"
             animate="animate"
@@ -101,6 +100,10 @@ export default function RightShowcase() {
           opacity: 1 !important;
           filter: saturate(1.08) contrast(1.05);
         }
+        .group\\/cards .card-slot:active {
+        opacity: 1 !important;
+        filter: saturate(1.08) contrast(1.05);
+        }
       `}</style>
         </motion.div>
     );
@@ -153,6 +156,12 @@ function CardFan({
                     boxShadow:
                         "0 18px 50px -12px rgba(0,0,0,.45), 0 3px 18px rgba(0,0,0,.25)",
                 }}
+                whileTap={{
+                 y: -12,
+                 scale: 1.06,
+                 rotate: final.r * 0.5,
+                 boxShadow: "0 18px 50px -12px rgba(0,0,0,.45), 0 3px 18px rgba(0,0,0,.25)",
+                 }}
                 transition={{ type: "spring", stiffness: 140, damping: 16, mass: 0.5 }}
                 className="relative rounded-[22px] overflow-hidden"
                 style={{ width: CARD_W, height: CARD_H }}
@@ -402,3 +411,4 @@ function getAccent(name) {
             return { a: BRAND.violet, b: BRAND.indigo, c: "rgba(196,181,253,1)" };
     }
 }
+
