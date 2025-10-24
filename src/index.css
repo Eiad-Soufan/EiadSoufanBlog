@@ -271,3 +271,52 @@ img {
     animation: none !important; transform: none !important; opacity: 1 !important;
   }
 }
+
+
+/* ========== Mobile-First Safe Layer (append-only) ========== */
+/* لا تغيّر المظهر؛ فقط تمنع الانزلاق الأفقي وتُسيّل الوسائط */
+
+:root { -webkit-text-size-adjust: 100%; }
+
+html, body {
+  width: 100%;
+  overflow-x: hidden;       /* يمنع أي تمرير أفقي عالمي */
+}
+
+#root, .app, .page {
+  overflow-x: hidden;       /* حاويات عليا آمنة */
+}
+
+/* وسائط مرنة لا تتجاوز العرض */
+img, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* الجداول لا تكسر الصفحة على الموبايل */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+@media (max-width: 640px) {
+  table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* حشوات جانبية معتدلة على الشاشات الصغيرة فقط (بدون تأثير على الديسكتوب) */
+@media (max-width: 640px) {
+  section, main > section {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
+/* أي عنصر عليه transform أو translate ما يخرج عن العرض */
+@media (max-width: 640px) {
+  [style*="translate"], [style*="transform"] {
+    max-width: 100%;
+  }
+}
