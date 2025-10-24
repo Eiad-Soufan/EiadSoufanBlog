@@ -6,19 +6,14 @@ import RightShowcase from "./RightShowcase";
 
 /**
  * HERO — Animated Aurora + word-by-word title reveal (crisp, no blur) + smooth subtitle
- * تحسينات الاستجابة:
- * - overflow-hidden على الشاشات الصغيرة لمنع أي تمرير أفقي.
- * - إخفاء الخلفية الثقيلة على الشاشات الصغيرة (تظهر من md+).
- * - تصغير RightShowcase على الشاشات الصغيرة وتوسيطه.
+ * - No backdrop blur over the title. Gradient shine keeps the look without blurring text.
  */
 
 export default function HeroNova({ title, subtitle }) {
   return (
-    <section className="relative overflow-hidden sm:overflow-visible py-14 md:py-20 lg:py-24">
-      {/* خلفية متحركة — مخفية على الشاشات الصغيرة لتحسين الأداء والوضوح */}
-      <div className="hidden md:block" aria-hidden>
-        <NeuralBackground3D offsetX="0vw" />
-      </div>
+    <section className="relative overflow-hidden py-14 md:py-20 lg:py-24">
+      {/* خلفية متحركة */}
+      <NeuralBackground3D offsetX="0vw" />
 
       {/* إذا عندك CSS سابق يعمل blur هنا، نوقِفه عبر الـstyle أدناه */}
       <div className="hero-overlay-gradient pointer-events-none" />
@@ -28,7 +23,6 @@ export default function HeroNova({ title, subtitle }) {
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         <div className="grid md:grid-cols-12 gap-6 md:gap-8 items-center">
-          {/* العمود الأيسر: العنوان والنص */}
           <div className="relative md:col-span-7 overflow-visible">
             <div
               aria-hidden
@@ -58,27 +52,9 @@ export default function HeroNova({ title, subtitle }) {
             </div>
           </div>
 
-          {/* العمود الأيمن: العرض الرسومي */}
-          <div className="md:col-span-5 relative overflow-visible">
-            {/* حاوية العرض — أصغر على الموبايل، وتوسيط لمنع خروج العرض */}
-            <div
-              className="
-                relative mx-auto
-                h-[340px] sm:h-[420px] md:h-[460px] lg:h-[520px]
-                w-full max-w-[520px]
-              "
-            >
-              <div
-                className="
-                  absolute inset-0 origin-center
-                  scale-[0.82] sm:scale-[0.9] md:scale-100 lg:scale-105
-                  rotate-0 md:rotate-0            /* لا دوران على الموبايل لمنع أي خروج */
-                  pointer-events-none
-                  [transform-origin:center]
-                "
-              >
-                <RightShowcase />
-              </div>
+          <div className="md:col-span-5 relative h-[380px] sm:h-[420px] md:h-[460px] lg:h-[520px] overflow-visible">
+            <div className="absolute inset-0 origin-center scale-[.82] sm:scale-[.9] md:scale-100 lg:scale-105">
+              <RightShowcase />
             </div>
           </div>
 
