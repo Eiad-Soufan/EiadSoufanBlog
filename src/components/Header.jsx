@@ -5,18 +5,16 @@ import { NavLink } from "react-router-dom";
 import logo from "../assets/logo.png";
 
 /**
- * Header — iOS Glass + Adaptive Scrim (وضوح عالٍ فوق الأبيض والداكن)
- * - زجاج: backdrop-blur-xl + ring + contrast/brightness محسنين
- * - طبقة scrim غامقة رقيقة تتكيف مع التمرير لضمان التباين
- * - drop-shadow للنص لزيادة الوضوح دون تغيير اللون
- * - المحتوى والهوفر واللوغو/العنوان كما هي
+ * Header — iOS Glass + Adaptive Scrim
+ * إصلاح الموبايل فقط: ترتيب عمودي + شريط تبويبات يتمرّر أفقيًا،
+ * مع الحفاظ على مظهر وسلوك الديسكتوب كما هو تمامًا.
  */
 
 const NAV = [
   { to: "/", label: "Home" },
-  { to: "/about-us", label: "About" },         // كان "About Us"
-  { to: "/why-us", label: "Why Eiad" },        // كان "Why Us"
-  { to: "/contact", label: "Contact" },        // كان "Contact me"
+  { to: "/about-us", label: "About" },
+  { to: "/why-us", label: "Why Eiad" },
+  { to: "/contact", label: "Contact" },
 ];
 
 function ScrollRestorer() {
@@ -93,7 +91,6 @@ function Particles() {
   );
 }
 
-// تبويب بنفس الهوفر السابق، مع drop-shadow أقوى للنص
 function TabLink({ to, children }) {
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const [sparkKey, setSparkKey] = useState(0);
@@ -110,7 +107,6 @@ function TabLink({ to, children }) {
       }}
       onMouseEnter={() => setSparkKey((k) => k + 1)}
     >
-      {/* Spotlight */}
       <span
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-200"
         style={{
@@ -118,7 +114,6 @@ function TabLink({ to, children }) {
         }}
         aria-hidden
       />
-      {/* Overlay خفيف للعمق */}
       <span
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300"
         style={{
@@ -126,7 +121,6 @@ function TabLink({ to, children }) {
         }}
         aria-hidden
       />
-      {/* Spark */}
       <motion.span
         key={sparkKey}
         className="pointer-events-none absolute left-1/2 top-1/2 -ml-1 -mt-1 w-2 h-2 rounded-full"
@@ -146,7 +140,6 @@ function TabLink({ to, children }) {
 }
 
 export default function Header() {
-  const [scrolled, setScrolled] = useState(false);
   const [depth, setDepth] = useState(0); // 0..1
 
   const tiltX = useMotionValue(0);
@@ -157,7 +150,6 @@ export default function Header() {
   useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY || 0;
-      setScrolled(y > 8);
       const d = Math.max(0, Math.min(1, y / 160));
       setDepth(d);
     };
@@ -178,33 +170,25 @@ export default function Header() {
     return () => window.removeEventListener("mousemove", onMove);
   }, [tiltX, tiltY]);
 
-  // ظل رقيق
   const boxShadow = `
     0 ${Math.round(1 + 1.5 * depth)}px ${Math.round(6 + 6 * depth)}px rgba(15,23,42,${(0.06 + 0.04 * depth).toFixed(2)}),
     0 ${Math.round(4 + 3 * depth)}px ${Math.round(18 + 10 * depth)}px rgba(15,23,42,${(0.10 + 0.05 * depth).toFixed(2)})
   `;
 
-  // زجاجية محسّنة للوضوح على الأبيض
   const glassClass =
     "backdrop-blur-xl bg-white/10 ring-1 ring-white/15 backdrop-contrast-135 backdrop-brightness-[0.88]";
-
-  // Opacity للـscrim (أعمق من السابق + يتزايد قليلاً مع التمرير)
-  const scrimOpacity = 0.30 + depth * 0.18; // ~0.30 → ~0.48
+  const scrimOpacity = 0.30 + depth * 0.18;
 
   return (
-    // رفعنا طبقة الهيدر وأضفنا isolate لضمان التصدّر فوق الخلفيات
     <header className="sticky top-0 z-[200] isolate">
       <ScrollRestorer />
 
-      {/* فاصل علوي رفيع */}
       <div className="h-[1px] w-full bg-white/5" />
 
-      {/* حاوية زجاجية شفافة + scrim متكيف */}
       <motion.div
         style={{ rotateX: sX, rotateY: sY, transformStyle: "preserve-3d", boxShadow }}
         className={`relative ${glassClass} border-b border-white/10`}
       >
-        {/* طبقة Scrim لضمان وضوح النص فوق الخلفيات البيضاء */}
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0"
@@ -215,8 +199,6 @@ export default function Header() {
             mixBlendMode: "normal",
           }}
         />
-
-        {/* نسيج ض噪 رقيق جداً */}
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 mix-blend-soft-light opacity-[0.06]"
@@ -226,12 +208,11 @@ export default function Header() {
             backgroundSize: "220px 220px, 240px 240px, 260px 260px, 280px 280px",
           }}
         />
-
-        {/* Particles */}
         <Particles />
 
         <div className="container mx-auto px-4 md:px-8">
-          <div className="flex items-center justify-between py-3 md:py-4">
+          {/* موبايل: عمود + gap؛ ديسكتوب: صف كما كان */}
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between py-3 md:py-4 gap-2 md:gap-0">
             {/* الهوية */}
             <div className="flex items-center gap-3">
               <motion.img
@@ -259,50 +240,44 @@ export default function Header() {
                     React • Django • AI • Data • Teaching
                   </span>
                 </div>
-
               </div>
             </div>
 
-            {/* الناف */}
-{/* الناف — ظاهر على الموبايل كسطر قابل للتمرير، وبدون أي تغيير على الديسكتوب */}
-<nav
-  className="
-    mt-2 md:mt-0
-    flex items-center gap-1
-    overflow-x-auto md:overflow-visible
-    whitespace-nowrap md:whitespace-normal
-    scrollbar-none [-webkit-overflow-scrolling:touch]
-    -mx-2 px-2
-  "
-  aria-label="Primary"
->
-  {NAV.map((item) => (
-    <NavLink key={item.to} to={item.to} className={({ isActive }) => "relative"}>
-      {({ isActive }) => (
-        <span className="relative inline-flex items-center">
-          {/* نفس تبويبك TabLink بلا أي تعديل بصري */}
-          <TabLink to={item.to}>{item.label}</TabLink>
-
-          {/* الخط السفلي النشط يبقى كما هو على الديسكتوب */}
-          <motion.span
-            layoutId="nav-underline"
-            className="hidden md:block absolute left-2 right-2 -bottom-1 h-[2px] rounded bg-white/80"
-            transition={{ type: "spring", stiffness: 500, damping: 40 }}
-            style={{ pointerEvents: "none" }}
-          />
-        </span>
-      )}
-    </NavLink>
-  ))}
-</nav>
-
+            {/* الناف — موبايل: سطر يتمرّر أفقيًا بعرض كامل؛ ديسكتوب: كما كان */}
+            <nav
+              className="
+                mt-1 md:mt-0
+                w-full md:w-auto
+                flex items-center gap-1
+                overflow-x-auto md:overflow-visible
+                whitespace-nowrap md:whitespace-normal
+                scrollbar-none [-webkit-overflow-scrolling:touch]
+                -mx-2 px-2
+              "
+              aria-label="Primary"
+            >
+              {NAV.map((item) => (
+                <NavLink key={item.to} to={item.to} className={({ isActive }) => "relative"}>
+                  {({ isActive }) => (
+                    <span className="relative inline-flex items-center">
+                      <TabLink to={item.to}>{item.label}</TabLink>
+                      {/* underline يظهر من md+ فقط */}
+                      <motion.span
+                        layoutId="nav-underline"
+                        className="hidden md:block absolute left-2 right-2 -bottom-1 h-[2px] rounded bg-white/80"
+                        transition={{ type: "spring", stiffness: 500, damping: 40 }}
+                        style={{ pointerEvents: "none" }}
+                      />
+                    </span>
+                  )}
+                </NavLink>
+              ))}
+            </nav>
           </div>
         </div>
       </motion.div>
 
-      {/* فاصل صغير أسفل الهيدر */}
       <div className="w-full h-[8px]" />
     </header>
   );
 }
-
