@@ -13,7 +13,7 @@ import ShowcaseGrid from "../components/ShowcaseGrid";
 /* خلفية داكنة موحّدة للقسم الثاني — تحسين ألوان وإزالة الشريط الرمادي */
 function FeatureSectionBG({ children }) {
   return (
-    <section className="relative py-20 md:py-28 overflow-hidden isolation-isolate">
+    <section className="relative py-16 sm:py-20 md:py-28 overflow-x-clip overflow-y-visible isolation-isolate">
       {/* base gradient (ثابت) */}
       <div
         className="absolute inset-0"
@@ -22,8 +22,8 @@ function FeatureSectionBG({ children }) {
             "linear-gradient(180deg, #0b1020 0%, #141229 40%, #0f172a 100%)",
         }}
       />
-      {/* glows (ألطف وبنِسَب أدق) */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
+      {/* glows (ألطف وبنِسَب أدق) — مخفية على الشاشات الصغيرة */}
+      <div className="absolute inset-0 z-0 pointer-events-none hidden sm:block">
         <div
           className="absolute -top-24 -left-16 h-[420px] w-[640px] blur-2xl opacity-35"
           style={{
@@ -58,7 +58,7 @@ function FeatureSectionBG({ children }) {
         <div className="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-[#0b1022]/40 to-transparent" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6">{children}</div>
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">{children}</div>
     </section>
   );
 }
@@ -119,9 +119,8 @@ export default function Home() {
         </div>
       </FeatureSectionBG>
 
-
       {/* ===== SECTION 3: SHOWCASE — داكن موحّد (تناغم ألوان ومسافات) ===== */}
-      <section className="relative py-20 md:py-28 overflow-hidden">
+      <section className="relative py-16 sm:py-20 md:py-28 overflow-x-clip overflow-y-visible">
         <div
           className="absolute inset-0"
           style={{
@@ -129,7 +128,8 @@ export default function Home() {
               "linear-gradient(180deg, #0b1020 0%, #141229 40%, #0f172a 100%)",
           }}
         />
-        <div className="absolute inset-0 z-0 pointer-events-none">
+        {/* glows/dots — مخفية على الشاشات الصغيرة */}
+        <div className="absolute inset-0 z-0 pointer-events-none hidden sm:block">
           <div
             className="absolute -top-20 left-1/2 -translate-x-1/2 h-[520px] w-[980px] blur-3xl opacity-28"
             style={{
@@ -155,7 +155,7 @@ export default function Home() {
           />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
           <SectionTitle
             eyebrow="Case Studies"
             title="Selected Projects — Frontend, Backend & AI"
@@ -169,8 +169,9 @@ export default function Home() {
       </section>
 
       {/* ===== CTA — تحسينات دقيقة على الظلال والتباين فقط ===== */}
-      <section className="relative py-24 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 z-0 pointer-events-none">
+      <section className="relative py-20 sm:py-24 md:py-32 overflow-x-clip overflow-y-visible">
+        {/* طبقة الخلفية والزخرفة — مخفية على الشاشات الصغيرة */}
+        <div className="absolute inset-0 z-0 pointer-events-none hidden sm:block">
           <div
             className="absolute inset-0"
             style={{
@@ -215,13 +216,13 @@ export default function Home() {
           />
         </div>
 
-        <div className="relative z-10 max-w-5xl mx-auto px-6">
-          <div className="relative rounded-3xl p-10 md:p-14 text-center bg-white/8 backdrop-blur-lg ring-1 ring-white/12 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.5)] overflow-hidden">
+        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="relative rounded-3xl p-8 sm:p-10 md:p-14 text-center bg-white/8 backdrop-blur-lg ring-1 ring-white/12 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.5)] overflow-hidden">
             <div
               className="pointer-events-none absolute inset-0 rounded-3xl"
               style={{ boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.08)" }}
             />
-            <h3 className="text-3xl md:text-5xl font-extrabold tracking-tight">
+            <h3 className="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tight">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-300 via-violet-300 to-sky-300">
                 Ship beautiful frontends on rock-solid APIs — with AI inside.
               </span>
@@ -257,9 +258,7 @@ export default function Home() {
               >
                 Start a Project
               </a>
-
             </div>
-
           </div>
         </div>
 
