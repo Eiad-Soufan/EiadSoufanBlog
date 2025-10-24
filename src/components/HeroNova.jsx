@@ -7,13 +7,16 @@ import RightShowcase from "./RightShowcase";
 /**
  * HERO — Animated Aurora + word-by-word title reveal (crisp, no blur) + smooth subtitle
  * - No backdrop blur over the title. Gradient shine keeps the look without blurring text.
+ * - الخلفيات والزخارف أسفل الهيدر دائمًا (z-index سالب).
  */
 
 export default function HeroNova({ title, subtitle }) {
   return (
     <section className="relative overflow-hidden py-14 md:py-20 lg:py-24">
-      {/* خلفية متحركة */}
-      <NeuralBackground3D offsetX="0vw" />
+      {/* خلفية متحركة — توضع أسفل الهيدر دائمًا */}
+      <div className="absolute inset-0 -z-[1] pointer-events-none" aria-hidden>
+        <NeuralBackground3D offsetX="0vw" />
+      </div>
 
       {/* إذا عندك CSS سابق يعمل blur هنا، نوقِفه عبر الـstyle أدناه */}
       <div className="hero-overlay-gradient pointer-events-none" />
@@ -63,7 +66,8 @@ export default function HeroNova({ title, subtitle }) {
         </div>
       </div>
 
-      {/* Overrides مضمونة لإيقاف أي تغبيش على الطبقات الزخرفية فوق العنوان */}
+      {/* Overrides مضمونة لإيقاف أي تغبيش على الطبقات الزخرفية فوق العنوان
+          + جعل الغطاء تحت الهيدر عبر z-index: -1 */}
       <style>{`
         /* امنع أي blur/backdrop-blur على الغطاء العام إن كان معرفاً في CSS العام */
         .hero-overlay-gradient{
@@ -73,7 +77,7 @@ export default function HeroNova({ title, subtitle }) {
           pointer-events: none;
           position: absolute;
           inset: 0;
-          z-index: 0; /* تحت العنوان */
+          z-index: -1; /* تحت كل المحتوى والهيدر */
           background: transparent;
         }
 
