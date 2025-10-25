@@ -11,19 +11,25 @@ import SectionTitle from "../components/SectionTitle";
 import ShowcaseGrid from "../components/ShowcaseGrid";
 
 /* خلفية داكنة موحّدة للقسم الثاني — تحسين ألوان وإزالة الشريط الرمادي */
-function FeatureSectionBG({ children }) {
+function FeatureSectionBG({ children, className = "" }) {
   return (
-    <section className="relative py-16 sm:py-20 md:py-28 overflow-x-clip overflow-y-visible isolation-isolate">
+    <section
+      className={
+        "relative py-16 sm:py-20 md:py-28 overflow-x-clip overflow-y-visible isolation-isolate " +
+        className
+      }
+    >
       {/* base gradient (ثابت) */}
       <div
-        className="absolute inset-0"
+        className="absolute inset-0 pointer-events-none"
         style={{
           background:
             "linear-gradient(180deg, #0b1020 0%, #141229 40%, #0f172a 100%)",
         }}
+        aria-hidden
       />
       {/* glows (ألطف وبنِسَب أدق) — مخفية على الشاشات الصغيرة */}
-      <div className="absolute inset-0 z-0 pointer-events-none hidden sm:block">
+      <div className="absolute inset-0 z-0 pointer-events-none hidden sm:block" aria-hidden>
         <div
           className="absolute -top-24 -left-16 h-[420px] w-[640px] blur-2xl opacity-35"
           style={{
@@ -54,7 +60,7 @@ function FeatureSectionBG({ children }) {
           </defs>
           <rect width="100%" height="100%" fill="url(#dots2)" />
         </svg>
-        {/* استبدال التدرّج الأبيض (كان يعمل “شريطًا”) بتلاشي داكن لطيف */}
+        {/* تلاشي علوي لطيف */}
         <div className="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-[#0b1022]/40 to-transparent" />
       </div>
 
@@ -71,8 +77,9 @@ export default function Home() {
         subtitle="Where innovation meets purpose."
       />
 
-      {/* ===== SECTION 2: FEATURES (What I Do) — داكن موحّد ===== */}
-      <FeatureSectionBG>
+      {/* ===== SECTION 2: FEATURES (What I Do) — داكن موحّد =====
+          ملاحظة: margin-top صغيرة تمنع أي تراكب مع شرائط المهارات أسفل الهيرو على الموبايل */}
+      <FeatureSectionBG className="mt-6 sm:mt-8">
         <SectionTitle
           eyebrow="What I Do"
           title="Full-stack engineering, AI, and reliable delivery"
@@ -122,14 +129,15 @@ export default function Home() {
       {/* ===== SECTION 3: SHOWCASE — داكن موحّد (تناغم ألوان ومسافات) ===== */}
       <section className="relative py-16 sm:py-20 md:py-28 overflow-x-clip overflow-y-visible">
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 pointer-events-none"
           style={{
             background:
               "linear-gradient(180deg, #0b1020 0%, #141229 40%, #0f172a 100%)",
           }}
+          aria-hidden
         />
         {/* glows/dots — مخفية على الشاشات الصغيرة */}
-        <div className="absolute inset-0 z-0 pointer-events-none hidden sm:block">
+        <div className="absolute inset-0 z-0 pointer-events-none hidden sm:block" aria-hidden>
           <div
             className="absolute -top-20 left-1/2 -translate-x-1/2 h-[520px] w-[980px] blur-3xl opacity-28"
             style={{
@@ -168,10 +176,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== CTA — تحسينات دقيقة على الظلال والتباين فقط ===== */}
+      {/* ===== CTA ===== */}
       <section className="relative py-20 sm:py-24 md:py-32 overflow-x-clip overflow-y-visible">
         {/* طبقة الخلفية والزخرفة — مخفية على الشاشات الصغيرة */}
-        <div className="absolute inset-0 z-0 pointer-events-none hidden sm:block">
+        <div className="absolute inset-0 z-0 pointer-events-none hidden sm:block" aria-hidden>
           <div
             className="absolute inset-0"
             style={{
