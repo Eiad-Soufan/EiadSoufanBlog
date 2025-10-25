@@ -13,7 +13,7 @@ import RightShowcase from "./RightShowcase";
 
 export default function HeroNova({ title, subtitle }) {
   return (
-    <section className="relative overflow-hidden py-14 md:py-20 lg:py-24">
+    <section className="relative overflow-visible py-14 md:py-20 lg:py-24 pb-16 md:pb-20">
       {/* خلفية متحركة — أسفل الهيدر */}
       <div className="absolute inset-0 -z-[1] pointer-events-none" aria-hidden>
         <NeuralBackground3D offsetX="0vw" />
