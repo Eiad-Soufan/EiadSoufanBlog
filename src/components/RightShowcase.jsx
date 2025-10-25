@@ -2,12 +2,6 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 
-/**
- * RightShowcase — Responsive fan deck
- * - موبايل: وسط الشاشة + تقليل التباعد + تصغير خفيف لظهور الثلاث بطاقات كاملة
- * - md+: نفس المظهر السابق (fan أوسع) بدون تغيير بصري
- */
-
 const CARD_W = 220;
 const CARD_H = 320;
 
@@ -21,7 +15,6 @@ const BRAND = {
   ink: "rgba(0,0,0,.12)",
 };
 
-// hook بسيط لمعرفة هل العرض >= md (768px)
 function useIsMdUp() {
   const [ok, setOk] = useState(false);
   useEffect(() => {
@@ -38,10 +31,10 @@ export default function RightShowcase() {
   const reduce = useReducedMotion();
   const isMd = useIsMdUp();
 
-  // إزاحات المروحة: أضيق على الموبايل، أوسع على md+
+  // انتشار المروحة: أضيق على الشاشات الصغيرة
   const fan = isMd
     ? { leftX: -120, rightX: 120, liftSide: -20, liftCenter: -36, rot: 16 }
-    : { leftX: -80, rightX: 80, liftSide: -12, liftCenter: -22, rot: 10 };
+    : { leftX: -64, rightX: 64, liftSide: -10, liftCenter: -18, rot: 8 };
 
   const parent = reduce
     ? { initial: {}, animate: {} }
@@ -55,62 +48,64 @@ export default function RightShowcase() {
 
   return (
     <motion.div
-      className="relative w-full h-[320px] sm:h-[400px] md:h-[460px] lg:h-[520px] select-none"
+      className="
+        relative select-none
+        w-full
+        h-[280px] xs:h-[320px] sm:h-[380px] md:h-[460px] lg:h-[520px]
+        flex items-center justify-center
+      "
       variants={parent}
       initial="initial"
       animate="animate"
       style={{ zIndex: 2 }}
     >
-      {/* وهج الخلفية (كما هو) */}
-      <div className="absolute inset-0 -z-10 pointer-events-none">
+      {/* وهج الخلفية يبقى لكن لا يحتاج تموضع مطلق يغطي العمود كله */}
+      <div className="pointer-events-none absolute inset-0 -z-10">
         <div
-          className="absolute right-[12%] top-[6%] w-56 h-56 rounded-full blur-3xl"
+          className="absolute right-[10%] top-[6%] w-40 h-40 sm:w-56 sm:h-56 rounded-full blur-3xl"
           style={{ background: "rgba(56,189,248,0.18)" }}
         />
         <div
-          className="absolute right-[24%] bottom-[10%] w-64 h-64 rounded-full blur-3xl"
+          className="absolute right-[18%] bottom-[8%] w-48 h-48 sm:w-64 sm:h-64 rounded-full blur-3xl"
           style={{ background: "rgba(124,58,237,0.16)" }}
         />
       </div>
 
-      {/* المنصّة — وسط الشاشة على الموبايل، وتبقى مناسبة على md+ */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div
-          className="
-            relative group/cards
-            w-full max-w-[460px] sm:max-w-[520px] md:max-w-[620px]
-            h-[300px] sm:h-[340px] lg:h-[360px]
-            origin-center
-            scale-[0.9] sm:scale-[0.95] md:scale-100 lg:scale-105
-          "
-        >
-          <CardFan
-            role="tablet"
-            title="Web Applications"
-            accent="sky"
-            final={{ x: fan.leftX, r: -fan.rot, z: 10, lift: fan.liftSide }}
-            delay={0.0}
-          />
-          <CardFan
-            role="laptop"
-            title="Desktop Applications"
-            accent="violet"
-            final={{ x: 0, r: 0, z: 20, lift: fan.liftCenter }}
-            delay={0.06}
-            featured
-          />
-          <CardFan
-            role="phone"
-            title="Mobile Applications"
-            accent="rose"
-            final={{ x: fan.rightX, r: fan.rot, z: 30, lift: fan.liftSide }}
-            delay={0.12}
-            lightPhoneUI
-          />
-        </div>
+      {/* منصة البطاقات — وسط على الموبايل، تكبر تدريجياً حتى md+ */}
+      <div
+        className="
+          relative group/cards
+          w-full max-w-[420px] xs:max-w-[460px] sm:max-w-[520px] md:max-w-[620px]
+          h-full
+          origin-center
+          scale-[0.82] xs:scale-[0.88] sm:scale-[0.94] md:scale-100 lg:scale-105
+        "
+      >
+        <CardFan
+          role="tablet"
+          title="Web Applications"
+          accent="sky"
+          final={{ x: fan.leftX, r: -fan.rot, z: 10, lift: fan.liftSide }}
+          delay={0.0}
+        />
+        <CardFan
+          role="laptop"
+          title="Desktop Applications"
+          accent="violet"
+          final={{ x: 0, r: 0, z: 20, lift: fan.liftCenter }}
+          delay={0.06}
+          featured
+        />
+        <CardFan
+          role="phone"
+          title="Mobile Applications"
+          accent="rose"
+          final={{ x: fan.rightX, r: fan.rot, z: 30, lift: fan.liftSide }}
+          delay={0.12}
+          lightPhoneUI
+        />
       </div>
 
-      {/* تحسين بصري خفيف */}
       <style>{`
         .group\\/cards:hover .card-slot {
           opacity: .85;
@@ -133,9 +128,9 @@ export default function RightShowcase() {
 /* ======================== Card Fan ======================== */
 
 function CardFan({
-  role = "laptop", // laptop | tablet | phone
+  role = "laptop",
   title = "",
-  accent = "violet", // sky | violet | rose
+  accent = "violet",
   final = { x: 0, r: 0, z: 10, lift: 0 },
   delay = 0,
   featured = false,
@@ -207,7 +202,6 @@ function CardFan({
             filter: "saturate(1.05)",
           }}
         />
-
         {/* جسم البطاقة */}
         <div
           className="absolute inset-0 rounded-[20px] backdrop-blur"
@@ -223,7 +217,6 @@ function CardFan({
               "repeating-linear-gradient(45deg, rgba(0,0,0,.02) 0 6px, rgba(0,0,0,0) 6px 12px)",
           }}
         />
-
         {/* لمعان */}
         <div
           aria-hidden
@@ -235,7 +228,6 @@ function CardFan({
             transition: "opacity .35s ease",
           }}
         />
-
         {/* عنوان البطاقة */}
         <div
           className="absolute top-3 left-3 text-[11px] font-semibold tracking-wide drop-shadow"
@@ -243,14 +235,12 @@ function CardFan({
         >
           {title}
         </div>
-
         {/* محتوى البطاقة */}
         <div className="absolute inset-0 p-10 pt-12">
           {role === "laptop" && <LaptopGlyph accent={color} />}
           {role === "tablet" && <TabletGlyph accent={color} />}
           {role === "phone" && <PhoneGlyph accent={color} lightUI={lightPhoneUI} />}
         </div>
-
         {/* توهج سفلي */}
         <motion.div
           aria-hidden
@@ -269,7 +259,6 @@ function CardFan({
 }
 
 /* ====================== Glyphs ====================== */
-
 function LaptopGlyph({ accent }) {
   const screenH = 100;
   return (
@@ -377,7 +366,6 @@ function PhoneGlyph({ accent, lightUI = false }) {
 }
 
 /* ====================== Utilities ====================== */
-
 function Badge({ color }) {
   return <span className="inline-block w-2 h-2 rounded-full" style={{ background: color }} />;
 }
