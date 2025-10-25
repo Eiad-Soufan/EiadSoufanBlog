@@ -232,7 +232,7 @@ export default function WhyUs() {
           variants={sectionParent}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: false, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.3 }}
         >
           <motion.h2
             className="text-3xl md:text-4xl font-extrabold mb-6a bg-clip-text text-transparent bg-gradient-to-b from-indigo-200 via-violet-200 to-sky-200 drop-shadow"
@@ -257,7 +257,7 @@ export default function WhyUs() {
           variants={sectionParent}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: false, amount: 0.25 }}
+          viewport={{ once: true, amount: 0.25 }}
         >
           <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
             {[
@@ -321,7 +321,7 @@ export default function WhyUs() {
           variants={sectionParent}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: false, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.3 }}
         >
           <motion.h2
             className="text-3xl font-bold mb-10
@@ -351,7 +351,7 @@ export default function WhyUs() {
           variants={sectionParent}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: false, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.3 }}
         >
           <motion.div
             variants={fadeUp}
@@ -402,6 +402,7 @@ export default function WhyUs() {
     </section>
   );
 }
+
 
 
 
