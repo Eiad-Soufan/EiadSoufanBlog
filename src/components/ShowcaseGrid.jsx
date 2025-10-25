@@ -1,97 +1,185 @@
 // src/components/ShowcaseGrid.jsx
 import { motion } from "framer-motion";
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 
 export default function ShowcaseGrid({ items = [] }) {
-  const loopItems = [...items, ...items];
-  const cycleSeconds = 28;
-
-  // سحب يدوي
+  const doubled = [...items, ...items];         // محتوى مزدوج لضمان الالتفاف
   const trackRef = useRef(null);
-  const [dragging, setDragging] = useState(false);
-  const [paused, setPaused] = useState(false);
-  const [offset, setOffset] = useState(0);
-  const dragX = useRef(0);   // آخر clientX
-  const base = useRef(0);    // الإزاحة الأساسية قبل السحب
 
+  // حالة الحركة
+  const [offset, setOffset] = useState(0);      // إزاحة المسار (px)
+  const [dragging, setDragging] = useState(false);
+  const [autoPlay, setAutoPlay] = useState(true);
+  const [velocity, setVelocity] = useState(0);  // قصور ذاتي لحظي بعد السحب
+
+  // قياسات
+  const singleWidthRef = useRef(1);             // عرض مجموعة واحدة (نصف المسار)
+  const lastXRef = useRef(0);
+  const lastTsRef = useRef(performance.now());
+  const wheelTimerRef = useRef(null);
+
+  // احسب عرض نصف المسار (مجموعة واحدة)
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    // بما أننا نرسم العناصر مضاعفة، عرض مجموعة واحدة = scrollWidth / 2
+    const measure = () => {
+      const half = el.scrollWidth / 2;
+      singleWidthRef.current = Math.max(half, 1);
+    };
+    measure();
+
+    // إعادة القياس عند تغيير الحجم/الخطوط
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    window.addEventListener("resize", measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, [items]);
+
+  // سرعات: نحسب السرعة الأساسية من مدة الدورة المطلوبة
+  // نريد قطع "مجموعة واحدة" خلال 28 ثانية (مطابقة للأنيميشن السابق).
+  const baseSpeed = useRef(0);
+  useEffect(() => {
+    const recalcBase = () => {
+      baseSpeed.current = singleWidthRef.current / 28; // px/sec
+    };
+    recalcBase();
+    const id = setInterval(recalcBase, 500); // تحديث بسيط حتى يتم تثبيت القياسات
+    return () => clearInterval(id);
+  }, []);
+
+  // حلقة الرسوم (تشغيل تلقائي + قصور ذاتي + التفاف لا نهائي)
+  useEffect(() => {
+    let raf;
+    const step = (ts) => {
+      const dt = Math.max(0, (ts - lastTsRef.current) / 1000); // بالثواني
+      lastTsRef.current = ts;
+
+      setOffset((prev) => {
+        let next = prev;
+
+        // حركة تلقائية لليسار
+        if (autoPlay && !dragging) {
+          next -= baseSpeed.current * dt;
+        }
+
+        // قصور ذاتي بعد السحب (يتلاشى تدريجيًا)
+        if (!dragging && Math.abs(velocity) > 0.01) {
+          next += velocity * dt;
+          // تخميد أسي لطيف
+          setVelocity((v) => v * 0.94);
+        }
+
+        // التفاف لا نهائي: أبقِ الإزاحة داخل [-W, 0]
+        const W = singleWidthRef.current;
+        if (next <= -W) next += W;
+        if (next > 0) next -= W;
+
+        return next;
+      });
+
+      raf = requestAnimationFrame(step);
+    };
+
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [autoPlay, dragging, velocity]);
+
+  // سحب بالماوس/اللمس
   const onPointerDown = useCallback((e) => {
-    setPaused(true);
+    // أوقف الأوتو أثناء السحب
+    setAutoPlay(false);
     setDragging(true);
-    dragX.current = e.clientX ?? (e.touches?.[0]?.clientX || 0);
-    base.current = offset;
-    // تفعيل التقاط المؤشر كي لا نفقد السحب خارج الحاوية
-    e.currentTarget.setPointerCapture?.(e.pointerId);
-  }, [offset]);
+    lastXRef.current = getClientX(e);
+    // منع سحب الصور الافتراضي
+    e.preventDefault?.();
+  }, []);
 
   const onPointerMove = useCallback((e) => {
     if (!dragging) return;
-    const x = e.clientX ?? (e.touches?.[0]?.clientX || 0);
-    const dx = x - dragX.current;
-    dragX.current = x;
-    setOffset((prev) => prev + dx);
+    const x = getClientX(e);
+    const dx = x - lastXRef.current;
+    lastXRef.current = x;
+
+    // حدّث الإزاحة (اتجاه السحب الطبيعي)
+    setOffset((prev) => {
+      let next = prev + dx;
+      const W = singleWidthRef.current;
+      if (next <= -W) next += W;
+      if (next > 0) next -= W;
+      return next;
+    });
+
+    // خزّن سرعة لحظية (px/sec تقريبية) لاستخدامها كقصور ذاتي قصير
+    // هنا نستخدم معامل بسيط بدل dt دقيق (يكفي للسلاسة)
+    setVelocity(dx * 8);
   }, [dragging]);
 
-  const endDrag = useCallback((e) => {
-    if (!dragging) return;
+  const onPointerUp = useCallback(() => {
     setDragging(false);
-    // نبقي الإيقاف مؤقتًا بعد السحب؛ يرجع تلقائيًا بالزر
-    // (لو بدك يرجع أوتو فورًا بعد السحب، استبدل السطر التالي بـ setPaused(false))
-  }, [dragging]);
-
-  // تمرير بعجلة الماوس (أفقي/رأسي) يوقف الأوتو ويحرّك الشريط
-  const onWheel = useCallback((e) => {
-    // deltaX للأفقي، إن لم يوجد نستعمل deltaY كتحريك أفقي
-    const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-    if (delta !== 0) {
-      setPaused(true);
-      setOffset((prev) => prev - delta);
-    }
+    // المطلوب: يعود فورًا للتشغيل التلقائي
+    // سنبقي velocity للحظة لدمج السلاسة، لكن الأوتو يعمل فورًا
+    setAutoPlay(true);
   }, []);
 
-  // إعادة تشغيل الأوتو (زر اختياري صغير)
-  const AutoPlayButton = () => (
+  // تمرير العجلة: يحرّك أفقيًا ويوقف الأوتو لحظيًا ثم يستأنف بعد مهلة قصيرة
+  const onWheel = useCallback((e) => {
+    const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+    if (delta === 0) return;
+
+    setAutoPlay(false);
+    setOffset((prev) => {
+      let next = prev - delta;
+      const W = singleWidthRef.current;
+      if (next <= -W) next += W;
+      if (next > 0) next -= W;
+      return next;
+    });
+
+    // استئناف تلقائي بعد عدم نشاط قصير
+    if (wheelTimerRef.current) clearTimeout(wheelTimerRef.current);
+    wheelTimerRef.current = setTimeout(() => setAutoPlay(true), 600);
+  }, []);
+
+  // زر إيقاف/تشغيل اختياري (غير ضروري الآن، لكن يبقى مفيدًا)
+  const AutoBtn = () => (
     <button
       type="button"
-      onClick={() => setPaused(false)}
+      onClick={() => setAutoPlay((v) => !v)}
       className="absolute right-2 -top-10 md:top-0 z-30 hidden sm:inline-flex items-center gap-1 rounded-md px-2.5 py-1.5 text-xs
                  bg-white/10 text-white ring-1 ring-white/15 hover:bg-white/14 transition"
-      aria-label="Resume auto scroll"
-      title="Resume auto scroll"
+      aria-label={autoPlay ? "Pause auto scroll" : "Resume auto scroll"}
     >
-      ▶ Auto
+      {autoPlay ? "❚❚ Pause" : "▶ Auto"}
     </button>
   );
 
   return (
-    <div className="relative group">
-      {/* زر استئناف الأوتو (اختياري يظهر على الشاشات الأوسع) */}
-      <AutoPlayButton />
+    <div className="relative group overflow-hidden">
+      <AutoBtn />
 
-      {/* تدرّجات جانبية داكنة لقطع الحواف */}
+      {/* ظلال الجانبين */}
       <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[#0b1020] to-transparent z-20" />
       <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#0b1020] to-transparent z-20" />
 
-      {/* المسار — إمّا أوتو بالـCSS أو تحكم يدوي بالـtransform */}
+      {/* المسار (JS-driven transform) */}
       <div
         ref={trackRef}
         className={`
           relative flex items-stretch gap-4 will-change-transform
-          select-none touch-pan-x
-          ${paused ? "" : "marquee"}
-          ${dragging ? "cursor-grabbing" : "cursor-grab"}
+          select-none touch-pan-x ${dragging ? "cursor-grabbing" : "cursor-grab"}
         `}
-        style={
-          paused
-            ? { transform: `translateX(${offset}px)` }
-            : { animation: `marquee ${cycleSeconds}s linear infinite` }
-        }
+        style={{ transform: `translateX(${offset}px)` }}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
-        onPointerUp={endDrag}
-        onPointerCancel={endDrag}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
         onWheel={onWheel}
       >
-        {loopItems.map((item, i) => {
+        {doubled.map((item, i) => {
           const src = typeof item === "string" ? item : item?.src;
           const caption = typeof item === "string" ? "" : item?.caption || "";
 
@@ -134,16 +222,13 @@ export default function ShowcaseGrid({ items = [] }) {
           );
         })}
       </div>
-
-      {/* CSS */}
-      <style>{`
-        @keyframes marquee {
-          0%   { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        /* إيقاف الأوتو عند المرور بالفأرة (كما كان) */
-        .group:hover .marquee { animation-play-state: paused !important; }
-      `}</style>
     </div>
   );
+}
+
+/* ===== Utilities ===== */
+function getClientX(e) {
+  // يدعم الماوس واللمس عبر PointerEvents
+  // بعض المتصفحات قد لا تملأ clientX مع اللمس، فنfallback إلى touches
+  return e.clientX ?? e.pageX ?? (e.touches?.[0]?.clientX ?? 0);
 }
