@@ -362,13 +362,15 @@ export default function WhyUs() {
               transition-shadow duration-300
             "
           >
-            <motion.h2
-              className="text-3xl md:text-4xl font-bold mb-4
-                         bg-clip-text text-transparent bg-gradient-to-b from-indigo-200 via-violet-200 to-sky-200"
-              variants={fadeUp}
-            >
-              Design your website, system, or app   your way
-            </motion.h2>
+<motion.h2
+  className="text-3xl md:text-4xl font-bold mb-4
+             leading-tight md:leading-[1.15] pb-[2px] overflow-visible
+             bg-clip-text text-transparent bg-gradient-to-b from-indigo-200 via-violet-200 to-sky-200"
+  variants={fadeUp}
+>
+  Design your website, system, or app your way
+</motion.h2>
+
             <motion.p
               className="mb-8 text-lg text-indigo-100/90 max-w-2xl mx-auto"
               variants={fadeUp}
@@ -400,5 +402,6 @@ export default function WhyUs() {
     </section>
   );
 }
+
 
 
