@@ -1,6 +1,5 @@
 // src/components/HeroNova.jsx
 import { motion } from "framer-motion";
-import { useMemo } from "react";
 import NeuralBackground3D from "./NeuralBackground3D";
 import RightShowcase from "./RightShowcase";
 import { useMemo, useRef, useState, useEffect } from "react";
