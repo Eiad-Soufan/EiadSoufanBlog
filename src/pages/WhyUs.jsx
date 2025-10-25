@@ -47,9 +47,9 @@ const fadeLeft = {
 
 /* ===== Stats data (unchanged) ===== */
 const stats = [
-  ["32", "+", "Projects delivered", 3],
+  ["32", "+", "Projects delivered", 2],
   ["17", "+", "AI models developed", 2],
-  ["22",  "+", "Technologies mastered", 3],
+  ["22",  "+", "Technologies mastered", 2],
   ["48", "+", "Satisfied clients", 2],
 ];
 
@@ -400,4 +400,5 @@ export default function WhyUs() {
     </section>
   );
 }
+
 
