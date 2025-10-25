@@ -76,7 +76,9 @@ export default function Home() {
         title="Think beyond limits. Shape the future."
         subtitle="Where innovation meets purpose."
       />
-
+      
+       <div aria-hidden className="h-6 sm:h-8 md:h-10" />
+      
       {/* ===== SECTION 2: FEATURES (What I Do) — داكن موحّد =====
           ملاحظة: margin-top صغيرة تمنع أي تراكب مع شرائط المهارات أسفل الهيرو على الموبايل */}
       <FeatureSectionBG className="mt-6 sm:mt-8">
@@ -289,3 +291,4 @@ export default function Home() {
     </div>
   );
 }
+
