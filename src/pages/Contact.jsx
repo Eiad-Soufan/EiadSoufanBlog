@@ -133,14 +133,16 @@ export default function Contact() {
       <div className="relative z-10 mx-auto max-w-4xl px-6 py-20">
         <motion.div ref={ref} variants={sectionParent} initial="hidden" animate={controls}>
           {/* العنوان */}
-          <motion.h1
+           <motion.h1
             variants={fadeUp}
-            className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center mb-10
-                       bg-clip-text text-transparent bg-gradient-to-b from-indigo-200 via-violet-200 to-sky-200 drop-shadow"
+            className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center
+                       leading-tight md:leading-[1.12] pb-[3px] mb-10 overflow-visible
+                       bg-clip-text text-transparent bg-gradient-to-b
+                       from-indigo-200 via-violet-200 to-sky-200 drop-shadow"
           >
             Start Your Project With Eiad
-
           </motion.h1>
+
 
           {/* بطاقة الفورم */}
           <motion.form
@@ -289,3 +291,4 @@ export default function Contact() {
     </section>
   );
 }
+
