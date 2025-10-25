@@ -144,22 +144,9 @@ export default function ShowcaseGrid({ items = [] }) {
     wheelTimerRef.current = setTimeout(() => setAutoPlay(true), 600);
   }, []);
 
-  // زر إيقاف/تشغيل اختياري (غير ضروري الآن، لكن يبقى مفيدًا)
-  const AutoBtn = () => (
-    <button
-      type="button"
-      onClick={() => setAutoPlay((v) => !v)}
-      className="absolute right-2 -top-10 md:top-0 z-30 hidden sm:inline-flex items-center gap-1 rounded-md px-2.5 py-1.5 text-xs
-                 bg-white/10 text-white ring-1 ring-white/15 hover:bg-white/14 transition"
-      aria-label={autoPlay ? "Pause auto scroll" : "Resume auto scroll"}
-    >
-      {autoPlay ? "❚❚ Pause" : "▶ Auto"}
-    </button>
-  );
 
   return (
     <div className="relative group overflow-hidden">
-      <AutoBtn />
 
       {/* ظلال الجانبين */}
       <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[#0b1020] to-transparent z-20" />
