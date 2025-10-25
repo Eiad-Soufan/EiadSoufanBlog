@@ -62,6 +62,12 @@ const GlassCard = ({ title, icon, children }) => (
 );
 
 export default function AboutUs() {
+  // ===== على دخول الصفحة: نضمن الرجوع لأعلى الصفحة
+  useEffect(() => {
+    // scroll to top on mount فقط
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+  }, []);
+
   // ===== Basic SEO (no deps): title/meta/OG/Twitter + JSON-LD (Person) =====
   useEffect(() => {
     const title = "About Eiad Abdulhadi Soufan — Frontend, Backend & AI";
@@ -178,7 +184,7 @@ export default function AboutUs() {
           variants={sectionParent}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: false, amount: 0.35 }}
+          viewport={{ once: true, amount: 0.35 }}   // ← مرة واحدة فقط
         >
           <SectionTitle className="mt-4 mb-8">About Eiad</SectionTitle>
 
@@ -231,7 +237,7 @@ export default function AboutUs() {
           variants={sectionParent}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: false, amount: 0.38 }}
+          viewport={{ once: true, amount: 0.38 }}   // ← مرة واحدة فقط
         >
           <SectionTitle>Professional Experience</SectionTitle>
 
@@ -301,7 +307,7 @@ export default function AboutUs() {
           variants={sectionParent}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: false, amount: 0.4 }}
+          viewport={{ once: true, amount: 0.4 }}    // ← مرة واحدة فقط
         >
           <SectionTitle>Contributions</SectionTitle>
 
@@ -328,7 +334,7 @@ export default function AboutUs() {
           variants={sectionParent}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: false, amount: 0.42 }}
+          viewport={{ once: true, amount: 0.42 }}   // ← مرة واحدة فقط
         >
           <SectionTitle>Freelance & Projects</SectionTitle>
 
@@ -375,7 +381,7 @@ export default function AboutUs() {
           variants={sectionParent}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: false, amount: 0.42 }}
+          viewport={{ once: true, amount: 0.42 }}   // ← مرة واحدة فقط
         >
           <SectionTitle>Publications</SectionTitle>
 
@@ -446,7 +452,7 @@ export default function AboutUs() {
           variants={sectionParent}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: false, amount: 0.45 }}
+          viewport={{ once: true, amount: 0.45 }}   // ← مرة واحدة فقط
         >
           <SectionTitle>Core Skills</SectionTitle>
 
