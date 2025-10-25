@@ -6,8 +6,7 @@ import logo from "../assets/logo.png";
 
 /**
  * Header — iOS Glass + Adaptive Scrim
- * إصلاح الموبايل فقط: ترتيب عمودي + شريط تبويبات يتمرّر أفقيًا،
- * مع الحفاظ على مظهر وسلوك الديسكتوب كما هو تمامًا.
+ * إصلاح الموبايل: عرض كل التابات بدون تمرير + خط أسفل التاب المفعّل فقط.
  */
 
 const NAV = [
@@ -98,8 +97,11 @@ function TabLink({ to, children }) {
     <NavLink
       to={to}
       className={({ isActive }) =>
-        `group relative isolate overflow-hidden rounded-md px-3 py-2 text-[13px] md:text-sm font-semibold tracking-wide transition
-         ${isActive ? "text-slate-50" : "text-slate-200/90 hover:text-white"} filter drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)]`
+        `group relative isolate overflow-hidden rounded-md
+         px-2 py-1.5 md:px-3 md:py-2
+         text-[13px] md:text-sm font-semibold tracking-wide transition
+         ${isActive ? "text-slate-50" : "text-slate-200/90 hover:text-white"}
+         filter drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)]`
       }
       onMouseMove={(e) => {
         const r = e.currentTarget.getBoundingClientRect();
@@ -211,7 +213,7 @@ export default function Header() {
         <Particles />
 
         <div className="container mx-auto px-4 md:px-8">
-          {/* موبايل: عمود + gap؛ ديسكتوب: صف كما كان */}
+          {/* موبايل: عمود + توزيع التابات بالتساوي؛ ديسكتوب كما كان */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between py-3 md:py-4 gap-2 md:gap-0">
             {/* الهوية */}
             <div className="flex items-center gap-3">
@@ -243,31 +245,33 @@ export default function Header() {
               </div>
             </div>
 
-            {/* الناف — موبايل: سطر يتمرّر أفقيًا بعرض كامل؛ ديسكتوب: كما كان */}
+            {/* الناف — على الموبايل: 4 تبويبات موزّعة بالتساوي بدون تمرير */}
             <nav
               className="
                 mt-1 md:mt-0
                 w-full md:w-auto
-                flex items-center gap-1
-                overflow-x-auto md:overflow-visible
-                whitespace-nowrap md:whitespace-normal
-                scrollbar-none [-webkit-overflow-scrolling:touch]
-                -mx-2 px-2
+                flex items-center
+                justify-between md:justify-start
+                gap-0 md:gap-1
+                overflow-visible
               "
               aria-label="Primary"
             >
               {NAV.map((item) => (
-                <NavLink key={item.to} to={item.to} className={({ isActive }) => "relative"}>
+                <NavLink key={item.to} to={item.to} className="relative flex-1 basis-0">
                   {({ isActive }) => (
-                    <span className="relative inline-flex items-center">
+                    <span className="relative inline-flex items-center justify-center w-full">
                       <TabLink to={item.to}>{item.label}</TabLink>
-                      {/* underline يظهر من md+ فقط */}
-                      <motion.span
-                        layoutId="nav-underline"
-                        className="hidden md:block absolute left-2 right-2 -bottom-1 h-[2px] rounded bg-white/80"
-                        transition={{ type: "spring", stiffness: 500, damping: 40 }}
-                        style={{ pointerEvents: "none" }}
-                      />
+
+                      {/* يظهر فقط عندما يكون التاب مفعّلاً (على الموبايل والديسكتوب) */}
+                      {isActive && (
+                        <motion.span
+                          layoutId="nav-underline"
+                          className="absolute left-2 right-2 -bottom-0.5 h-[2px] rounded bg-white/80"
+                          transition={{ type: "spring", stiffness: 500, damping: 40 }}
+                          style={{ pointerEvents: "none" }}
+                        />
+                      )}
                     </span>
                   )}
                 </NavLink>
