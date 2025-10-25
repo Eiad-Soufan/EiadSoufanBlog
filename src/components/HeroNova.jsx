@@ -76,6 +76,9 @@ export default function HeroNova({ title, subtitle }) {
           {/* عمود توازن تخطيطي (يبقى كما هو) */}
           <div className="md:col-span-5" />
         </div>
+        {/* Spacer صغير لضمان عدم التصادم مع بداية القسم التالي على الشاشات الضيقة */}
+<div className="h-6 md:hidden" />
+
       </div>
 
       {/* Overrides */}
