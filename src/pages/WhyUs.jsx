@@ -47,10 +47,10 @@ const fadeLeft = {
 
 /* ===== Stats data (unchanged) ===== */
 const stats = [
-  ["26", "%", "Online Sales Boost", 2],
-  ["7", " Days", "Avg Build Time", 2],
-  ["24", "+", "Websites & Applications Built", 3],
-  ["100", "%", "Client Satisfaction", 3],
+  ["32", "+", "Projects delivered", 3],
+  ["17", "+", "AI models developed", 2],
+  ["22",  "+", "Technologies mastered", 3],
+  ["48", "+", "Satisfied clients", 2],
 ];
 
 /* ===== Stat card (unchanged) ===== */
@@ -400,3 +400,4 @@ export default function WhyUs() {
     </section>
   );
 }
+
