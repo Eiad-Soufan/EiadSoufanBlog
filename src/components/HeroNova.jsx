@@ -5,66 +5,72 @@ import NeuralBackground3D from "./NeuralBackground3D";
 import RightShowcase from "./RightShowcase";
 
 /**
- * HERO — Animated Aurora + word-by-word title reveal (crisp, no blur) + smooth subtitle
- * - الخلفيات والزخارف أسفل الهيدر دائمًا (z-index سالب).
- * - على الموبايل: الكروت تتوسط وتتقلص قليلًا لتظهر كاملة.
- * - على الديسكتوب (md+): تبقى يمين النص بنفس المظهر.
+ * HERO — رسبونسيف مضبوط:
+ * - موبايل/أجهزة لوحية صغيرة: النص أولاً ثم الكروت تحتَه في الوسط، بدون قصّ.
+ * - md+: عمودان (النص يسار، الكروت يمين) كما على اللابتوب.
  */
 
 export default function HeroNova({ title, subtitle }) {
   return (
     <section className="relative overflow-visible py-14 md:py-20 lg:py-24 pb-16 md:pb-20">
-      {/* خلفية متحركة — أسفل الهيدر */}
+      {/* خلفية متحركة — دائماً تحت المحتوى والهيدر */}
       <div className="absolute inset-0 -z-[1] pointer-events-none" aria-hidden>
         <NeuralBackground3D offsetX="0vw" />
       </div>
 
-      {/* غطاء شفاف (بدون blur) */}
+      {/* غطاء شفاف بدون blur */}
       <div className="hero-overlay-gradient pointer-events-none" />
 
-      {/* شرائط المصطلحات أسفل الهيرو */}
+      {/* شرائط المهارات أسفل الهيرو */}
       <StrongTermCascade />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
-        <div className="grid md:grid-cols-12 gap-6 md:gap-8 items-center">
+        {/* موبايل: عمودي؛ من md+: شبكة 12 عمود */}
+        <div className="flex flex-col gap-8 md:grid md:grid-cols-12 md:gap-8 md:items-center">
           {/* النص */}
-          <div className="relative md:col-span-7 overflow-visible">
+          <div className="md:col-span-7">
+            {/* هالة خفيفة خلف العنوان */}
             <div
               aria-hidden
               className="pointer-events-none absolute -inset-6 md:-inset-8 -z-[1]
-             [mask-image:radial-gradient(closest-side,white,transparent)]
-             bg-black/20"
+                         [mask-image:radial-gradient(closest-side,white,transparent)]
+                         bg-black/20"
             />
             <TitleReveal text={title} />
+
             <div className="mt-4 max-w-2xl">
-              <div className="mt-2 md:mt-3 max-w-2xl">
+              <div className="mt-2 md:mt-3">
                 <SubtitleReveal text={subtitle} />
               </div>
+
+              {/* خط تأكيد تحت السطر الثاني */}
               <motion.div
                 initial={{ scaleX: 0, opacity: 0.6 }}
                 whileInView={{ scaleX: 0.4, opacity: 0.9 }}
                 viewport={{ once: false, amount: 0.8 }}
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
                 className="origin-left h-1 rounded-full mt-3
-             bg-gradient-to-r from-indigo-500/80 via-violet-500/80 to-sky-500/80"
+                           bg-gradient-to-r from-indigo-500/80 via-violet-500/80 to-sky-500/80"
               />
             </div>
           </div>
 
-          {/* الكروت — تتوسط وتتقلص على الموبايل، وثابتة على md+ */}
+          {/* الكروت */}
           <div
             className="
-              md:col-span-5 relative
-              h-[320px] sm:h-[400px] md:h-[460px] lg:h-[520px]
-              overflow-visible
+              md:col-span-5
+              relative
               flex md:block items-center justify-center
+              h-[320px] sm:h-[380px] md:h-[460px] lg:h-[520px]
+              overflow-visible
+              md:mt-0
             "
           >
+            {/* حاوية مرنة: تتوسط على الشاشات الصغيرة وتكبر تدريجيًا */}
             <div
               className="
-                relative
-                w-full max-w-[460px] sm:max-w-[520px]
-                h-full
+                relative w-full h-full
+                max-w-[460px] sm:max-w-[520px] md:max-w-none
                 origin-center
                 scale-[0.9] sm:scale-[0.95] md:scale-100 lg:scale-105
               "
@@ -72,16 +78,10 @@ export default function HeroNova({ title, subtitle }) {
               <RightShowcase />
             </div>
           </div>
-
-          {/* عمود توازن تخطيطي (يبقى كما هو) */}
-          <div className="md:col-span-5" />
         </div>
-        {/* Spacer صغير لضمان عدم التصادم مع بداية القسم التالي على الشاشات الضيقة */}
-<div className="h-6 md:hidden" />
-
       </div>
 
-      {/* Overrides */}
+      {/* Overrides: منع أي تمويه + إبقاء الغطاء تحت المحتوى */}
       <style>{`
         .hero-overlay-gradient{
           filter: none !important;
@@ -111,13 +111,16 @@ export default function HeroNova({ title, subtitle }) {
 /* ===== Title word-by-word reveal — CRISP (no blur) ===== */
 function TitleReveal({ text }) {
   const words = (text || "").split(" ").filter(Boolean);
+
   const STAGGER = 0.035;
   const DELAY = 0.05;
   const SPRING = { type: "spring", stiffness: 180, damping: 20, mass: 0.7 };
+
   const container = {
     hidden: {},
     visible: { transition: { staggerChildren: STAGGER, delayChildren: DELAY } },
   };
+
   const word = {
     hidden: { opacity: 0, y: 16 },
     visible: { opacity: 1, y: 0, transition: { ...SPRING } },
@@ -131,7 +134,6 @@ function TitleReveal({ text }) {
                    text-4xl sm:text-5xl md:text-6xl
                    leading-[1.20] sm:leading-[1.16] md:leading-[1.12]
                    pb-2 md:pb-3
-                   after:block after:content-[''] after:h-[6px]
                    drop-shadow-[0_2px_6px_rgba(0,0,0,.3)]"
         variants={container}
         initial="hidden"
@@ -153,6 +155,7 @@ function TitleReveal({ text }) {
         ))}
       </motion.h1>
 
+      {/* لمعان أفقي تحت العنوان */}
       <span
         aria-hidden
         className="title-shine pointer-events-none absolute inset-x-0 top-[12%] bottom-[12%] z-0"
@@ -164,6 +167,7 @@ function TitleReveal({ text }) {
 /* ===== Subtitle ===== */
 function SubtitleReveal({ text = "" }) {
   const words = useMemo(() => text.split(/\s+/).filter(Boolean), [text]);
+
   const container = {
     hidden: { opacity: 0 },
     visible: {
@@ -171,6 +175,7 @@ function SubtitleReveal({ text = "" }) {
       transition: { staggerChildren: 0.02, delayChildren: 0.05 },
     },
   };
+
   const child = {
     hidden: { opacity: 0, y: 10 },
     visible: {
@@ -200,13 +205,14 @@ function SubtitleReveal({ text = "" }) {
   );
 }
 
-/* ===== StrongTermCascade ===== */
+/* ===== StrongTermCascade — تبقى أسفل الهيرو دون قصّ ===== */
 function StrongTermCascade() {
   const TERMS = [
-    "Python","Django","DRF","React","TypeScript","Tailwind",
-    "Docker","PostgreSQL","CI/CD","AWS","GraphQL",
-    "Next.js","FastAPI","Pandas","NumPy"
+    "Python", "Django", "DRF", "React", "TypeScript", "Tailwind",
+    "Docker", "PostgreSQL", "CI/CD", "AWS", "GraphQL",
+    "Next.js", "FastAPI", "Pandas", "NumPy"
   ];
+
   return (
     <div className="absolute inset-x-0 bottom-0 z-[5] pointer-events-none select-none h-11 md:h-12">
       <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-[#0b1222]/0 via-[#0b1222]/40 to-[#0b1222]/60" />
@@ -219,7 +225,9 @@ function StrongTermCascade() {
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true, amount: 0.8 }}
               transition={{ type: "spring", stiffness: 420, damping: 26, delay: i * 0.055 }}
-              className="font-mono text-[11px] md:text-xs rounded-full px-3 py-1 text-slate-100/95 bg-white/10 backdrop-blur ring-1 ring-white/15 shadow-[0_4px_12px_rgba(0,0,0,.25)]"
+              className="font-mono text-[11px] md:text-xs rounded-full px-3 py-1
+                         text-slate-100/95 bg-white/10 backdrop-blur
+                         ring-1 ring-white/15 shadow-[0_4px_12px_rgba(0,0,0,.25)]"
               style={{ whiteSpace: "nowrap" }}
             >
               {t}
