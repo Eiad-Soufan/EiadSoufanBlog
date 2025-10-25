@@ -55,7 +55,7 @@ const stats = [
 
 /* ===== Stat card (unchanged) ===== */
 function Stat({ value, suffix, label, duration, i }) {
-  const { ref, inView } = useInView({ triggerOnce: false, threshold: 0.45 });
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.45 });
 
   return (
     <motion.div
@@ -235,11 +235,15 @@ export default function WhyUs() {
           viewport={{ once: true, amount: 0.3 }}
         >
           <motion.h2
-            className="text-3xl md:text-4xl font-extrabold mb-6a bg-clip-text text-transparent bg-gradient-to-b from-indigo-200 via-violet-200 to-sky-200 drop-shadow"
+            className="text-3xl md:text-4xl font-extrabold
+                       leading-tight md:leading-[1.15] pb-[2px] mb-6 overflow-visible
+                       bg-clip-text text-transparent bg-gradient-to-b
+                       from-indigo-200 via-violet-200 to-sky-200 drop-shadow"
             variants={fadeUp}
           >
             Why Eiad Abdulhadi Soufan?
           </motion.h2>
+
           <motion.p
             className="max-w-3xl mx-auto text-indigo-100/90 text-lg leading-relaxed"
             variants={fadeUp}
@@ -402,6 +406,7 @@ export default function WhyUs() {
     </section>
   );
 }
+
 
 
 
