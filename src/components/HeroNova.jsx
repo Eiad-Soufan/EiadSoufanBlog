@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useMemo } from "react";
 import NeuralBackground3D from "./NeuralBackground3D";
 import RightShowcase from "./RightShowcase";
+import { useMemo, useRef, useState, useEffect } from "react";
 
 /**
  * HERO — رسبونسيف مضبوط:
@@ -38,21 +39,9 @@ export default function HeroNova({ title, subtitle }) {
             />
             <TitleReveal text={title} />
 
-            <div className="mt-4 max-w-2xl">
-              <div className="mt-2 md:mt-3">
-                <SubtitleReveal text={subtitle} />
-              </div>
+{/* سطر ثانٍ — مسافة آمنة + خط مطابق للعرض */}
+<SubtitleBlock subtitle={subtitle} />
 
-              {/* خط تأكيد تحت السطر الثاني */}
-              <motion.div
-                initial={{ scaleX: 0, opacity: 0.6 }}
-                whileInView={{ scaleX: 0.4, opacity: 0.9 }}
-                viewport={{ once: false, amount: 0.8 }}
-                transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
-                className="origin-left h-1 rounded-full mt-3
-                           bg-gradient-to-r from-indigo-500/80 via-violet-500/80 to-sky-500/80"
-              />
-            </div>
           </div>
 
           {/* الكروت */}
@@ -201,6 +190,55 @@ function SubtitleReveal({ text = "" }) {
           </motion.span>
         ))}
       </motion.p>
+    </div>
+  );
+}
+
+function SubtitleBlock({ subtitle = "" }) {
+  const wrapRef = useRef(null);
+  const [w, setW] = useState(0);
+
+  // قياس عرض النص الفعلي وتحديثه عند تغيير الحجم
+  useEffect(() => {
+    const measure = () => {
+      if (wrapRef.current) setW(Math.ceil(wrapRef.current.offsetWidth));
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    // في حال تغير الخطوط/الأوزان بعد التحميل
+    const t = setTimeout(measure, 50);
+    return () => {
+      window.removeEventListener("resize", measure);
+      clearTimeout(t);
+    };
+  }, []);
+
+  return (
+    <div className="mt-4 max-w-2xl">
+      <div className="mt-2 md:mt-3">
+        {/* مسافة آمنة تمنع أي قصّ: leading + padding + overflow-visible */}
+        <div
+          ref={wrapRef}
+          className="inline-block align-top overflow-visible
+                     leading-relaxed md:leading-[1.6] pb-[2px]"
+        >
+          <SubtitleReveal text={subtitle} />
+        </div>
+      </div>
+
+      {/* خط تأكيد بعرض النص تمامًا */}
+      <motion.div
+        initial={{ opacity: 0.6, scaleX: 0 }}
+        whileInView={{ opacity: 0.9, scaleX: 1 }}
+        viewport={{ once: true, amount: 0.8 }}
+        transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
+        className="origin-left h-1 rounded-full mt-3
+                   bg-gradient-to-r from-indigo-500/80 via-violet-500/80 to-sky-500/80"
+        style={{
+          width: w || "60%",
+          maxWidth: "100%",
+        }}
+      />
     </div>
   );
 }
