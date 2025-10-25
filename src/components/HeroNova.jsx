@@ -86,9 +86,9 @@ export default function HeroNova({ title, subtitle }) {
           backdrop-filter: none !important;
           -webkit-backdrop-filter: none !important;
           background:
-            radial-gradient(60% 60% at 50% 50%, rgba(124,58,237,0.16), transparent 68%),
-            radial-gradient(46% 46% at 55% 50%, rgba(56,189,248,0.12), transparent 70%);
-          opacity: .35;
+            radial-gradient(60% 60% at 50% 50%, rgba(124,58,237,0.16), transparent 78%),
+            radial-gradient(46% 46% at 55% 50%, rgba(56,189,248,0.12), transparent 80%);
+          opacity: .65;
           z-index: 0;
         }
       `}</style>
