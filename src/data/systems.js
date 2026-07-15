@@ -1,6 +1,12 @@
 import lawnexMark from "../assets/lawnex-mark.webp";
 import berkatMadinahMark from "../assets/berkat-mark.webp";
 import yallahBaggageMark from "../assets/yallah-mark.webp";
+import arabicaPreview from "../assets/previews/arabica-preview.webp";
+import berkatDatesPreview from "../assets/previews/berkat-dates-preview.webp";
+import berkatPortalPreview from "../assets/previews/berkat-portal-preview.webp";
+import lawnexPreview from "../assets/previews/lawnex-preview.webp";
+import mohammadAboZeedPreview from "../assets/previews/mohammad-abo-zeed-preview.webp";
+import yallahBaggagePreview from "../assets/previews/yallah-baggage-preview.webp";
 
 export const systems = [
   {
@@ -15,7 +21,7 @@ export const systems = [
     role:
       "Built the Django backend and React platform, and contributed approximately half of the Flutter application.",
     metrics: [
-      { value: "4,000+", label: "Active users" },
+      { value: "5,000+", label: "Active users" },
       { value: "200,000+", label: "Legal units" },
     ],
     stack: ["Django", "React", "Flutter", "AI / RAG"],
@@ -31,6 +37,13 @@ export const systems = [
       },
     ],
     logo: lawnexMark,
+    preview: {
+      src: lawnexPreview,
+      alt: "LAWNEX Arabic legal intelligence platform interface",
+      width: 1280,
+      height: 685,
+      position: "75% top",
+    },
     accent: { primary: "#f7b955", glow: "247 185 85" },
   },
   {
@@ -56,6 +69,13 @@ export const systems = [
       },
     ],
     logo: berkatMadinahMark,
+    preview: {
+      src: berkatPortalPreview,
+      alt: "Berkat Madinah internal operations portal interface",
+      width: 1280,
+      height: 702,
+      position: "center top",
+    },
     accent: { primary: "#54d68b", glow: "84 214 139" },
   },
   {
@@ -82,6 +102,13 @@ export const systems = [
       },
     ],
     logo: yallahBaggageMark,
+    preview: {
+      src: yallahBaggagePreview,
+      alt: "Yallah Baggage logistics platform interface",
+      width: 1280,
+      height: 698,
+      position: "left top",
+    },
     accent: { primary: "#55b8ff", glow: "85 184 255" },
   },
   {
@@ -101,6 +128,13 @@ export const systems = [
       { label: "Visit website", href: "https://mohammadabozeed.com/" },
     ],
     logo: null,
+    preview: {
+      src: mohammadAboZeedPreview,
+      alt: "Mohammad Abo Zeed Arabic content platform interface",
+      width: 1280,
+      height: 702,
+      position: "62% top",
+    },
     accent: { primary: "#b892ff", glow: "184 146 255" },
   },
   {
@@ -123,6 +157,13 @@ export const systems = [
       { label: "Visit website", href: "https://arabicarestaurant.my/" },
     ],
     logo: null,
+    preview: {
+      src: arabicaPreview,
+      alt: "Arabica Restaurant website interface",
+      width: 1280,
+      height: 698,
+      position: "46% top",
+    },
     accent: { primary: "#f08b70", glow: "240 139 112" },
   },
   {
@@ -142,6 +183,13 @@ export const systems = [
       { label: "Visit landing page", href: "https://dates.madinah.com.my/" },
     ],
     logo: null,
+    preview: {
+      src: berkatDatesPreview,
+      alt: "Berkat Madinah dates campaign storefront interface",
+      width: 1280,
+      height: 698,
+      position: "52% top",
+    },
     accent: { primary: "#e5b96f", glow: "229 185 111" },
   },
 ];

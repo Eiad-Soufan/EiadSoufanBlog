@@ -7,24 +7,7 @@ import {
 import { useEffect, useMemo, useRef } from "react";
 import { Link } from "react-router-dom";
 import systems from "../../data/systems";
-import {
-  AboZeedVisual,
-  ArabicaVisual,
-  BerkatVisual,
-  DatesVisual,
-  LawnexVisual,
-  YallahVisual,
-} from "./SystemVisuals";
 import "../../styles/systems.css";
-
-const visualBySystem = {
-  lawnex: LawnexVisual,
-  "berkat-madinah": BerkatVisual,
-  "yallah-baggage": YallahVisual,
-  "arabica-restaurant": ArabicaVisual,
-  "mohammad-abo-zeed": AboZeedVisual,
-  "dates-madinah": DatesVisual,
-};
 
 const reveal = {
   hidden: { opacity: 0, y: 28 },
@@ -175,18 +158,36 @@ function Metrics({ metrics }) {
   );
 }
 
+function ProjectPreview({ project }) {
+  return (
+    <div className="systems-project-preview">
+      <span className="systems-preview-aura" aria-hidden="true" />
+      <div className="systems-preview-frame">
+        <img
+          className="systems-preview-image"
+          src={project.preview.src}
+          alt={project.preview.alt}
+          width={project.preview.width}
+          height={project.preview.height}
+          style={{ objectPosition: project.preview.position }}
+          loading="lazy"
+          decoding="async"
+          fetchPriority="low"
+          draggable={false}
+        />
+        <span className="systems-preview-finish" aria-hidden="true" />
+      </div>
+    </div>
+  );
+}
+
 function SystemCard({ project }) {
-  const Visual = visualBySystem[project.id];
   const reduceMotion = useReducedMotion();
-  const cardRef = useRef(null);
-  const visualInView = useInView(cardRef, { amount: 0.08, margin: "120px 0px" });
 
   return (
     <Motion.article
-      ref={cardRef}
       className={`systems-card systems-card--uniform systems-card--${project.id}`}
       style={{ "--system-accent": project.accent.glow }}
-      data-visual-active={visualInView ? "true" : "false"}
       initial={reduceMotion ? false : "hidden"}
       whileInView="visible"
       viewport={{ once: true, amount: 0.18 }}
@@ -201,7 +202,7 @@ function SystemCard({ project }) {
       </div>
 
       <div className="systems-card-media">
-        <Visual logo={project.logo} />
+        <ProjectPreview project={project} />
       </div>
 
       <div className="systems-card-copy">
