@@ -112,8 +112,8 @@ function CareerConstellation({ reduceMotion }) {
 
       <div className="career-core">
         <BrandMark className="h-14 w-14 sm:h-16 sm:w-16" />
-        <span>Systems engineer</span>
-        <strong className="display-font">Eiad Soufan</strong>
+        <span className="career-core-role">Systems engineer</span>
+        <strong className="career-core-name display-font">Eiad Soufan</strong>
       </div>
 
       <span className="career-node career-node--backend">

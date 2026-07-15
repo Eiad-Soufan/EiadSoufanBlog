@@ -139,7 +139,7 @@
   max-width: 12.5ch;
   margin: 1.5rem 0 0;
   color: rgb(var(--color-text));
-  font-size: clamp(2.75rem, 5.6vw, 5.15rem);
+  font-size: clamp(2.75rem, 5.2vw, 4.8rem);
   font-weight: 650;
   letter-spacing: -0.062em;
   line-height: 0.99;
@@ -376,15 +376,15 @@
   text-align: center;
 }
 
-.career-core > span,
-.career-core > strong {
+.career-core-role,
+.career-core-name {
   position: absolute;
   left: 50%;
   width: max-content;
   transform: translateX(-50%);
 }
 
-.career-core > span {
+.career-core-role {
   top: calc(100% + 1.15rem);
   color: rgb(var(--color-muted));
   font-size: 0.54rem;
@@ -393,7 +393,7 @@
   text-transform: uppercase;
 }
 
-.career-core > strong {
+.career-core-name {
   top: calc(100% + 2.05rem);
   color: rgb(var(--color-text));
   font-size: clamp(0.82rem, 1.4vw, 1.05rem);
@@ -549,7 +549,7 @@
 
 .about-capabilities {
   position: relative;
-  padding-block: clamp(6rem, 11vw, 10.5rem);
+  padding-block: clamp(5.5rem, 9vw, 8rem);
 }
 
 .about-capabilities::before {
@@ -733,7 +733,7 @@
   background:
     radial-gradient(40rem 30rem at 50% 0%, rgb(var(--color-brand) / 0.075), transparent 72%),
     linear-gradient(180deg, rgb(var(--color-canvas-soft) / 0.7), rgb(var(--color-canvas)));
-  padding-block: clamp(6.5rem, 12vw, 11rem);
+  padding-block: clamp(5.75rem, 9.5vw, 8.5rem);
 }
 
 .about-career::before {
@@ -793,6 +793,21 @@
   width: 1.5rem;
   height: 2.1rem;
   place-items: center;
+}
+
+.career-entry-meta {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.career-entry-marker {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.career-entry-card {
+  grid-column: 3;
+  grid-row: 1;
 }
 
 .career-entry-marker span {
@@ -1614,11 +1629,11 @@
     width: 40%;
   }
 
-  .career-core > span {
+  .career-core-role {
     top: calc(100% + 0.8rem);
   }
 
-  .career-core > strong {
+  .career-core-name {
     top: calc(100% + 1.65rem);
   }
 
