@@ -12,7 +12,7 @@ export const profile = {
 
 export const impactMetrics = [
   { value: "4,000+", label: "Active LAWNEX users" },
-  { value: "200,000+", label: "Indexed legal units optimized" },
-  { value: "100+", label: "Employees supported across 5 branches" },
+  { value: "200,000+", label: "Legal units handled at scale" },
+  { value: "100+", label: "Employees across 5 branches" },
   { value: "3", label: "Scientific publications" },
 ];
