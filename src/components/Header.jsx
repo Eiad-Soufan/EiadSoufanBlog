@@ -1,6 +1,7 @@
 import { AnimatePresence, motion as Motion } from "framer-motion";
 import { useEffect, useId, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import BrandMark from "./BrandMark";
 
 const NAV_ITEMS = [
   { to: "/#selected-work", label: "Work" },
@@ -41,15 +42,6 @@ function MenuIcon({ open }) {
           open ? "-translate-y-[5px] -rotate-45" : ""
         }`}
       />
-    </span>
-  );
-}
-
-function BrandMark() {
-  return (
-    <span className="relative grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-[13px] border border-line/25 bg-surface-raised text-[0.77rem] font-extrabold tracking-[-0.04em] text-ink shadow-[inset_0_1px_0_rgb(255_255_255_/_0.08)]">
-      <span className="absolute inset-x-1 top-0 h-px bg-gradient-to-r from-transparent via-cyan/80 to-transparent" />
-      ES
     </span>
   );
 }

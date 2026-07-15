@@ -96,7 +96,7 @@ export default function HeroNova() {
             <Motion.h1
               variants={entrance}
               transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
-              className="display-font mt-4 max-w-[13ch] text-[clamp(2.65rem,6.7vw,6.15rem)] font-bold leading-[0.98] tracking-[-0.065em] text-ink"
+              className="display-font mt-4 max-w-[19ch] text-[clamp(2rem,3.25vw,3.15rem)] font-bold leading-[1.06] tracking-[-0.045em] text-ink"
             >
               I engineer <span className="text-gradient">intelligent systems</span> for
               real-world complexity.
@@ -105,7 +105,7 @@ export default function HeroNova() {
             <Motion.p
               variants={entrance}
               transition={{ duration: 0.58, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-7 max-w-[66ch] text-[0.98rem] leading-[1.8] text-muted sm:text-[1.06rem] lg:max-w-[61ch]"
+              className="mt-6 max-w-[66ch] text-[0.98rem] leading-[1.8] text-muted sm:text-[1.06rem] lg:max-w-[61ch]"
             >
               {profile.summary}
             </Motion.p>

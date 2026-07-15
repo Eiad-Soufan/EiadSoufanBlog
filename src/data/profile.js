@@ -11,8 +11,12 @@ export const profile = {
 };
 
 export const impactMetrics = [
-  { value: "4,000+", label: "Active LAWNEX users" },
-  { value: "200,000+", label: "Legal units handled at scale" },
-  { value: "100+", label: "Employees across 5 branches" },
-  { value: "3", label: "Scientific publications" },
+  {
+    value: 5000,
+    suffix: "+",
+    label: "Active users across my applications",
+  },
+  { value: 200000, suffix: "+", label: "Legal units handled at scale" },
+  { value: 100, suffix: "+", label: "Employees across 5 branches" },
+  { value: 3, suffix: "", label: "Scientific publications" },
 ];
