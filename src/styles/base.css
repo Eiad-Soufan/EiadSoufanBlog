@@ -171,6 +171,10 @@ canvas {
   font-family: var(--font-display);
 }
 
+.hero-title-scale {
+  font-size: var(--hero-title-size);
+}
+
 .text-gradient {
   color: transparent;
   background: linear-gradient(

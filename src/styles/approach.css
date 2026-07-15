@@ -126,7 +126,7 @@
   max-width: 11ch;
   margin: 1.45rem 0 0;
   color: rgb(var(--color-text));
-  font-size: clamp(2.75rem, 5.2vw, 4.8rem);
+  font-size: var(--hero-title-size);
   font-weight: 650;
   letter-spacing: -0.062em;
   line-height: 0.99;
@@ -1404,7 +1404,7 @@
   }
 
   .approach-hero-copy h1 {
-    font-size: clamp(2.5rem, 13vw, 3.9rem);
+    font-size: var(--hero-title-size);
     line-height: 1.01;
   }
 
@@ -1523,7 +1523,7 @@
   }
 
   .approach-hero-copy h1 {
-    font-size: 2.4rem;
+    font-size: var(--hero-title-size);
   }
 
   .blueprint-node {

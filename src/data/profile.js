@@ -5,6 +5,10 @@ export const profile = {
   headline: "I engineer intelligent systems for real-world complexity.",
   summary:
     "Senior Python/Django engineer and technical lead building enterprise platforms, AI-powered legal technology, and SaaS products across web and mobile — from architecture and APIs to deployment and continuous improvement.",
+  email: "eiad.soufan.2@gmail.com",
+  phone: "+60 18-303 5842",
+  phoneHref: "+60183035842",
+  whatsapp: "https://wa.me/60183035842",
   github: "https://github.com/Eiad-Soufan",
   linkedin: "https://linkedin.com/in/eiad-soufan-39924a178",
 };

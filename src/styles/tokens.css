@@ -20,6 +20,7 @@
 
   --site-width: 78rem;
   --site-gutter: clamp(1.125rem, 4vw, 3rem);
+  --hero-title-size: clamp(2rem, 3.25vw, 3.15rem);
   --radius-card: 1.75rem;
   --radius-control: 0.9rem;
   --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);

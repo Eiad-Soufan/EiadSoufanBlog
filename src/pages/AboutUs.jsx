@@ -348,7 +348,7 @@ export default function AboutUs() {
             </Motion.p>
 
             <Motion.h1
-              className="display-font"
+              className="hero-title-scale display-font"
               variants={reveal}
               transition={{ duration: 0.65, ease: premiumEase }}
             >

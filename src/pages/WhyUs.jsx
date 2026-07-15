@@ -301,7 +301,7 @@ export default function WhyUs() {
               <span aria-hidden="true" /> Engineering approach
             </Motion.p>
 
-            <Motion.h1 className="display-font" variants={reveal} transition={{ duration: 0.68, ease: premiumEase }}>
+            <Motion.h1 className="hero-title-scale display-font" variants={reveal} transition={{ duration: 0.68, ease: premiumEase }}>
               From uncertain idea to <em>reliable system.</em>
             </Motion.h1>
 

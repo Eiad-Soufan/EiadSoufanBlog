@@ -80,7 +80,7 @@ export default function HeroNova() {
             <Motion.h1
               variants={entrance}
               transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
-              className="display-font mt-4 max-w-[19ch] text-[clamp(2rem,3.25vw,3.15rem)] font-bold leading-[1.06] tracking-[-0.045em] text-ink"
+              className="hero-title-scale display-font mt-4 max-w-[19ch] font-bold leading-[1.06] tracking-[-0.045em] text-ink"
             >
               I engineer <span className="text-gradient">intelligent systems</span> for
               real-world complexity.
