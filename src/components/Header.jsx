@@ -141,7 +141,7 @@ export default function Header() {
       <div
         className={`absolute inset-0 border-b transition-all duration-300 ease-premium ${
           scrolled
-            ? "border-line/15 bg-canvas/88 shadow-[0_18px_50px_-30px_rgb(0_0_0_/_0.9)] backdrop-blur-xl"
+            ? "border-line/15 bg-canvas/90 shadow-[0_18px_50px_-30px_rgb(0_0_0_/_0.9)] backdrop-blur-xl"
             : "border-transparent bg-canvas/55 backdrop-blur-md"
         }`}
       />
@@ -203,7 +203,7 @@ export default function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-x-0 top-full border-b border-line/15 bg-canvas/96 px-[var(--site-gutter)] pb-5 pt-3 shadow-[0_28px_70px_-30px_rgb(0_0_0_/_0.95)] backdrop-blur-xl md:hidden"
+            className="absolute inset-x-0 top-full border-b border-line/15 bg-canvas/95 px-[var(--site-gutter)] pb-5 pt-3 shadow-[0_28px_70px_-30px_rgb(0_0_0_/_0.95)] backdrop-blur-xl md:hidden"
           >
             <nav
               className="mx-auto flex max-w-[var(--site-width)] flex-col rounded-2xl border border-line/15 bg-surface/65 p-2"
