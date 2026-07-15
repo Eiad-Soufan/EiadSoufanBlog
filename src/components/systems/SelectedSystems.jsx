@@ -103,10 +103,10 @@ function Arrow() {
   );
 }
 
-function ProjectMark({ project, prominent = false }) {
+function ProjectMark({ project }) {
   if (project.logo) {
     return (
-      <span className={`systems-mark ${prominent ? "systems-mark--prominent" : ""}`}>
+      <span className="systems-mark">
         <img src={project.logo} alt="" loading="lazy" decoding="async" />
       </span>
     );
@@ -120,7 +120,7 @@ function ProjectMark({ project, prominent = false }) {
 
   return (
     <span
-      className={`systems-mark systems-mark--type ${prominent ? "systems-mark--prominent" : ""}`}
+      className="systems-mark systems-mark--type"
       aria-hidden="true"
     >
       {initials}
@@ -138,9 +138,9 @@ function Stack({ stack }) {
   );
 }
 
-function ProjectLinks({ links, compact = false }) {
+function ProjectLinks({ links }) {
   return (
-    <div className={`systems-links ${compact ? "systems-links--compact" : ""}`}>
+    <div className="systems-links">
       {links.map((link, index) => (
         <a
           key={link.href}
@@ -158,11 +158,11 @@ function ProjectLinks({ links, compact = false }) {
   );
 }
 
-function Metrics({ metrics, large = false }) {
+function Metrics({ metrics }) {
   if (!metrics.length) return null;
 
   return (
-    <dl className={`systems-metrics ${large ? "systems-metrics--large" : ""}`}>
+    <dl className="systems-metrics">
       {metrics.map((metric, index) => (
         <div key={metric.label}>
           <dt>{metric.label}</dt>
@@ -175,7 +175,7 @@ function Metrics({ metrics, large = false }) {
   );
 }
 
-function FlagshipSystem({ project }) {
+function SystemCard({ project }) {
   const Visual = visualBySystem[project.id];
   const reduceMotion = useReducedMotion();
   const cardRef = useRef(null);
@@ -184,64 +184,7 @@ function FlagshipSystem({ project }) {
   return (
     <Motion.article
       ref={cardRef}
-      className="systems-card systems-card--flagship"
-      style={{ "--system-accent": project.accent.glow }}
-      data-visual-active={visualInView ? "true" : "false"}
-      initial={reduceMotion ? false : "hidden"}
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.16 }}
-      variants={reveal}
-      transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
-    >
-      <span className="systems-card-glow" aria-hidden="true" />
-      <div className="systems-card-meta">
-        <span>{project.index}</span>
-        <span>Flagship system</span>
-        <span>Live product</span>
-      </div>
-
-      <div className="systems-flagship-layout">
-        <div className="systems-flagship-copy">
-          <div className="systems-brand-row">
-            <ProjectMark project={project} prominent />
-            <div>
-              <p className="systems-category">{project.category}</p>
-              <h3>{project.title}</h3>
-            </div>
-          </div>
-
-          <p className="systems-tagline">{project.tagline}</p>
-          <p className="systems-summary">{project.summary}</p>
-
-          <Metrics metrics={project.metrics} large />
-
-          <div className="systems-role">
-            <span>My contribution</span>
-            <p>{project.role}</p>
-          </div>
-
-          <Stack stack={project.stack} />
-          <ProjectLinks links={project.links} />
-        </div>
-
-        <div className="systems-flagship-visual">
-          <Visual logo={project.logo} />
-        </div>
-      </div>
-    </Motion.article>
-  );
-}
-
-function SystemCard({ project, compact = false }) {
-  const Visual = visualBySystem[project.id];
-  const reduceMotion = useReducedMotion();
-  const cardRef = useRef(null);
-  const visualInView = useInView(cardRef, { amount: 0.08, margin: "120px 0px" });
-
-  return (
-    <Motion.article
-      ref={cardRef}
-      className={`systems-card systems-card--${compact ? "compact" : "featured"} systems-card--${project.id}`}
+      className={`systems-card systems-card--uniform systems-card--${project.id}`}
       style={{ "--system-accent": project.accent.glow }}
       data-visual-active={visualInView ? "true" : "false"}
       initial={reduceMotion ? false : "hidden"}
@@ -254,6 +197,7 @@ function SystemCard({ project, compact = false }) {
       <div className="systems-card-meta">
         <span>{project.index}</span>
         <span>{project.category}</span>
+        <span>{project.tier === "flagship" ? "Flagship" : "Production system"}</span>
       </div>
 
       <div className="systems-card-media">
@@ -266,16 +210,16 @@ function SystemCard({ project, compact = false }) {
           <h3>{project.title}</h3>
         </div>
         <p className="systems-tagline">{project.tagline}</p>
-        {!compact && <p className="systems-summary">{project.summary}</p>}
+        <p className="systems-summary">{project.summary}</p>
         <Metrics metrics={project.metrics} />
 
-        <div className="systems-role systems-role--compact">
+        <div className="systems-role systems-role--uniform">
           <span>My contribution</span>
           <p>{project.role}</p>
         </div>
 
         <Stack stack={project.stack} />
-        <ProjectLinks links={project.links} compact />
+        <ProjectLinks links={project.links} />
       </div>
     </Motion.article>
   );
@@ -317,9 +261,6 @@ function SystemsThread() {
 }
 
 export default function SelectedSystems() {
-  const flagship = systems.find((project) => project.tier === "flagship");
-  const featured = systems.filter((project) => project.tier === "featured");
-  const compact = systems.filter((project) => project.tier === "compact");
   const reduceMotion = useReducedMotion();
 
   return (
@@ -361,20 +302,10 @@ export default function SelectedSystems() {
           </div>
         </Motion.header>
 
-        <div className="systems-showcase">
-          <FlagshipSystem project={flagship} />
-
-          <div className="systems-featured-grid">
-            {featured.map((project) => (
-              <SystemCard key={project.id} project={project} />
-            ))}
-          </div>
-
-          <div className="systems-compact-grid">
-            {compact.map((project) => (
-              <SystemCard key={project.id} project={project} compact />
-            ))}
-          </div>
+        <div className="systems-unified-grid">
+          {systems.map((project) => (
+            <SystemCard key={project.id} project={project} />
+          ))}
         </div>
 
         <Motion.div

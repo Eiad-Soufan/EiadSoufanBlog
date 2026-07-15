@@ -1493,6 +1493,92 @@
   }
 }
 
+/* Card-width fallbacks keep the three commerce visuals readable in the
+   unified two-column showcase, even on wide tablet viewports. */
+@container (max-width: 28rem) {
+  .systems-arabica-window,
+  .systems-abozeed-window {
+    inset: 4% 2% 2%;
+  }
+
+  .systems-arabica-display {
+    font-size: clamp(1.2rem, 4.4cqw, 2rem);
+  }
+
+  .systems-abozeed-feature-copy > b {
+    font-size: clamp(0.86rem, 3cqw, 1.25rem);
+  }
+
+  .systems-dates-title {
+    font-size: clamp(1rem, 3.8cqw, 1.65rem);
+  }
+}
+
+@container (max-width: 21rem) {
+  .systems-arabica-links i:nth-child(3),
+  .systems-dates-navlinks i:nth-child(2),
+  .systems-arabica-photo-caption,
+  .systems-arabica-footerline > span:first-child {
+    display: none;
+  }
+
+  .systems-arabica-footerline {
+    justify-content: flex-end;
+    gap: 0.6rem;
+  }
+
+  .systems-abozeed-page {
+    grid-template-columns: 2.65rem minmax(0, 1fr);
+  }
+
+  .systems-abozeed-side-link {
+    justify-content: center;
+    font-size: 0;
+  }
+
+  .systems-abozeed-side-link i {
+    width: 0.55rem;
+  }
+
+  .systems-abozeed-search {
+    font-size: 0;
+  }
+
+  .systems-abozeed-search i {
+    font-size: 0.65rem;
+  }
+
+  .systems-abozeed-feature {
+    grid-template-columns: minmax(0, 1.35fr) minmax(2.75rem, 0.65fr);
+  }
+
+  .systems-abozeed-lesson {
+    padding: 0.3rem;
+  }
+
+  .systems-abozeed-lesson > b {
+    font-size: 0.32rem;
+  }
+
+  .systems-dates-campaign {
+    inset: 2% 0.5% 0.5%;
+  }
+
+  .systems-dates-landing {
+    right: 24%;
+  }
+
+  .systems-dates-analytics {
+    top: 8%;
+    width: 39%;
+    height: 84%;
+  }
+
+  .systems-dates-channels span:nth-child(3) {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .systems-arabica-window,
   .systems-arabica-plate,
