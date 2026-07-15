@@ -2,6 +2,7 @@ import { motion as Motion, useReducedMotion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { profile } from "../data/profile";
 import ImpactMetrics from "./ImpactMetrics";
+import NeuralCosmos from "./NeuralCosmos";
 import SignatureField from "./SignatureField";
 
 const entrance = {
@@ -45,24 +46,11 @@ export default function HeroNova() {
 
   return (
     <section className="relative isolate overflow-hidden border-b border-line/10">
-      <div className="pointer-events-none absolute inset-0 -z-20 bg-[linear-gradient(180deg,rgb(var(--color-canvas))_0%,rgb(var(--color-canvas-soft))_68%,rgb(11_16_28)_100%)]" />
-      <div className="pointer-events-none absolute left-[-18rem] top-[-18rem] -z-10 h-[42rem] w-[42rem] rounded-full bg-brand/[0.09] blur-3xl" />
-      <div className="pointer-events-none absolute right-[-16rem] top-[-10rem] -z-10 h-[38rem] w-[38rem] rounded-full bg-cyan/[0.055] blur-3xl" />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.13]"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgb(143 166 205 / .07) 1px, transparent 1px), linear-gradient(90deg, rgb(143 166 205 / .07) 1px, transparent 1px)",
-          backgroundSize: "72px 72px",
-          maskImage:
-            "linear-gradient(to bottom, black 0%, transparent 74%)",
-          WebkitMaskImage:
-            "linear-gradient(to bottom, black 0%, transparent 74%)",
-        }}
-      />
+      <div className="pointer-events-none absolute inset-0 -z-30 bg-[linear-gradient(180deg,rgb(var(--color-canvas))_0%,rgb(var(--color-canvas-soft))_68%,rgb(11_16_28)_100%)]" />
+      <NeuralCosmos />
+      <div className="hero-readability-veil pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
 
-      <div className="site-container pb-14 pt-14 sm:pb-16 sm:pt-20 lg:pb-20 lg:pt-24">
+      <div className="site-container relative z-10 pb-14 pt-14 sm:pb-16 sm:pt-20 lg:pb-20 lg:pt-24">
         <div className="grid items-center gap-14 lg:grid-cols-12 lg:gap-12 xl:gap-16">
           <Motion.div
             initial={initial}
@@ -73,15 +61,11 @@ export default function HeroNova() {
             <Motion.div
               variants={entrance}
               transition={{ duration: 0.52, ease: [0.22, 1, 0.36, 1] }}
-              className="inline-flex flex-wrap items-center gap-x-3 gap-y-2 rounded-full border border-line/15 bg-surface/45 px-3.5 py-2"
+              className="inline-flex items-center rounded-full border border-line/15 bg-surface/55 px-3.5 py-2 backdrop-blur-md"
             >
               <span className="inline-flex items-center gap-2 text-[0.66rem] font-bold uppercase tracking-[0.15em] text-ink/90 sm:text-[0.7rem]">
                 <span className="status-pulse h-1.5 w-1.5 rounded-full bg-success" />
                 {profile.location}
-              </span>
-              <span className="h-3 w-px bg-line/20" aria-hidden="true" />
-              <span className="text-[0.66rem] font-bold uppercase tracking-[0.15em] text-muted sm:text-[0.7rem]">
-                {profile.availability}
               </span>
             </Motion.div>
 

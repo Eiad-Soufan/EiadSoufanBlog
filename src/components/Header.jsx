@@ -129,16 +129,13 @@ export default function Header() {
   }, [menuOpen]);
 
   return (
-    <header className="sticky top-0 z-[200] h-16 md:h-[72px]">
+    <header className="sticky top-0 z-[200] isolate h-16 md:h-[72px]">
       <div
-        className={`absolute inset-0 border-b transition-all duration-300 ease-premium ${
-          scrolled
-            ? "border-line/15 bg-canvas/90 shadow-[0_18px_50px_-30px_rgb(0_0_0_/_0.9)] backdrop-blur-xl"
-            : "border-transparent bg-canvas/55 backdrop-blur-md"
-        }`}
+        aria-hidden="true"
+        className={`header-glass ${scrolled ? "header-glass--scrolled" : ""}`}
       />
 
-      <div className="site-container relative flex h-full items-center justify-between">
+      <div className="site-container relative z-10 flex h-full items-center justify-between">
         <Link
           to="/"
           className="group inline-flex min-h-11 items-center gap-3 rounded-xl pr-2"
@@ -195,7 +192,7 @@ export default function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-x-0 top-full border-b border-line/15 bg-canvas/95 px-[var(--site-gutter)] pb-5 pt-3 shadow-[0_28px_70px_-30px_rgb(0_0_0_/_0.95)] backdrop-blur-xl md:hidden"
+            className="absolute inset-x-0 top-full z-20 border-b border-line/[0.24] bg-canvas/[0.86] px-[var(--site-gutter)] pb-5 pt-3 shadow-[0_28px_70px_-30px_rgb(0_0_0_/_0.95)] backdrop-blur-[24px] backdrop-saturate-[1.4] md:hidden"
           >
             <nav
               className="mx-auto flex max-w-[var(--site-width)] flex-col rounded-2xl border border-line/15 bg-surface/65 p-2"

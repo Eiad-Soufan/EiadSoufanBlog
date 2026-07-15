@@ -2,7 +2,6 @@ export const profile = {
   name: "Eiad Soufan",
   role: "Lead Software Engineer",
   location: "Kuala Lumpur, Malaysia",
-  availability: "Open to relocation",
   headline: "I engineer intelligent systems for real-world complexity.",
   summary:
     "Senior Python/Django engineer and technical lead building enterprise platforms, AI-powered legal technology, and SaaS products across web and mobile — from architecture and APIs to deployment and continuous improvement.",
