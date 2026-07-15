@@ -1,413 +1,457 @@
-// src/pages/WhyUs.jsx
-import { motion } from "framer-motion";
-import { useEffect } from "react";
-import CountUp from "react-countup";
-import { useInView } from "react-intersection-observer";
-import { useNavigate } from "react-router-dom";
+import {
+  motion as Motion,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+} from "framer-motion";
+import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+import BrandMark from "../components/BrandMark";
+import {
+  approachPrinciples,
+  approachStages,
+  workingRhythm,
+} from "../data/approach";
+import "../styles/approach.css";
 
-/* ===== Animations (unchanged) ===== */
-const easing = [0.22, 1, 0.36, 1];
+const premiumEase = [0.22, 1, 0.36, 1];
 
-const sectionParent = {
-  hidden: { opacity: 0, y: 20, filter: "blur(2px)" },
-  show: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: {
-      ease: easing,
-      duration: 0.55,
-      staggerChildren: 0.06,
-      delayChildren: 0.04,
-    },
-  },
+const reveal = {
+  hidden: { opacity: 0, y: 24, filter: "blur(7px)" },
+  visible: { opacity: 1, y: 0, filter: "blur(0px)" },
 };
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 16, scale: 0.98, filter: "blur(4px)" },
-  show: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    filter: "blur(0px)",
-    transition: { type: "spring", stiffness: 140, damping: 18, mass: 0.7 },
-  },
-};
+function ArrowIcon({ external = false }) {
+  return (
+    <svg viewBox="0 0 20 20" aria-hidden="true">
+      {external ? <path d="M7 5h8v8M15 5 6 14" /> : <path d="M4 10h11m-4.5-4.5L15 10l-4.5 4.5" />}
+    </svg>
+  );
+}
 
-const fadeLeft = {
-  hidden: { opacity: 0, x: -16, scale: 0.985, filter: "blur(3px)" },
-  show: {
-    opacity: 1,
-    x: 0,
-    scale: 1,
-    filter: "blur(0px)",
-    transition: { type: "spring", stiffness: 140, damping: 18, mass: 0.7 },
-  },
-};
-
-/* ===== Stats data (unchanged) ===== */
-const stats = [
-  ["32", "+", "Projects delivered", 2],
-  ["17", "+", "AI models developed", 2],
-  ["22",  "+", "Technologies mastered", 2],
-  ["48", "+", "Satisfied clients", 2],
-];
-
-/* ===== Stat card (unchanged) ===== */
-function Stat({ value, suffix, label, duration, i }) {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.45 });
+function StageIcon({ code }) {
+  const paths = {
+    FRAME: (
+      <>
+        <circle cx="8" cy="8" r="3.5" />
+        <path d="m10.7 10.7 3.2 3.2M16 5h4v4M5 16v4h4" />
+      </>
+    ),
+    ARCHITECT: (
+      <>
+        <path d="m4 8 8-5 8 5-8 5-8-5Z" />
+        <path d="m4 13 8 5 8-5M4 17l8 5 8-5" />
+      </>
+    ),
+    PROVE: (
+      <>
+        <path d="M9 3h6M10 3v5l-5.5 9.5A2.3 2.3 0 0 0 6.5 21h11a2.3 2.3 0 0 0 2-3.5L14 8V3" />
+        <path d="M7 16h10" />
+      </>
+    ),
+    BUILD: (
+      <>
+        <rect x="3" y="4" width="18" height="16" rx="2.5" />
+        <path d="M3 9h18M8 14h3m2 0h3" />
+      </>
+    ),
+    EVOLVE: (
+      <>
+        <path d="M20 7v5h-5M4 17v-5h5" />
+        <path d="M6.1 8.2A7 7 0 0 1 18.8 9M17.9 15.8A7 7 0 0 1 5.2 15" />
+      </>
+    ),
+  };
 
   return (
-    <motion.div
-      ref={ref}
-      variants={fadeUp}
-      className="
-        group relative rounded-2xl p-6
-        bg-white/5 ring-1 ring-white/10 backdrop-blur-sm
-        transition-all duration-300
-        hover:bg-white/7 hover:ring-white/20 hover:-translate-y-1
-        overflow-hidden
-      "
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      {paths[code]}
+    </svg>
+  );
+}
+
+function SectionIntro({ eyebrow, title, copy, center = false }) {
+  return (
+    <Motion.div
+      className={`approach-section-intro${center ? " approach-section-intro--center" : ""}`}
+      variants={reveal}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.5 }}
+      transition={{ duration: 0.65, ease: premiumEase }}
     >
-      <span
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        style={{
-          background:
-            "radial-gradient(220px 180px at 50% 30%, rgba(124,58,237,0.14), transparent 60%)",
-        }}
-      />
-      <span
-        aria-hidden
-        className="pointer-events-none absolute inset-0 rounded-2xl"
-        style={{ boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.08)" }}
-      />
-      <p
-        className="text-4xl font-extrabold tracking-tight
-                   bg-clip-text text-transparent
-                   bg-gradient-to-r from-indigo-300 via-violet-300 to-sky-300
-                   drop-shadow-[0_2px_6px_rgba(0,0,0,.25)]"
-      >
-        {inView ? (
-          <CountUp
-            key={`stat-${i}-${inView}`}
-            end={parseInt(value)}
-            duration={duration}
-            suffix={suffix}
-            useEasing={false}
-          />
-        ) : (
-          0
-        )}
+      <p className="approach-eyebrow">
+        <span aria-hidden="true" />
+        {eyebrow}
       </p>
-      <p className="text-indigo-100/90 mt-2">{label}</p>
-    </motion.div>
+      <h2 className="display-font">{title}</h2>
+      {copy ? <p className="approach-section-copy">{copy}</p> : null}
+    </Motion.div>
+  );
+}
+
+function SystemBlueprint({ reduceMotion }) {
+  return (
+    <Motion.div
+      className="system-blueprint"
+      data-motion={reduceMotion ? "paused" : "running"}
+      aria-label="A connected engineering process from problem framing to production"
+      initial={reduceMotion ? false : { opacity: 0, scale: 0.95, rotate: 1.5 }}
+      animate={{ opacity: 1, scale: 1, rotate: 0 }}
+      transition={{ duration: 0.9, delay: 0.14, ease: premiumEase }}
+    >
+      <div className="blueprint-grid" aria-hidden="true" />
+
+      <div className="blueprint-toolbar">
+        <span><i aria-hidden="true" /> System map</span>
+        <small>LIVE PROCESS · 05 STAGES</small>
+      </div>
+
+      <svg className="blueprint-connections" viewBox="0 0 520 430" aria-hidden="true">
+        <defs>
+          <linearGradient id="approach-flow" x1="20" y1="20" x2="500" y2="410" gradientUnits="userSpaceOnUse">
+            <stop stopColor="rgb(91 224 255)" />
+            <stop offset="0.52" stopColor="rgb(105 137 255)" />
+            <stop offset="1" stopColor="rgb(165 132 255)" />
+          </linearGradient>
+        </defs>
+        <path className="blueprint-path blueprint-path--base" d="M92 104C169 105 173 198 260 213s90-105 171-94" />
+        <path className="blueprint-path blueprint-path--base" d="M260 213c-69 30-57 112-145 120M260 213c79 26 76 111 159 123" />
+        <path className="blueprint-path blueprint-path--energy" d="M92 104C169 105 173 198 260 213s90-105 171-94" />
+        <path className="blueprint-path blueprint-path--energy blueprint-path--energy-two" d="M260 213c-69 30-57 112-145 120M260 213c79 26 76 111 159 123" />
+      </svg>
+
+      <div className="blueprint-core">
+        <BrandMark className="h-12 w-12" />
+        <span className="blueprint-core-label">COHERENT</span>
+        <strong className="blueprint-core-name display-font">System</strong>
+      </div>
+
+      <span className="blueprint-node blueprint-node--problem"><i />Problem</span>
+      <span className="blueprint-node blueprint-node--architecture"><i />Architecture</span>
+      <span className="blueprint-node blueprint-node--product"><i />Product</span>
+      <span className="blueprint-node blueprint-node--production"><i />Production</span>
+
+      <div className="blueprint-readout blueprint-readout--risk">
+        <span>Risk</span>
+        <strong>Visible early</strong>
+        <i><b /></i>
+      </div>
+      <div className="blueprint-readout blueprint-readout--feedback">
+        <span>Feedback</span>
+        <strong>Continuous</strong>
+        <i><b /></i>
+      </div>
+
+      <div className="blueprint-status">
+        <span><i /> Decisions visible</span>
+        <span><i /> Release ready</span>
+        <span><i /> Learning active</span>
+      </div>
+    </Motion.div>
+  );
+}
+
+function ProcessStage({ stage, index, reduceMotion }) {
+  return (
+    <Motion.article
+      className={`process-stage process-stage--${stage.accent}`}
+      variants={reveal}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.28 }}
+      transition={{ duration: 0.65, delay: reduceMotion ? 0 : index * 0.035, ease: premiumEase }}
+    >
+      <div className="process-stage-rail">
+        <span className="process-stage-icon"><StageIcon code={stage.code} /></span>
+        <span className="process-stage-index">{stage.index}</span>
+      </div>
+
+      <div className="process-stage-body">
+        <span className="process-stage-code">{stage.code}</span>
+        <h3 className="display-font">{stage.title}</h3>
+        <p>{stage.summary}</p>
+        <ul aria-label={`${stage.code.toLowerCase()} deliverables`}>
+          {stage.details.map((detail) => <li key={detail}>{detail}</li>)}
+        </ul>
+      </div>
+
+      <div className="process-stage-output">
+        <span>Outcome</span>
+        <strong>{stage.output}</strong>
+      </div>
+    </Motion.article>
+  );
+}
+
+function ProcessSequence({ reduceMotion }) {
+  const processRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: processRef,
+    offset: ["start 76%", "end 68%"],
+  });
+  const progress = useSpring(scrollYProgress, {
+    stiffness: 110,
+    damping: 25,
+    restDelta: 0.001,
+  });
+
+  return (
+    <div className="process-sequence" ref={processRef}>
+      <span className="process-line" aria-hidden="true" />
+      <Motion.span
+        className="process-line-progress"
+        style={{ scaleY: reduceMotion ? 1 : progress }}
+        aria-hidden="true"
+      />
+      {approachStages.map((stage, index) => (
+        <ProcessStage
+          key={stage.code}
+          stage={stage}
+          index={index}
+          reduceMotion={reduceMotion}
+        />
+      ))}
+    </div>
+  );
+}
+
+function PrincipleCard({ principle, index, reduceMotion }) {
+  return (
+    <Motion.article
+      className={`principle-card principle-card--${principle.accent}${principle.featured ? " principle-card--featured" : ""}`}
+      variants={reveal}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.32 }}
+      transition={{ duration: 0.62, delay: reduceMotion ? 0 : index * 0.05, ease: premiumEase }}
+    >
+      <div className="principle-card-top">
+        <span>{principle.index}</span>
+        <i aria-hidden="true" />
+      </div>
+      <h3 className="display-font">{principle.title}</h3>
+      <p>{principle.summary}</p>
+      {principle.featured ? (
+        <div className="principle-signal" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+        </div>
+      ) : null}
+    </Motion.article>
   );
 }
 
 export default function WhyUs() {
-  const navigate = useNavigate();
+  const reduceMotion = useReducedMotion();
 
-  // ===== SEO: title/meta/OG/Twitter + JSON-LD (PERSON) =====
   useEffect(() => {
-    const title =
-      "Why Eiad Abdulhadi Soufan — React Frontends, Django APIs & Applied AI";
+    const pageTitle = "Engineering Approach — Eiad Soufan";
     const description =
-      "Eiad Abdulhadi Soufan builds modern React frontends on reliable Django/DRF backends—with CI/CD, performance, and practical AI (LLMs, RAG, embeddings).";
-    const keywords =
-      "Eiad Abdulhadi Soufan, React developer, Django REST, Full-stack engineer, Tailwind, Framer Motion, PostgreSQL, CI/CD, performance, SEO, AI, LLMs, RAG, embeddings, Kuala Lumpur, Malaysia";
+      "How Eiad Soufan takes complex software from problem framing and architecture through delivery, production, and continuous improvement.";
+    const previousTitle = document.title;
+    document.title = pageTitle;
 
-    document.title = title;
-
-    const setMeta = (name, content, attr = "name") => {
-      let el = document.querySelector(`meta[${attr}="${name}"]`);
-      if (!el) {
-        el = document.createElement("meta");
-        el.setAttribute(attr, name);
-        document.head.appendChild(el);
+    const upsertMeta = (key, content, attribute = "name") => {
+      let element = document.querySelector(`meta[${attribute}="${key}"]`);
+      if (!element) {
+        element = document.createElement("meta");
+        element.setAttribute(attribute, key);
+        document.head.appendChild(element);
       }
-      el.setAttribute("content", content);
+      const previousContent = element.getAttribute("content");
+      element.setAttribute("content", content);
+      return () => {
+        if (previousContent) element.setAttribute("content", previousContent);
+        else element.remove();
+      };
     };
 
-    setMeta("description", description);
-    setMeta("keywords", keywords);
-    setMeta("og:title", title, "property");
-    setMeta("og:description", description, "property");
-    setMeta("og:type", "website", "property");
-    setMeta("twitter:card", "summary_large_image");
+    const cleanups = [
+      upsertMeta("description", description),
+      upsertMeta("og:title", pageTitle, "property"),
+      upsertMeta("og:description", description, "property"),
+      upsertMeta("og:type", "website", "property"),
+    ];
 
-    const ldId = "ld-whyus-jsonld";
-    let ld = document.getElementById(ldId);
-    if (!ld) {
-      ld = document.createElement("script");
-      ld.type = "application/ld+json";
-      ld.id = ldId;
-      document.head.appendChild(ld);
-    }
-    ld.textContent = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Eiad Abdulhadi Soufan",
-      "description": description,
-      "jobTitle": "Senior Full-Stack Engineer (React, Django, AI)",
-      "knowsAbout": [
-        "React", "Tailwind CSS", "Framer Motion",
-        "Django", "Django REST Framework", "PostgreSQL",
-        "DevOps", "CI/CD", "Docker", "Nginx",
-        "AI", "LLMs", "RAG", "Embeddings", "Analytics"
-      ],
-      "url": "https://example.com/why-us",
-      "homeLocation": "Kuala Lumpur, Malaysia",
-      "sameAs": []
-    });
+    return () => {
+      document.title = previousTitle;
+      cleanups.forEach((cleanup) => cleanup());
+    };
   }, []);
 
   return (
-    <section className="relative min-h-screen py-16 md:py-20 overflow-hidden text-indigo-50">
-      {/* ===== Background (unchanged) ===== */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(180deg, #0b1020 0%, #141229 40%, #0f172a 100%)",
-          }}
-        />
-        <div
-          className="absolute -top-16 -left-12 h-[420px] w-[560px] blur-2xl opacity-40"
-          style={{
-            background:
-              "radial-gradient(50% 50% at 50% 50%, rgba(99,102,241,0.22), transparent 60%)",
-          }}
-        />
-        <div
-          className="absolute -bottom-16 -right-12 h-[480px] w-[680px] blur-[36px] opacity-35"
-          style={{
-            background:
-              "radial-gradient(50% 50% at 50% 50%, rgba(56,189,248,0.20), transparent 62%)",
-          }}
-        />
-        <div
-          className="absolute top-[22%] left-[12%] h-[260px] w-[260px] blur-2xl opacity-22"
-          style={{
-            background:
-              "radial-gradient(50% 50% at 50% 50%, rgba(168,85,247,0.16), transparent 65%)",
-          }}
-        />
-        <div
-          className="absolute top-[36%] right-[14%] h-[300px] w-[300px] blur-2xl opacity-22"
-          style={{
-            background:
-              "radial-gradient(50% 50% at 50% 50%, rgba(99,102,241,0.16), transparent 65%)",
-          }}
-        />
-        <div
-          className="absolute bottom-[18%] left-[28%] h-[280px] w-[280px] blur-2xl opacity-20"
-          style={{
-            background:
-              "radial-gradient(50% 50% at 50% 50%, rgba(56,189,248,0.14), transparent 68%)",
-          }}
-        />
-        <div
-          className="absolute top-[12%] right-[36%] h-[220px] w-[220px] blur-xl opacity-18"
-          style={{
-            background:
-              "radial-gradient(50% 50% at 50% 50%, rgba(139,92,246,0.14), transparent 68%)",
-          }}
-        />
-        <div
-          className="absolute bottom-[30%] right-[46%] h-[200px] w-[200px] blur-xl opacity-16"
-          style={{
-            background:
-              "radial-gradient(50% 50% at 50% 50%, rgba(14,165,233,0.13), transparent 68%)",
-          }}
-        />
-      </div>
+    <div className="approach-page">
+      <section className="approach-hero">
+        <div className="approach-hero-grid" aria-hidden="true" />
+        <div className="approach-hero-glow approach-hero-glow--one" aria-hidden="true" />
+        <div className="approach-hero-glow approach-hero-glow--two" aria-hidden="true" />
 
-      {/* ===== Content ===== */}
-      <div className="relative z-10">
-        {/* WHY US */}
-        <motion.section
-          className="relative py-12 md:py-16 px-6 text-center"
-          variants={sectionParent}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.3 }}
-        >
-          <motion.h2
-            className="text-3xl md:text-4xl font-extrabold
-                       leading-tight md:leading-[1.15] pb-[2px] mb-6 overflow-visible
-                       bg-clip-text text-transparent bg-gradient-to-b
-                       from-indigo-200 via-violet-200 to-sky-200 drop-shadow"
-            variants={fadeUp}
+        <div className="site-container approach-hero-layout">
+          <Motion.div
+            className="approach-hero-copy"
+            initial={reduceMotion ? false : "hidden"}
+            animate="visible"
+            transition={{ staggerChildren: reduceMotion ? 0 : 0.07 }}
           >
-            Why Eiad Abdulhadi Soufan?
-          </motion.h2>
+            <Motion.p className="approach-eyebrow" variants={reveal} transition={{ duration: 0.5, ease: premiumEase }}>
+              <span aria-hidden="true" /> Engineering approach
+            </Motion.p>
 
-          <motion.p
-            className="max-w-3xl mx-auto text-indigo-100/90 text-lg leading-relaxed"
-            variants={fadeUp}
-          >
-            Build with a developer who ships <strong>beautiful UIs</strong>,{" "}
-            <strong>reliable APIs</strong>, and <strong>AI-ready</strong> features.
-            Modern React on the front, Django/DRF on the back—delivered with CI/CD,
-            observability, and performance in mind.
-          </motion.p>
-        </motion.section>
+            <Motion.h1 className="display-font" variants={reveal} transition={{ duration: 0.68, ease: premiumEase }}>
+              From uncertain idea to <em>reliable system.</em>
+            </Motion.h1>
 
-        {/* FEATURED POINTS */}
-        <motion.section
-          className="relative py-12 md:py-16 px-6"
-          variants={sectionParent}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.25 }}
-        >
-          <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
-            {[
-              {
-                icon: "🖥️",
-                title: "Modern Frontend (React/Tailwind/Framer)",
-                desc: "Accessible, responsive UI with tasteful motion. Component systems that scale and feel fast on any device.",
-              },
-              {
-                icon: "🔗",
-                title: "Reliable Backend (Django/DRF)",
-                desc: "Versioned REST endpoints, JWT/OAuth, caching & pagination—clean contracts your frontend can trust.",
-              },
-              {
-                icon: "🧠",
-                title: "Applied AI (LLMs, RAG, Embeddings)",
-                desc: "Smart search, content suggestions, and automation that actually improve UX—not demos.",
-              },
-              {
-                icon: "⚡",
-                title: "Delivery, SEO & Performance",
-                desc: "CI/CD, lazy loading, and Core Web Vitals in mind. Analytics & reporting to guide real decisions.",
-              },
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                variants={fadeLeft}
-                className="
-                  group relative rounded-2xl p-6
-                  bg-white/5 ring-1 ring-white/10 backdrop-blur-sm
-                  transition-all duration-300
-                  hover:-translate-y-1 hover:bg-white/7 hover:ring-white/20
-                  overflow-hidden
-                "
-                whileHover={{ rotate: -0.3, scale: 1.01 }}
-                transition={{ type: "spring", stiffness: 180, damping: 18, mass: 0.6 }}
-              >
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{
-                    background:
-                      "radial-gradient(220px 180px at 50% 30%, rgba(99,102,241,0.10), transparent 60%)",
-                  }}
-                />
-                <h3 className="text-xl font-bold mb-2 text-indigo-100">
-                  <span className="mr-1">{item.icon}</span>
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-200 via-violet-200 to-sky-200">
-                    {item.title}
-                  </span>
-                </h3>
-                <p className="text-indigo-100/90">{item.desc}</p>
-              </motion.div>
-            ))}
+            <Motion.p className="approach-hero-lead" variants={reveal} transition={{ duration: 0.62, ease: premiumEase }}>
+              I reduce uncertainty early, connect architecture to experience, and ship in
+              increments that already resemble production. The goal is not merely to build
+              more—it is to make every decision compound.
+            </Motion.p>
+
+            <Motion.div className="approach-actions" variants={reveal} transition={{ duration: 0.6, ease: premiumEase }}>
+              <Link to="/contact" className="approach-action approach-action--primary">
+                Discuss a system <ArrowIcon />
+              </Link>
+              <Link to="/#selected-work" className="approach-action approach-action--secondary">
+                See the outcomes
+              </Link>
+            </Motion.div>
+
+            <Motion.dl className="approach-hero-signals" variants={reveal} transition={{ duration: 0.6, ease: premiumEase }}>
+              <div><dt>01</dt><dd>Risk front-loaded</dd></div>
+              <div><dt>02</dt><dd>Decisions visible</dd></div>
+              <div><dt>03</dt><dd>Production included</dd></div>
+            </Motion.dl>
+          </Motion.div>
+
+          <SystemBlueprint reduceMotion={reduceMotion} />
+        </div>
+      </section>
+
+      <section className="approach-process">
+        <div className="site-container approach-process-layout">
+          <div className="approach-process-sticky">
+            <SectionIntro
+              eyebrow="The delivery sequence"
+              title="Five moves. One continuous system."
+              copy="The phases are distinct enough to create clarity, but connected enough to avoid hand-off gaps. Learning flows forward—and production insight flows back."
+            />
+            <Motion.div
+              className="process-loop-note"
+              variants={reveal}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.6 }}
+              transition={{ duration: 0.62, ease: premiumEase }}
+            >
+              <span>Continuous loop</span>
+              <svg viewBox="0 0 64 24" aria-hidden="true">
+                <path d="M6 12h48m-8-7 8 7-8 7" />
+              </svg>
+              <strong>Frame · Architect · Prove · Build · Evolve</strong>
+            </Motion.div>
           </div>
-        </motion.section>
 
-        {/* RESULTS */}
-        <motion.section
-          className="relative py-12 md:py-16 px-6 text-center"
-          variants={sectionParent}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.3 }}
-        >
-          <motion.h2
-            className="text-3xl font-bold mb-10
-                       bg-clip-text text-transparent bg-gradient-to-b from-indigo-200 via-violet-200 to-sky-200 drop-shadow"
-            variants={fadeUp}
-          >
-            Results That Speak
-          </motion.h2>
+          <ProcessSequence reduceMotion={reduceMotion} />
+        </div>
+      </section>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-            {stats.map(([value, suffix, label, duration], i) => (
-              <Stat
-                key={`${label}-${i}`}
-                value={value}
-                suffix={suffix}
-                label={label}
-                duration={duration}
-                i={i}
+      <section className="approach-principles">
+        <div className="site-container">
+          <SectionIntro
+            eyebrow="Decision principles"
+            title="The standards behind the work."
+            copy="Technology changes quickly. These decisions stay useful because they protect clarity, reliability, and long-term product value."
+            center
+          />
+
+          <div className="principles-grid">
+            {approachPrinciples.map((principle, index) => (
+              <PrincipleCard
+                key={principle.index}
+                principle={principle}
+                index={index}
+                reduceMotion={reduceMotion}
               />
             ))}
           </div>
-        </motion.section>
+        </div>
+      </section>
 
-        {/* CTA */}
-        <motion.section
-          className="relative py-16 md:py-20 px-6 text-center"
-          variants={sectionParent}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.3 }}
-        >
-          <motion.div
-            variants={fadeUp}
-            className="
-              mx-auto max-w-3xl rounded-2xl p-10
-              bg-white/8 backdrop-blur-lg ring-1 ring-white/12
-              shadow-[0_10px_40px_-12px_rgba(0,0,0,0.5)]
-              transition-shadow duration-300
-            "
+      <section className="approach-rhythm">
+        <div className="site-container">
+          <Motion.div
+            className="rhythm-panel"
+            variants={reveal}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.22 }}
+            transition={{ duration: 0.68, ease: premiumEase }}
           >
-<motion.h2
-  className="text-3xl md:text-4xl font-bold mb-4
-             leading-tight md:leading-[1.15] pb-[2px] overflow-visible
-             bg-clip-text text-transparent bg-gradient-to-b from-indigo-200 via-violet-200 to-sky-200"
-  variants={fadeUp}
->
-  Design your website, system, or app your way
-</motion.h2>
+            <div className="rhythm-heading">
+              <p className="approach-eyebrow"><span aria-hidden="true" /> Working rhythm</p>
+              <h2 className="display-font">No black box between brief and release.</h2>
+              <p>
+                Collaboration stays concrete: what we know, what we chose, what is working,
+                and what the next release will prove.
+              </p>
+            </div>
 
-            <motion.p
-              className="mb-8 text-lg text-indigo-100/90 max-w-2xl mx-auto"
-              variants={fadeUp}
-            >
-              Ready to launch? Propose your budget and goals—we’ll reply with a clear plan for frontend, backend, and AI features that fit.
-            </motion.p>
+            <ol className="rhythm-steps">
+              {workingRhythm.map((item, index) => (
+                <li key={item.phase}>
+                  <span className="rhythm-number">0{index + 1}</span>
+                  <div>
+                    <small>{item.cadence}</small>
+                    <h3 className="display-font">{item.phase}</h3>
+                    <p>{item.description}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
 
-            <motion.button
-              onClick={() => navigate("/contact")}
-              className="
-                inline-flex items-center justify-center rounded-xl px-5 py-3
-                font-semibold text-white
-                bg-gradient-to-r from-indigo-600 via-violet-600 to-sky-600
-                shadow-[0_6px_20px_-10px_rgba(79,70,229,.65)]
-                hover:-translate-y-0.5 hover:shadow-[0_16px_36px_-14px_rgba(79,70,229,.75)]
-                active:translate-y-0 active:shadow-[0_6px_20px_-10px_rgba(79,70,229,.65)]
-                focus:outline-none focus:ring-2 focus:ring-violet-300/70
-                focus:ring-offset-2 focus:ring-offset-slate-900
-                transition-all duration-200 will-change-transform
-              "
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.985 }}
-            >
-              Submit Your Offer Now
-            </motion.button>
-          </motion.div>
-        </motion.section>
-      </div>
-    </section>
+            <div className="rhythm-contract">
+              <span>You always know</span>
+              <ul>
+                <li><i /> What is being solved now</li>
+                <li><i /> Why the current decision exists</li>
+                <li><i /> What “ready” means</li>
+                <li><i /> What production taught us</li>
+              </ul>
+            </div>
+          </Motion.div>
+        </div>
+      </section>
+
+      <section className="approach-outro">
+        <div className="site-container">
+          <Motion.div
+            className="approach-outro-card"
+            variants={reveal}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 0.7, ease: premiumEase }}
+          >
+            <div>
+              <p className="approach-eyebrow"><span aria-hidden="true" /> Start with the real problem</p>
+              <h2 className="display-font">Bring the complexity. We’ll find the shape.</h2>
+              <p>A useful first conversation needs no polished specification—only an honest problem worth solving.</p>
+            </div>
+            <div className="approach-outro-actions">
+              <Link to="/contact" className="approach-action approach-action--primary">
+                Start a conversation <ArrowIcon />
+              </Link>
+              <Link to="/about-us" className="approach-action approach-action--secondary">
+                About Eiad
+              </Link>
+            </div>
+          </Motion.div>
+        </div>
+      </section>
+    </div>
   );
 }
-
-
-
-
-
