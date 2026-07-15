@@ -1,6 +1,8 @@
 import lawnexMark from "../assets/lawnex-mark.webp";
 import berkatMadinahMark from "../assets/berkat-mark.webp";
 import yallahBaggageMark from "../assets/yallah-mark.webp";
+import arabicaMark from "../assets/arabica-mark.webp";
+import mohammadAboZeedMark from "../assets/mohammad-abo-zeed-mark.webp";
 import arabicaPreview from "../assets/previews/arabica-preview.webp";
 import berkatDatesPreview from "../assets/previews/berkat-dates-preview.webp";
 import berkatPortalPreview from "../assets/previews/berkat-portal-preview.webp";
@@ -127,7 +129,7 @@ export const systems = [
     links: [
       { label: "Visit website", href: "https://mohammadabozeed.com/" },
     ],
-    logo: null,
+    logo: mohammadAboZeedMark,
     preview: {
       src: mohammadAboZeedPreview,
       alt: "Mohammad Abo Zeed Arabic content platform interface",
@@ -156,7 +158,7 @@ export const systems = [
     links: [
       { label: "Visit website", href: "https://arabicarestaurant.my/" },
     ],
-    logo: null,
+    logo: arabicaMark,
     preview: {
       src: arabicaPreview,
       alt: "Arabica Restaurant website interface",
@@ -182,7 +184,7 @@ export const systems = [
     links: [
       { label: "Visit landing page", href: "https://dates.madinah.com.my/" },
     ],
-    logo: null,
+    logo: berkatMadinahMark,
     preview: {
       src: berkatDatesPreview,
       alt: "Berkat Madinah dates campaign storefront interface",

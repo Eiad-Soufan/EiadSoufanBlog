@@ -293,6 +293,22 @@
     rgb(var(--color-surface));
 }
 
+.systems-card--berkat-madinah .systems-mark,
+.systems-card--dates-madinah .systems-mark {
+  background: rgb(246 250 247 / 0.94);
+  padding: 0.2rem;
+}
+
+.systems-card--arabica-restaurant .systems-mark {
+  background: rgb(34 18 13 / 0.88);
+  padding: 0.13rem;
+}
+
+.systems-card--mohammad-abo-zeed .systems-mark {
+  background: rgb(241 247 247 / 0.94);
+  padding: 0.24rem;
+}
+
 .systems-card-title-row h3 {
   margin: 0;
   color: rgb(var(--color-text));
