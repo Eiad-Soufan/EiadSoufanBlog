@@ -75,7 +75,7 @@ export default function HeroNova() {
               transition={{ duration: 0.52, ease: [0.22, 1, 0.36, 1] }}
               className="inline-flex flex-wrap items-center gap-x-3 gap-y-2 rounded-full border border-line/15 bg-surface/45 px-3.5 py-2"
             >
-              <span className="inline-flex items-center gap-2 text-[0.66rem] font-bold uppercase tracking-[0.15em] text-ink/88 sm:text-[0.7rem]">
+              <span className="inline-flex items-center gap-2 text-[0.66rem] font-bold uppercase tracking-[0.15em] text-ink/90 sm:text-[0.7rem]">
                 <span className="status-pulse h-1.5 w-1.5 rounded-full bg-success" />
                 {profile.location}
               </span>
