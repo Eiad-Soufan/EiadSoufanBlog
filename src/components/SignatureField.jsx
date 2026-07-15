@@ -1,4 +1,5 @@
 import { motion as Motion, useReducedMotion } from "framer-motion";
+import BrandMark from "./BrandMark";
 
 const NODES = [
   { label: "Django", detail: "Backend", className: "left-[5%] top-[24%]" },
@@ -136,10 +137,8 @@ export default function SignatureField() {
           </svg>
 
           <div className="absolute left-1/2 top-1/2 z-10 flex h-[112px] w-[112px] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full sm:h-[126px] sm:w-[126px]">
-            <span className="display-font text-[2.2rem] font-bold tracking-[-0.09em] text-gradient sm:text-[2.65rem]">
-              ES
-            </span>
-            <span className="mt-1 text-[0.5rem] font-bold uppercase tracking-[0.2em] text-muted sm:text-[0.56rem]">
+            <BrandMark className="h-14 w-14 sm:h-16 sm:w-16" />
+            <span className="mt-2 text-center text-[0.46rem] font-bold uppercase tracking-[0.16em] text-muted sm:text-[0.5rem]">
               Architect · Build · Scale
             </span>
           </div>

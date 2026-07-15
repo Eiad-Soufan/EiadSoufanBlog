@@ -1,7 +1,7 @@
-export default function BrandMark() {
+export default function BrandMark({ className = "h-10 w-10" }) {
   return (
     <span
-      className="block h-10 w-10 shrink-0 drop-shadow-[0_10px_24px_rgb(0_0_0_/_0.32)] transition-transform duration-300 ease-premium group-hover:-translate-y-0.5 group-hover:scale-[1.025]"
+      className={`block shrink-0 drop-shadow-[0_10px_24px_rgb(0_0_0_/_0.32)] transition-transform duration-300 ease-premium group-hover:-translate-y-0.5 group-hover:scale-[1.025] ${className}`}
       aria-hidden="true"
     >
       <svg
