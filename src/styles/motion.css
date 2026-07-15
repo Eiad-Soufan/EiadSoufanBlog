@@ -1,0 +1,60 @@
+@keyframes signature-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes signature-orbit-reverse {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes status-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.88);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.signature-orbit {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: signature-orbit 34s linear infinite;
+  will-change: transform;
+}
+
+.signature-orbit--reverse {
+  animation-name: signature-orbit-reverse;
+  animation-duration: 46s;
+}
+
+.status-pulse {
+  animation: status-pulse 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .signature-orbit,
+  .signature-orbit--reverse,
+  .status-pulse {
+    animation: none !important;
+  }
+}

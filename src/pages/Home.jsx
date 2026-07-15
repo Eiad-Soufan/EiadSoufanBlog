@@ -72,16 +72,11 @@ function FeatureSectionBG({ children, className = "" }) {
 export default function Home() {
   return (
     <div className="relative">
-      <HeroNova
-        title="Think beyond limits. Shape the future."
-        subtitle="Where innovation meets purpose."
-      />
-      
-       <div aria-hidden className="h-6 sm:h-8 md:h-10" />
+      <HeroNova />
       
       {/* ===== SECTION 2: FEATURES (What I Do) — داكن موحّد =====
           ملاحظة: margin-top صغيرة تمنع أي تراكب مع شرائط المهارات أسفل الهيرو على الموبايل */}
-      <FeatureSectionBG className="mt-6 sm:mt-8">
+      <FeatureSectionBG>
         <SectionTitle
           eyebrow="What I Do"
           title="Full-stack engineering, AI, and reliable delivery"
@@ -129,7 +124,10 @@ export default function Home() {
       </FeatureSectionBG>
 
       {/* ===== SECTION 3: SHOWCASE — داكن موحّد (تناغم ألوان ومسافات) ===== */}
-      <section className="relative py-16 sm:py-20 md:py-28 overflow-x-clip overflow-y-visible">
+      <section
+        id="selected-work"
+        className="relative scroll-mt-24 py-16 sm:py-20 md:py-28 overflow-x-clip overflow-y-visible"
+      >
         <div
           className="absolute inset-0 pointer-events-none"
           style={{

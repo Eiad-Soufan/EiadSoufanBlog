@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter as Router } from 'react-router-dom'
 import App from './App'
 import './index.css'
-import "./mobile-hotfix.css";
+import './styles/tokens.css'
+import './styles/base.css'
+import './styles/motion.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
