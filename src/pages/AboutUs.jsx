@@ -247,20 +247,20 @@ export default function AboutUs() {
                 Food & retail group with multiple branches undergoing digital transformation.
               </p>
               <p className="mt-2">
-                <strong>Software Engineer (Mar 2025 – Present):</strong> Company portal,
-                internal forms/complaints workflows, dashboards, and reporting APIs with
-                CI/CD and observability.
+                <strong>Lead Software Engineer (2025 – 2026):</strong> Led delivery of
+                internal business systems, improving workflow automation, data consistency,
+                and cross-department coordination.
               </p>
             </GlassCard>
 
-            <GlassCard title="Yalla Baggage · Dubai, UAE" icon="✈️">
+            <GlassCard title="Yallah Baggage · Dubai, UAE" icon="✈️">
               <p className="mt-2">
                 Airport logistics platform enabling smart baggage tracking and delivery.
               </p>
               <p className="mt-2">
-                <strong>Team Lead — Platform (Feb 2025 – Jun 2025):</strong> Real-time
-                tracking, scalable Django/DRF backend, JWT auth, Flutter client, and admin
-                dashboards—iterated with measurable APIs.
+                <strong>Technical Delivery Lead:</strong> Led deployment, hosting, and
+                production readiness while coordinating delivery decisions across the
+                Node.js, Vue.js, and Flutter product stack.
               </p>
             </GlassCard>
 

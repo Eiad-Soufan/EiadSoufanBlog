@@ -1,0 +1,1153 @@
+/* Operations visuals — Berkat Madinah + Yallah Baggage */
+
+.systems-visual--berkat,
+.systems-visual--yallah {
+  container-type: inline-size;
+}
+
+/* Berkat Madinah --------------------------------------------------------- */
+
+.systems-visual--berkat {
+  background:
+    radial-gradient(circle at 80% 8%, rgb(84 214 139 / 0.16), transparent 34%),
+    radial-gradient(circle at 12% 92%, rgb(54 119 255 / 0.12), transparent 42%),
+    linear-gradient(145deg, rgb(9 23 24 / 0.96), rgb(5 12 19 / 0.96));
+}
+
+.systems-visual--berkat .systems-visual-glow {
+  inset: auto;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  filter: blur(70px);
+  top: -28%;
+  right: -12%;
+  width: 64%;
+  background: rgb(84 214 139 / 0.22);
+}
+
+.systems-berkat-window {
+  position: absolute;
+  inset: 5.5% 3.5%;
+  border-color: rgb(120 229 163 / 0.15);
+  background: rgb(7 16 21 / 0.92);
+  box-shadow:
+    0 2.2rem 5rem -2.2rem rgb(0 0 0 / 0.92),
+    0 0 0 1px rgb(84 214 139 / 0.035),
+    inset 0 1px rgb(255 255 255 / 0.04);
+  transform: perspective(80rem) rotateX(1.2deg) rotateY(-1deg);
+  transform-origin: 50% 100%;
+}
+
+.systems-berkat-shell {
+  display: grid;
+  grid-template-columns: clamp(2.7rem, 9cqw, 3.65rem) minmax(0, 1fr);
+  min-height: 0;
+  height: calc(100% - 2.5rem);
+  color: rgb(230 244 238);
+}
+
+.systems-berkat-sidebar {
+  display: flex;
+  min-height: 0;
+  align-items: center;
+  flex-direction: column;
+  gap: clamp(0.6rem, 2.5cqw, 0.92rem);
+  border-right: 1px solid rgb(138 205 164 / 0.1);
+  background:
+    linear-gradient(180deg, rgb(84 214 139 / 0.045), transparent 35%),
+    rgb(5 13 17 / 0.72);
+  padding: clamp(0.65rem, 2.6cqw, 0.95rem) 0.45rem;
+}
+
+.systems-berkat-logo,
+.systems-berkat-avatar,
+.systems-berkat-side-icon {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+}
+
+.systems-berkat-logo {
+  width: clamp(1.7rem, 5.2cqw, 2.05rem);
+  aspect-ratio: 1;
+  margin-bottom: clamp(0.35rem, 1.8cqw, 0.7rem);
+  border: 1px solid rgb(102 226 151 / 0.28);
+  border-radius: 0.63rem;
+  background:
+    linear-gradient(145deg, rgb(112 234 158 / 0.18), rgb(19 77 48 / 0.16)),
+    rgb(10 27 22);
+  box-shadow:
+    inset 0 1px rgb(255 255 255 / 0.08),
+    0 0 1.3rem rgb(84 214 139 / 0.12);
+  color: rgb(142 239 179);
+  font-family: var(--font-display);
+  font-size: clamp(0.62rem, 2cqw, 0.8rem);
+  font-style: normal;
+  font-weight: 800;
+}
+
+.systems-berkat-side-icon {
+  position: relative;
+  width: clamp(1.55rem, 4.8cqw, 1.9rem);
+  aspect-ratio: 1;
+  border: 1px solid transparent;
+  border-radius: 0.58rem;
+}
+
+.systems-berkat-side-icon::before,
+.systems-berkat-side-icon::after {
+  position: absolute;
+  content: "";
+}
+
+.systems-berkat-side-icon::before {
+  width: 0.68rem;
+  height: 0.68rem;
+  border: 1px solid rgb(153 181 169 / 0.42);
+  border-radius: 0.2rem;
+}
+
+.systems-berkat-side-icon::after {
+  width: 0.26rem;
+  height: 0.26rem;
+  border-radius: 50%;
+  background: rgb(153 181 169 / 0.42);
+}
+
+.systems-berkat-side-icon--active {
+  border-color: rgb(84 214 139 / 0.2);
+  background: rgb(84 214 139 / 0.11);
+  box-shadow: inset 0 1px rgb(255 255 255 / 0.045);
+}
+
+.systems-berkat-side-icon--active::before {
+  border-color: rgb(119 232 163 / 0.78);
+}
+
+.systems-berkat-side-icon--active::after {
+  background: rgb(119 232 163);
+  box-shadow: 0 0 0.65rem rgb(84 214 139 / 0.6);
+}
+
+.systems-berkat-avatar {
+  width: clamp(1.55rem, 4.8cqw, 1.9rem);
+  aspect-ratio: 1;
+  margin-top: auto;
+  border: 1px solid rgb(255 255 255 / 0.1);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 35%, rgb(173 214 192 / 0.7) 0 18%, transparent 20%),
+    radial-gradient(circle at 50% 92%, rgb(173 214 192 / 0.52) 0 34%, transparent 36%),
+    rgb(19 40 35);
+}
+
+.systems-berkat-main {
+  min-width: 0;
+  overflow: hidden;
+  padding: clamp(0.75rem, 3.3cqw, 1.35rem);
+}
+
+.systems-berkat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.systems-berkat-header > span:first-child {
+  display: grid;
+  gap: 0.16rem;
+}
+
+.systems-berkat-eyebrow,
+.systems-berkat-title {
+  display: block;
+  font-style: normal;
+}
+
+.systems-berkat-eyebrow {
+  color: rgb(106 225 153 / 0.78);
+  font-size: clamp(0.4rem, 1.5cqw, 0.55rem);
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.systems-berkat-title {
+  color: rgb(235 246 240);
+  font-family: var(--font-display);
+  font-size: clamp(0.72rem, 2.8cqw, 1.08rem);
+  letter-spacing: -0.035em;
+}
+
+.systems-berkat-filter {
+  flex: 0 0 auto;
+  border: 1px solid rgb(137 199 162 / 0.13);
+  border-radius: 0.52rem;
+  background: rgb(255 255 255 / 0.025);
+  padding: clamp(0.32rem, 1.2cqw, 0.46rem) clamp(0.45rem, 1.6cqw, 0.64rem);
+  color: rgb(181 204 193 / 0.66);
+  font-size: clamp(0.42rem, 1.35cqw, 0.54rem);
+}
+
+.systems-berkat-metrics {
+  display: grid;
+  grid-template-columns: 1.6fr 0.76fr 0.76fr;
+  gap: clamp(0.38rem, 1.5cqw, 0.62rem);
+  margin-top: clamp(0.62rem, 2.6cqw, 1rem);
+}
+
+.systems-berkat-metric {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: clamp(3.65rem, 15cqw, 5.25rem);
+  overflow: hidden;
+  flex-direction: column;
+  border: 1px solid rgb(125 180 147 / 0.1);
+  border-radius: clamp(0.55rem, 2cqw, 0.8rem);
+  background:
+    linear-gradient(155deg, rgb(255 255 255 / 0.034), transparent 48%),
+    rgb(10 23 25 / 0.72);
+  padding: clamp(0.48rem, 1.85cqw, 0.72rem);
+  box-shadow: inset 0 1px rgb(255 255 255 / 0.025);
+}
+
+.systems-berkat-metric--accent {
+  border-color: rgb(84 214 139 / 0.16);
+  background:
+    radial-gradient(circle at 86% 15%, rgb(84 214 139 / 0.13), transparent 52%),
+    rgb(9 25 23 / 0.78);
+}
+
+.systems-berkat-metric-label {
+  color: rgb(162 188 177 / 0.55);
+  font-size: clamp(0.39rem, 1.3cqw, 0.5rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.systems-berkat-metric-value {
+  margin-top: 0.18rem;
+  color: rgb(230 245 236);
+  font-family: var(--font-display);
+  font-size: clamp(0.7rem, 2.6cqw, 1rem);
+  font-weight: 700;
+}
+
+.systems-berkat-metric .systems-sparkline--berkat {
+  position: absolute;
+  right: 0.45rem;
+  bottom: 0.35rem;
+  left: 0.45rem;
+  width: calc(100% - 0.9rem);
+  height: 44%;
+}
+
+.systems-sparkline--berkat .systems-sparkline-area {
+  fill: rgb(84 214 139 / 0.08);
+}
+
+.systems-sparkline--berkat .systems-sparkline-line {
+  fill: none;
+  stroke: rgb(109 231 157 / 0.8);
+  stroke-width: 1.6;
+  vector-effect: non-scaling-stroke;
+}
+
+.systems-sparkline--berkat .systems-sparkline-point {
+  fill: rgb(149 244 185);
+  filter: drop-shadow(0 0 4px rgb(84 214 139 / 0.85));
+}
+
+.systems-berkat-metric-dial {
+  position: absolute;
+  right: 50%;
+  bottom: clamp(0.42rem, 1.8cqw, 0.72rem);
+  width: clamp(1.6rem, 6.2cqw, 2.25rem);
+  aspect-ratio: 1;
+  transform: translateX(50%);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgb(10 23 25) 0 48%, transparent 51%),
+    conic-gradient(from 225deg, rgb(84 214 139 / 0.9) 0 62%, rgb(255 255 255 / 0.07) 62% 75%, transparent 75%);
+  filter: drop-shadow(0 0 0.65rem rgb(84 214 139 / 0.09));
+}
+
+.systems-berkat-metric-dial i {
+  position: absolute;
+  top: 19%;
+  left: 50%;
+  width: 1px;
+  height: 33%;
+  transform: rotate(42deg);
+  transform-origin: 50% 100%;
+  background: rgb(225 246 234 / 0.75);
+}
+
+.systems-berkat-bars {
+  display: flex;
+  height: clamp(1.65rem, 6.3cqw, 2.25rem);
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(0.16rem, 0.75cqw, 0.28rem);
+  margin-top: auto;
+}
+
+.systems-berkat-bars i {
+  width: clamp(0.22rem, 1cqw, 0.36rem);
+  border-radius: 999px 999px 0.16rem 0.16rem;
+  background: linear-gradient(180deg, rgb(112 230 157), rgb(51 126 84 / 0.42));
+  box-shadow: 0 0 0.6rem rgb(84 214 139 / 0.11);
+  transform-origin: 50% 100%;
+  animation: systems-berkat-bars 3.8s ease-in-out infinite;
+}
+
+.systems-berkat-bars i:nth-child(1) {
+  height: 36%;
+  animation-delay: -1.1s;
+}
+
+.systems-berkat-bars i:nth-child(2) {
+  height: 68%;
+  animation-delay: -2.4s;
+}
+
+.systems-berkat-bars i:nth-child(3) {
+  height: 48%;
+  animation-delay: -0.7s;
+}
+
+.systems-berkat-bars i:nth-child(4) {
+  height: 88%;
+  animation-delay: -1.8s;
+}
+
+.systems-berkat-board {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.9fr);
+  gap: clamp(0.42rem, 1.7cqw, 0.7rem);
+  margin-top: clamp(0.42rem, 1.7cqw, 0.7rem);
+}
+
+.systems-berkat-branch-map,
+.systems-berkat-workflow {
+  position: relative;
+  min-width: 0;
+  min-height: clamp(7.8rem, 30cqw, 11.25rem);
+  overflow: hidden;
+  border: 1px solid rgb(125 180 147 / 0.095);
+  border-radius: clamp(0.55rem, 2cqw, 0.82rem);
+  background:
+    radial-gradient(circle at 50% 48%, rgb(84 214 139 / 0.055), transparent 43%),
+    rgb(8 20 23 / 0.68);
+  padding: clamp(0.52rem, 1.9cqw, 0.76rem);
+}
+
+.systems-berkat-panel-title {
+  position: relative;
+  z-index: 3;
+  color: rgb(178 204 191 / 0.62);
+  font-size: clamp(0.4rem, 1.3cqw, 0.5rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.systems-berkat-map-lines {
+  position: absolute;
+  inset: 13% 4% auto;
+  width: 92%;
+  height: 65%;
+  overflow: visible;
+}
+
+.systems-berkat-map-lines path {
+  fill: none;
+  stroke: rgb(84 214 139 / 0.28);
+  stroke-dasharray: 3 5;
+  stroke-linecap: round;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  animation: systems-berkat-network 9s linear infinite;
+}
+
+.systems-berkat-map-lines circle {
+  fill: rgb(9 23 24);
+  stroke: rgb(112 231 158 / 0.72);
+  stroke-width: 1.15;
+  vector-effect: non-scaling-stroke;
+}
+
+.systems-berkat-map-lines circle:first-of-type {
+  fill: rgb(84 214 139 / 0.14);
+  stroke: rgb(138 242 177 / 0.92);
+  filter: drop-shadow(0 0 7px rgb(84 214 139 / 0.38));
+  animation: systems-berkat-core-pulse 3.4s ease-in-out infinite;
+}
+
+.systems-berkat-core {
+  position: absolute;
+  top: 43.5%;
+  left: 50%;
+  z-index: 2;
+  display: grid;
+  width: clamp(1.25rem, 4.6cqw, 1.65rem);
+  aspect-ratio: 1;
+  place-items: center;
+  transform: translate(-50%, -50%);
+  color: rgb(170 244 197);
+  font-size: clamp(0.33rem, 1.15cqw, 0.45rem);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.systems-berkat-branch-list {
+  position: absolute;
+  right: 0.58rem;
+  bottom: 0.52rem;
+  left: 0.58rem;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.2rem;
+}
+
+.systems-berkat-branch {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 0.22rem;
+  border: 1px solid rgb(121 190 148 / 0.09);
+  border-radius: 0.3rem;
+  background: rgb(255 255 255 / 0.018);
+  padding: 0.25rem 0.15rem;
+  color: rgb(172 198 186 / 0.5);
+  font-size: clamp(0.3rem, 0.95cqw, 0.41rem);
+  white-space: nowrap;
+}
+
+.systems-berkat-branch i {
+  width: 0.22rem;
+  height: 0.22rem;
+  border-radius: 50%;
+  background: rgb(96 224 146 / 0.85);
+  box-shadow: 0 0 0.35rem rgb(84 214 139 / 0.48);
+}
+
+.systems-berkat-workflow {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.28rem, 1.15cqw, 0.48rem);
+}
+
+.systems-berkat-flow-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: clamp(0.28rem, 1cqw, 0.42rem);
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid rgb(124 179 146 / 0.08);
+  border-radius: 0.46rem;
+  background: rgb(255 255 255 / 0.022);
+  padding: clamp(0.34rem, 1.2cqw, 0.48rem);
+}
+
+.systems-berkat-flow-row::after {
+  position: absolute;
+  inset: 0 auto 0 -55%;
+  width: 45%;
+  content: "";
+  background: linear-gradient(90deg, transparent, rgb(108 229 154 / 0.08), transparent);
+  animation: systems-berkat-row-scan 7s var(--ease-premium) infinite;
+}
+
+.systems-berkat-flow-row:nth-of-type(3)::after {
+  animation-delay: -4.6s;
+}
+
+.systems-berkat-flow-row:nth-of-type(4)::after {
+  animation-delay: -2.3s;
+}
+
+.systems-berkat-flow-avatar {
+  display: grid;
+  width: clamp(1.1rem, 3.8cqw, 1.45rem);
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid rgb(102 218 146 / 0.18);
+  border-radius: 0.38rem;
+  background: rgb(84 214 139 / 0.08);
+  color: rgb(137 225 170 / 0.78);
+  font-size: clamp(0.34rem, 1.1cqw, 0.44rem);
+  font-weight: 800;
+}
+
+.systems-berkat-flow-copy {
+  display: grid;
+  min-width: 0;
+  gap: 0.25rem;
+}
+
+.systems-berkat-flow-copy i {
+  display: block;
+  height: 0.2rem;
+  border-radius: 999px;
+  background: rgb(187 208 198 / 0.15);
+}
+
+.systems-berkat-flow-copy i:first-child {
+  width: 88%;
+}
+
+.systems-berkat-flow-copy i:last-child {
+  width: 58%;
+  opacity: 0.55;
+}
+
+.systems-berkat-flow-state {
+  border: 1px solid rgb(188 202 195 / 0.09);
+  border-radius: 999px;
+  padding: 0.22rem 0.32rem;
+  color: rgb(181 199 190 / 0.52);
+  font-size: clamp(0.29rem, 0.95cqw, 0.38rem);
+  font-weight: 700;
+}
+
+.systems-berkat-flow-state--done {
+  border-color: rgb(84 214 139 / 0.17);
+  background: rgb(84 214 139 / 0.07);
+  color: rgb(125 229 165 / 0.83);
+}
+
+/* Yallah Baggage --------------------------------------------------------- */
+
+.systems-visual--yallah {
+  background:
+    radial-gradient(circle at 73% 20%, rgb(90 190 255 / 0.18), transparent 34%),
+    radial-gradient(circle at 17% 80%, rgb(201 255 101 / 0.1), transparent 38%),
+    linear-gradient(145deg, rgb(8 18 31 / 0.98), rgb(5 11 21 / 0.98));
+}
+
+.systems-visual--yallah .systems-visual-grid {
+  opacity: 0.09;
+  transform: rotate(-7deg) scale(1.2);
+}
+
+.systems-visual--yallah .systems-visual-glow {
+  inset: auto;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  filter: blur(70px);
+  top: -24%;
+  right: -16%;
+  width: 68%;
+  background: rgb(85 184 255 / 0.24);
+}
+
+.systems-yallah-map {
+  position: absolute;
+  inset: 3% 0 0 -2%;
+  overflow: hidden;
+  border-radius: inherit;
+  opacity: 0.94;
+}
+
+.systems-yallah-map::before,
+.systems-yallah-map::after {
+  position: absolute;
+  border: 1px solid rgb(114 169 207 / 0.06);
+  border-radius: 42% 58% 50% 44%;
+  content: "";
+  pointer-events: none;
+}
+
+.systems-yallah-map::before {
+  inset: 13% 48% 49% -8%;
+  transform: rotate(16deg);
+  background: rgb(69 112 141 / 0.025);
+}
+
+.systems-yallah-map::after {
+  inset: 51% 58% -10% 4%;
+  transform: rotate(-14deg);
+  background: rgb(97 137 163 / 0.018);
+}
+
+.systems-yallah-route {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 0 1.1rem rgb(85 184 255 / 0.06));
+}
+
+.systems-yallah-map-road {
+  fill: none;
+  stroke: rgb(129 164 192 / 0.13);
+  stroke-linecap: round;
+  stroke-width: 13;
+  vector-effect: non-scaling-stroke;
+}
+
+.systems-yallah-map-road--thin {
+  stroke: rgb(133 171 202 / 0.095);
+  stroke-dasharray: 2 8;
+  stroke-width: 1;
+}
+
+.systems-yallah-route-line {
+  fill: none;
+  stroke-dasharray: 7 7;
+  stroke-linecap: round;
+  stroke-width: 2.2;
+  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 0 5px rgb(102 202 255 / 0.5));
+  animation: systems-yallah-route 8s linear infinite;
+}
+
+.systems-yallah-route-pins circle {
+  fill: rgb(7 18 29);
+  stroke: rgb(130 216 255 / 0.82);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 0 6px rgb(85 184 255 / 0.45));
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: systems-yallah-pin 3.2s ease-in-out infinite;
+}
+
+.systems-yallah-route-pins circle:nth-child(2) {
+  stroke: rgb(202 255 111 / 0.82);
+  animation-delay: -1.1s;
+}
+
+.systems-yallah-route-pins circle:nth-child(3) {
+  animation-delay: -2.2s;
+}
+
+.systems-yallah-location {
+  position: absolute;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  border: 1px solid rgb(119 197 236 / 0.13);
+  border-radius: 999px;
+  background: rgb(7 17 29 / 0.72);
+  padding: 0.3rem 0.46rem;
+  box-shadow:
+    0 0.7rem 1.5rem rgb(0 0 0 / 0.23),
+    inset 0 1px rgb(255 255 255 / 0.035);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: rgb(190 215 229 / 0.68);
+  font-size: clamp(0.38rem, 1.35cqw, 0.51rem);
+  font-weight: 700;
+  letter-spacing: 0.025em;
+}
+
+.systems-yallah-location i {
+  width: 0.3rem;
+  height: 0.3rem;
+  border-radius: 50%;
+  background: rgb(114 216 255);
+  box-shadow: 0 0 0.55rem rgb(85 184 255 / 0.78);
+}
+
+.systems-yallah-location--pickup {
+  top: 72%;
+  left: 5.5%;
+}
+
+.systems-yallah-location--airport {
+  top: 18%;
+  left: 57%;
+}
+
+.systems-yallah-location--airport i {
+  background: rgb(205 255 112);
+  box-shadow: 0 0 0.55rem rgb(201 255 101 / 0.65);
+}
+
+.systems-yallah-location--delivery {
+  top: 34%;
+  right: 4%;
+}
+
+.systems-yallah-phone {
+  position: absolute;
+  top: 50%;
+  right: clamp(0.75rem, 5cqw, 1.9rem);
+  z-index: 4;
+  width: clamp(7.7rem, 29cqw, 10.4rem);
+  aspect-ratio: 0.535;
+  transform: translateY(-50%) rotate(2.2deg);
+  border: 1px solid rgb(182 226 245 / 0.23);
+  border-radius: clamp(1.25rem, 4.4cqw, 1.75rem);
+  background: linear-gradient(145deg, rgb(42 62 75), rgb(8 16 25) 42%, rgb(31 47 58));
+  padding: clamp(0.28rem, 1.1cqw, 0.42rem);
+  box-shadow:
+    0 2.3rem 4rem -1.5rem rgb(0 0 0 / 0.9),
+    -0.9rem 0.6rem 3rem rgb(61 167 224 / 0.1),
+    inset 0 1px rgb(255 255 255 / 0.16);
+  animation: systems-yallah-phone-float 7s ease-in-out infinite;
+}
+
+.systems-yallah-phone::before {
+  position: absolute;
+  inset: 0.18rem;
+  z-index: -1;
+  border: 1px solid rgb(255 255 255 / 0.055);
+  border-radius: inherit;
+  content: "";
+}
+
+.systems-yallah-phone-speaker {
+  position: absolute;
+  top: clamp(0.48rem, 1.9cqw, 0.66rem);
+  left: 50%;
+  z-index: 3;
+  width: 30%;
+  height: 0.2rem;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: rgb(3 8 14 / 0.82);
+  box-shadow: 0 1px rgb(255 255 255 / 0.05);
+}
+
+.systems-yallah-phone-screen {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border-radius: calc(clamp(1.25rem, 4.4cqw, 1.75rem) - 0.3rem);
+  background:
+    radial-gradient(circle at 86% 0%, rgb(85 184 255 / 0.16), transparent 31%),
+    linear-gradient(160deg, rgb(12 29 47), rgb(5 13 24) 65%);
+  padding: clamp(1.1rem, 4.2cqw, 1.5rem) clamp(0.58rem, 2.4cqw, 0.85rem) clamp(0.65rem, 2.5cqw, 0.9rem);
+}
+
+.systems-yallah-phone-screen::after {
+  position: absolute;
+  inset: auto -45% -25%;
+  height: 50%;
+  border-radius: 50%;
+  background: rgb(201 255 101 / 0.045);
+  filter: blur(22px);
+  content: "";
+}
+
+.systems-yallah-phone-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: clamp(0.7rem, 3cqw, 1.05rem);
+}
+
+.systems-yallah-phone-logo {
+  display: grid;
+  width: clamp(1.05rem, 4cqw, 1.38rem);
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid rgb(111 207 255 / 0.27);
+  border-radius: 0.42rem;
+  background: rgb(85 184 255 / 0.1);
+  color: rgb(143 220 255);
+  font-family: var(--font-display);
+  font-size: clamp(0.42rem, 1.6cqw, 0.57rem);
+  font-weight: 850;
+}
+
+.systems-yallah-phone-user {
+  width: clamp(0.95rem, 3.6cqw, 1.22rem);
+  aspect-ratio: 1;
+  border: 1px solid rgb(255 255 255 / 0.09);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 35%, rgb(178 211 229 / 0.6) 0 18%, transparent 20%),
+    radial-gradient(circle at 50% 90%, rgb(178 211 229 / 0.38) 0 34%, transparent 36%),
+    rgb(16 36 53);
+}
+
+.systems-yallah-phone-kicker,
+.systems-yallah-phone-title {
+  display: block;
+}
+
+.systems-yallah-phone-kicker {
+  color: rgb(135 179 204 / 0.58);
+  font-size: clamp(0.35rem, 1.3cqw, 0.45rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.systems-yallah-phone-title {
+  margin-top: 0.18rem;
+  color: rgb(233 246 255);
+  font-family: var(--font-display);
+  font-size: clamp(0.82rem, 3.2cqw, 1.12rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.systems-yallah-phone-card {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: clamp(0.35rem, 1.5cqw, 0.52rem);
+  align-items: center;
+  margin-top: clamp(0.65rem, 2.8cqw, 0.95rem);
+  border: 1px solid rgb(121 203 244 / 0.14);
+  border-radius: clamp(0.58rem, 2.2cqw, 0.78rem);
+  background:
+    linear-gradient(145deg, rgb(255 255 255 / 0.045), transparent),
+    rgb(15 37 55 / 0.78);
+  padding: clamp(0.48rem, 1.9cqw, 0.68rem);
+  box-shadow: inset 0 1px rgb(255 255 255 / 0.035);
+}
+
+.systems-yallah-bag {
+  position: relative;
+  display: block;
+  width: clamp(1.05rem, 4cqw, 1.4rem);
+  height: clamp(1.22rem, 4.6cqw, 1.6rem);
+  border: 1px solid rgb(135 218 255 / 0.6);
+  border-radius: 0.27rem;
+  background: rgb(85 184 255 / 0.08);
+}
+
+.systems-yallah-bag::before {
+  position: absolute;
+  top: -0.3rem;
+  left: 26%;
+  width: 48%;
+  height: 0.35rem;
+  border: 1px solid rgb(135 218 255 / 0.52);
+  border-bottom: 0;
+  border-radius: 0.3rem 0.3rem 0 0;
+  content: "";
+}
+
+.systems-yallah-bag i {
+  position: absolute;
+  inset: auto 22% 18%;
+  height: 1px;
+  background: rgb(153 225 255 / 0.4);
+}
+
+.systems-yallah-phone-copy {
+  display: grid;
+  min-width: 0;
+  gap: 0.26rem;
+}
+
+.systems-yallah-phone-copy b {
+  overflow: hidden;
+  color: rgb(219 240 250 / 0.83);
+  font-size: clamp(0.38rem, 1.45cqw, 0.51rem);
+  font-weight: 750;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.systems-yallah-phone-copy i {
+  display: block;
+  width: 75%;
+  height: 0.2rem;
+  border-radius: 999px;
+  background: rgb(159 193 211 / 0.16);
+}
+
+.systems-yallah-phone-arrow {
+  color: rgb(132 212 250 / 0.68);
+  font-size: clamp(0.76rem, 2.8cqw, 1rem);
+}
+
+.systems-yallah-progress {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: clamp(0.55rem, 2.3cqw, 0.78rem);
+  margin-top: clamp(0.76rem, 3cqw, 1.05rem);
+  padding-left: clamp(0.2rem, 0.8cqw, 0.3rem);
+}
+
+.systems-yallah-progress-line {
+  position: absolute;
+  top: 0.3rem;
+  bottom: 0.3rem;
+  left: calc(clamp(0.2rem, 0.8cqw, 0.3rem) + 0.16rem);
+  width: 1px;
+  background: linear-gradient(rgb(201 255 101 / 0.72) 0 47%, rgb(114 155 180 / 0.16) 47%);
+}
+
+.systems-yallah-progress-stop {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.42rem;
+  color: rgb(143 174 192 / 0.5);
+  font-size: clamp(0.34rem, 1.3cqw, 0.45rem);
+  font-weight: 650;
+}
+
+.systems-yallah-progress-stop i {
+  z-index: 1;
+  display: block;
+  width: 0.34rem;
+  height: 0.34rem;
+  border: 1px solid rgb(120 160 183 / 0.32);
+  border-radius: 50%;
+  background: rgb(8 20 33);
+}
+
+.systems-yallah-progress-stop--done {
+  color: rgb(203 229 215 / 0.7);
+}
+
+.systems-yallah-progress-stop--done i {
+  border-color: rgb(201 255 101 / 0.7);
+  background: rgb(201 255 101 / 0.84);
+  box-shadow: 0 0 0.55rem rgb(201 255 101 / 0.35);
+}
+
+.systems-yallah-progress-stop--active {
+  color: rgb(162 220 248 / 0.88);
+}
+
+.systems-yallah-progress-stop--active i {
+  border-color: rgb(118 215 255 / 0.82);
+  background: rgb(9 26 40);
+  box-shadow:
+    0 0 0 0.16rem rgb(85 184 255 / 0.12),
+    0 0 0.75rem rgb(85 184 255 / 0.35);
+  animation: systems-yallah-active-stop 2.6s ease-in-out infinite;
+}
+
+.systems-yallah-flight-path {
+  position: absolute;
+  top: 34%;
+  left: 42%;
+  z-index: 3;
+  color: rgb(207 247 255 / 0.92);
+  font-size: clamp(0.55rem, 2cqw, 0.78rem);
+  filter: drop-shadow(0 0 7px rgb(95 206 255 / 0.75));
+  animation: systems-yallah-flight 9s var(--ease-premium) infinite;
+}
+
+@keyframes systems-berkat-bars {
+  0%,
+  100% {
+    transform: scaleY(0.82);
+    opacity: 0.66;
+  }
+
+  50% {
+    transform: scaleY(1.08);
+    opacity: 1;
+  }
+}
+
+@keyframes systems-berkat-network {
+  to {
+    stroke-dashoffset: -80;
+  }
+}
+
+@keyframes systems-berkat-core-pulse {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: scale(0.9);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes systems-berkat-row-scan {
+  0%,
+  34% {
+    transform: translateX(0);
+  }
+
+  68%,
+  100% {
+    transform: translateX(370%);
+  }
+}
+
+@keyframes systems-yallah-route {
+  to {
+    stroke-dashoffset: -112;
+  }
+}
+
+@keyframes systems-yallah-pin {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: scale(0.88);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes systems-yallah-phone-float {
+  0%,
+  100% {
+    transform: translateY(-50%) rotate(2.2deg);
+  }
+
+  50% {
+    transform: translateY(calc(-50% - 4px)) rotate(1.2deg);
+  }
+}
+
+@keyframes systems-yallah-active-stop {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 0.12rem rgb(85 184 255 / 0.1),
+      0 0 0.55rem rgb(85 184 255 / 0.25);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 0.24rem rgb(85 184 255 / 0.13),
+      0 0 0.9rem rgb(85 184 255 / 0.5);
+  }
+}
+
+@keyframes systems-yallah-flight {
+  0%,
+  12% {
+    opacity: 0;
+    transform: translate3d(-4.5rem, 3.2rem, 0) rotate(-18deg) scale(0.72);
+  }
+
+  26% {
+    opacity: 0.9;
+  }
+
+  68% {
+    opacity: 0.85;
+  }
+
+  82%,
+  100% {
+    opacity: 0;
+    transform: translate3d(4.8rem, -3.1rem, 0) rotate(12deg) scale(1.05);
+  }
+}
+
+@container (max-width: 28rem) {
+  .systems-berkat-window {
+    inset: 4% 2.5%;
+  }
+
+  .systems-berkat-shell {
+    grid-template-columns: 2.45rem minmax(0, 1fr);
+  }
+
+  .systems-berkat-main {
+    padding: 0.62rem;
+  }
+
+  .systems-berkat-metrics {
+    grid-template-columns: 1.45fr 0.75fr 0.75fr;
+  }
+
+  .systems-berkat-board {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  }
+
+  .systems-berkat-branch,
+  .systems-berkat-flow-state {
+    font-size: 0.32rem;
+  }
+
+  .systems-yallah-phone {
+    right: 0.75rem;
+    width: min(32cqw, 8.4rem);
+  }
+
+  .systems-yallah-location--delivery {
+    display: none;
+  }
+}
+
+@container (max-width: 21rem) {
+  .systems-berkat-sidebar {
+    display: none;
+  }
+
+  .systems-berkat-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .systems-berkat-filter,
+  .systems-berkat-metric:nth-child(3),
+  .systems-berkat-workflow {
+    display: none;
+  }
+
+  .systems-berkat-metrics {
+    grid-template-columns: 1.55fr 0.8fr;
+  }
+
+  .systems-berkat-board {
+    grid-template-columns: 1fr;
+  }
+
+  .systems-berkat-branch-map {
+    min-height: 6.75rem;
+  }
+
+  .systems-yallah-phone {
+    right: 0.45rem;
+    width: min(34cqw, 7.4rem);
+  }
+
+  .systems-yallah-location--airport {
+    left: 48%;
+  }
+
+  .systems-yallah-progress-stop:last-child {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .systems-berkat-window {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .systems-berkat-bars i,
+  .systems-berkat-map-lines path,
+  .systems-berkat-map-lines circle:first-of-type,
+  .systems-berkat-flow-row::after,
+  .systems-yallah-route-line,
+  .systems-yallah-route-pins circle,
+  .systems-yallah-phone,
+  .systems-yallah-progress-stop--active i,
+  .systems-yallah-flight-path {
+    animation: none !important;
+  }
+
+  .systems-berkat-flow-row::after,
+  .systems-yallah-flight-path {
+    display: none;
+  }
+}
