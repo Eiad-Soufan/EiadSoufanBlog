@@ -139,7 +139,7 @@ export default function SignatureField() {
             />
           </svg>
 
-          <div className="absolute left-1/2 top-1/2 z-10 h-14 w-14 -translate-x-1/2 -translate-y-1/2 sm:h-16 sm:w-16">
+          <div className="absolute left-1/2 top-1/2 z-10 h-12 w-[4.5rem] -translate-x-1/2 -translate-y-1/2 sm:h-14 sm:w-[5.25rem]">
             <BrandMark className="h-full w-full" />
             <span className="absolute left-1/2 top-[calc(100%+0.45rem)] block w-[8.5rem] -translate-x-1/2 text-center text-[0.46rem] font-bold uppercase leading-[1.35] tracking-[0.16em] text-muted sm:top-[calc(100%+0.5rem)] sm:text-[0.5rem]">
               {copy.home.signature.core}

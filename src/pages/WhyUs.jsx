@@ -123,7 +123,7 @@ function SystemBlueprint({ reduceMotion, content }) {
       </svg>
 
       <div className="blueprint-core">
-        <BrandMark className="h-12 w-12" />
+        <BrandMark className="h-10 w-16" />
         <span className="blueprint-core-label">{content.coherent}</span>
         <strong className="blueprint-core-name display-font">{content.system}</strong>
       </div>

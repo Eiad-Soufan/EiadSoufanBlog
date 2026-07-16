@@ -112,7 +112,7 @@ function CareerConstellation({ reduceMotion, content }) {
       <div className="career-constellation-glow" aria-hidden="true" />
 
       <div className="career-core">
-        <BrandMark className="h-14 w-14 sm:h-16 sm:w-16" />
+        <BrandMark className="h-12 w-[4.5rem] sm:h-14 sm:w-[5.25rem]" />
         <span className="career-core-role">{content.role}</span>
         <strong className="career-core-name display-font">Eiad Soufan</strong>
       </div>

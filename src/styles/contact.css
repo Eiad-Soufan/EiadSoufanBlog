@@ -453,8 +453,8 @@ button.contact-action {
 }
 
 .contact-signal-mark {
-  width: 2.6rem;
-  height: 2.6rem;
+  width: 3rem;
+  height: 2rem;
 }
 
 .contact-signal-core > strong {
@@ -1204,8 +1204,8 @@ button.contact-action {
   }
 
   .contact-signal-mark {
-    width: 2.25rem;
-    height: 2.25rem;
+    width: 2.7rem;
+    height: 1.75rem;
   }
 
   .contact-form {
