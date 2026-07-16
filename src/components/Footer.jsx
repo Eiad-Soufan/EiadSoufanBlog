@@ -5,14 +5,6 @@ import { useLocale } from "../i18n/LocaleContext";
 import "../styles/footer.css";
 import BrandMark from "./BrandMark";
 
-function ArrowIcon() {
-  return (
-    <svg viewBox="0 0 20 20" aria-hidden="true">
-      <path d="M4 10h11m-4.5-4.5L15 10l-4.5 4.5" />
-    </svg>
-  );
-}
-
 export default function Footer() {
   const year = new Date().getFullYear();
   const { copy, path } = useLocale();
@@ -38,16 +30,6 @@ export default function Footer() {
       <div className="site-footer-glow site-footer-glow--two" aria-hidden="true" />
 
       <div className="site-container site-footer-inner">
-        <div className="site-footer-cta">
-          <div>
-            <p><span aria-hidden="true" /> {copy.footer.kicker}</p>
-            <h2 className="display-font">{copy.footer.title}</h2>
-          </div>
-          <Link to={path("contact")} className="site-footer-cta-link">
-            {copy.footer.start} <ArrowIcon />
-          </Link>
-        </div>
-
         <div className="site-footer-main">
           <div className="site-footer-brand">
             <Link to={path("home")} className="site-footer-identity" aria-label={copy.common.nav.homeAria}>

@@ -412,8 +412,7 @@ html[lang="ar"] body :where(
     .approach-section-intro h2,
     .contact-section-heading h2,
     .systems-intro h2,
-    .systems-outro h2,
-    .site-footer-cta h2
+    .systems-outro h2
   ) {
   letter-spacing: normal;
   line-height: 1.26;
@@ -568,7 +567,6 @@ html[lang="ar"] body .contact-form-footer > p {
 
 /* Only directional arrows are mirrored; external-link glyphs remain familiar. */
 html[lang="ar"] body :where(
-    .site-footer-cta-link,
     .systems-outro-primary,
     .about-action:not([target="_blank"]),
     .approach-action:not([target="_blank"]),
