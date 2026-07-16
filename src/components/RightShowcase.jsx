@@ -1,5 +1,6 @@
 // src/components/RightShowcase.jsx
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
+import useHydrationSafeReducedMotion from "../hooks/useHydrationSafeReducedMotion";
 import { useEffect, useState } from "react";
 
 const CARD_W = 220;
@@ -28,7 +29,7 @@ function useIsMdUp() {
 }
 
 export default function RightShowcase() {
-  const reduce = useReducedMotion();
+  const reduce = useHydrationSafeReducedMotion();
   const isMd = useIsMdUp();
 
   // انتشار المروحة: أضيق على الشاشات الصغيرة
@@ -136,7 +137,7 @@ function CardFan({
   featured = false,
   lightPhoneUI = false,
 }) {
-  const reduce = useReducedMotion();
+  const reduce = useHydrationSafeReducedMotion();
   const color = getAccent(accent);
 
   const from = { x: 0, y: 0, rotate: 0, scale: 0.96, opacity: 0 };

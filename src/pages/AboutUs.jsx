@@ -1,568 +1,561 @@
-// src/pages/AboutUs.jsx
-import { motion } from 'framer-motion';
-import { useEffect } from 'react';
+import {
+  motion as Motion,
+  useScroll,
+  useSpring,
+} from "framer-motion";
+import { useMemo, useRef } from "react";
+import { Link } from "react-router-dom";
+import BrandMark from "../components/BrandMark";
+import {
+  capabilityPillars as baseCapabilityPillars,
+  career as baseCareer,
+  education as baseEducation,
+  publications as basePublications,
+  recognitions as baseRecognitions,
+} from "../data/about";
+import { profile } from "../data/profile";
+import useHydrationSafeReducedMotion from "../hooks/useHydrationSafeReducedMotion";
+import { useLocale } from "../i18n/LocaleContext";
+import "../styles/about.css";
 
-// ===== Easing موحّد
-const easing = [0.22, 1, 0.36, 1];
+const premiumEase = [0.22, 1, 0.36, 1];
 
-/* يحرك القسم بالكامل ويُكاسْكِد العناصر */
-const sectionParent = {
-  hidden: { opacity: 0, y: 20 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      ease: easing,
-      duration: 0.55,
-      staggerChildren: 0.06,
-      delayChildren: 0.04,
-    },
-  },
+const reveal = {
+  hidden: { opacity: 0, y: 24, filter: "blur(7px)" },
+  visible: { opacity: 1, y: 0, filter: "blur(0px)" },
 };
 
-/* عنصر فردي: دخول “بريميوم” */
-const fadeUp = {
-  hidden: { opacity: 0, y: 16, scale: 0.98, filter: "blur(4px)" },
-  show: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    filter: "blur(0px)",
-    transition: { type: "spring", stiffness: 140, damping: 18, mass: 0.7 },
-  },
-};
+function ArrowIcon({ external = false }) {
+  return (
+    <svg viewBox="0 0 20 20" aria-hidden="true">
+      {external ? (
+        <path d="M7 5h8v8M15 5 6 14" />
+      ) : (
+        <path d="M4 10h11m-4.5-4.5L15 10l-4.5 4.5" />
+      )}
+    </svg>
+  );
+}
 
-/* عنوان قسم بمسافات مضبوطة */
-const SectionTitle = ({ children, className = '' }) => (
-  <motion.h2
-    className={`text-4xl font-extrabold text-center mb-6 bg-clip-text text-transparent
-                bg-gradient-to-b from-indigo-200 via-violet-200 to-sky-200 drop-shadow ${className}`}
-    variants={fadeUp}
-  >
-    {children}
-  </motion.h2>
-);
-
-/* بطاقة زجاجية عامة */
-const GlassCard = ({ title, icon, children }) => (
-  <motion.div
-    className="rounded-2xl p-6 ring-1 ring-white/10 bg-white/5 backdrop-blur-md shadow-lg
-               transition-colors duration-300 hover:bg-white/7 hover:ring-white/20"
-    variants={fadeUp}
-    whileHover={{ y: -6, scale: 1.015 }}
-    transition={{ type: "spring", stiffness: 180, damping: 18, mass: 0.6 }}
-  >
-    {title ? (
-      <h3 className="text-xl font-bold text-indigo-100 mb-2">
-        {title} {icon && <span className="ml-2">{icon}</span>}
-      </h3>
-    ) : null}
-    <div className="text-indigo-100/90 leading-relaxed">{children}</div>
-  </motion.div>
-);
-
-export default function AboutUs() {
-  // ===== على دخول الصفحة: نضمن الرجوع لأعلى الصفحة
-  useEffect(() => {
-    // scroll to top on mount فقط
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
-  }, []);
-
-  // ===== Basic SEO (no deps): title/meta/OG/Twitter + JSON-LD (Person) =====
-  useEffect(() => {
-    const title = "About Eiad Abdulhadi Soufan — Frontend, Backend & AI";
-    const description =
-      "Senior full-stack engineer. Modern React/Tailwind UIs, Django/DRF APIs, and applied AI (LLMs, RAG, embeddings). Led teams, shipped production systems, and taught across universities.";
-    const keywords =
-      "Eiad Abdulhadi Soufan, React, Tailwind, Framer Motion, Django, DRF, PostgreSQL, CI/CD, Docker, Nginx, AI, LLMs, RAG, embeddings, full-stack, Malaysia, Kuala Lumpur";
-
-    document.title = title;
-
-    const setMeta = (name, content, attr = "name") => {
-      let el = document.querySelector(`meta[${attr}="${name}"]`);
-      if (!el) {
-        el = document.createElement("meta");
-        el.setAttribute(attr, name);
-        document.head.appendChild(el);
-      }
-      el.setAttribute("content", content);
-    };
-
-    setMeta("description", description);
-    setMeta("keywords", keywords);
-    setMeta("og:title", title, "property");
-    setMeta("og:description", description, "property");
-    setMeta("og:type", "profile", "property");
-    setMeta("twitter:card", "summary_large_image");
-
-    // JSON-LD Person
-    const ldId = "ld-about-jsonld";
-    let ld = document.getElementById(ldId);
-    if (!ld) {
-      ld = document.createElement("script");
-      ld.type = "application/ld+json";
-      ld.id = ldId;
-      document.head.appendChild(ld);
-    }
-    ld.textContent = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Eiad Abdulhadi Soufan",
-      "jobTitle": "Senior Full-Stack Engineer (React, Django, AI)",
-      "knowsAbout": [
-        "React", "Tailwind CSS", "Framer Motion",
-        "Django", "Django REST Framework", "PostgreSQL",
-        "DevOps", "CI/CD", "Docker", "Nginx",
-        "AI", "LLMs", "RAG", "Embeddings", "Analytics"
-      ],
-      "url": "https://example.com/about",
-      "homeLocation": "Kuala Lumpur, Malaysia",
-      "sameAs": []
-    });
-  }, []);
+function CapabilityIcon({ index }) {
+  const icons = {
+    "01": (
+      <>
+        <path d="M5 7.5 12 3l7 4.5-7 4.5-7-4.5Z" />
+        <path d="m5 12 7 4.5 7-4.5M5 16.5 12 21l7-4.5" />
+      </>
+    ),
+    "02": (
+      <>
+        <circle cx="12" cy="12" r="3" />
+        <circle cx="12" cy="4.5" r="1.5" />
+        <circle cx="19" cy="15.5" r="1.5" />
+        <circle cx="5" cy="15.5" r="1.5" />
+        <path d="m12 6 0 3m2.8 4.5 2.8 1.4M9.2 13.5l-2.8 1.4" />
+      </>
+    ),
+    "03": (
+      <>
+        <rect x="3" y="5" width="18" height="14" rx="2.5" />
+        <path d="M3 9h18M7 3v4m10-4v4M8 14h3m2 0h3" />
+      </>
+    ),
+    "04": (
+      <>
+        <circle cx="12" cy="7.5" r="3" />
+        <path d="M5.5 21v-2.5A4.5 4.5 0 0 1 10 14h4a4.5 4.5 0 0 1 4.5 4.5V21" />
+        <path d="M4.5 9.5a2.5 2.5 0 1 0 0 5M19.5 9.5a2.5 2.5 0 1 1 0 5" />
+      </>
+    ),
+  };
 
   return (
-    /* ===== غلاف الصفحة بخلفية ثابتة ===== */
-    <section className="relative min-h-screen overflow-hidden text-indigo-50">
-      {/* الخلفية */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              'linear-gradient(180deg, #0b1020 0%, #141229 40%, #0f172a 100%)',
-          }}
-        />
-        <div
-          aria-hidden
-          className="absolute -top-14 -left-10 h-[420px] w-[560px] blur-2xl opacity-40"
-          style={{
-            background:
-              'radial-gradient(50% 50% at 50% 50%, rgba(99,102,241,0.22), transparent 60%)',
-          }}
-        />
-        <div
-          aria-hidden
-          className="absolute -bottom-16 -right-12 h-[500px] w-[720px] blur-[36px] opacity-35"
-          style={{
-            background:
-              'radial-gradient(50% 50% at 50% 50%, rgba(56,189,248,0.20), transparent 62%)',
-          }}
-        />
-        <div
-          aria-hidden
-          className="absolute top-[22%] left-[12%] h-[260px] w-[260px] blur-2xl opacity-22"
-          style={{
-            background:
-              'radial-gradient(50% 50% at 50% 50%, rgba(168,85,247,0.16), transparent 65%)',
-          }}
-        />
-        <div
-          aria-hidden
-          className="absolute top-[36%] right-[14%] h-[300px] w-[300px] blur-2xl opacity-22"
-          style={{
-            background:
-              'radial-gradient(50% 50% at 50% 50%, rgba(99,102,241,0.16), transparent 65%)',
-          }}
-        />
-        <div
-          aria-hidden
-          className="absolute inset-0 opacity-[0.05] mix-blend-screen"
-          style={{
-            backgroundImage:
-              'radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.8) 1px, transparent 1px), radial-gradient(1px 1px at 80% 70%, rgba(255,255,255,0.75) 1px, transparent 1px), radial-gradient(1px 1px at 60% 20%, rgba(255,255,255,0.7) 1px, transparent 1px), radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.7) 1px, transparent 1px)',
-            backgroundSize: '220px 220px, 240px 240px, 260px 260px, 280px 280px',
-          }}
-        />
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      {icons[index]}
+    </svg>
+  );
+}
+
+function SectionIntro({ eyebrow, title, copy, align = "left" }) {
+  return (
+    <Motion.div
+      className={`about-section-intro about-section-intro--${align}`}
+      variants={reveal}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.5 }}
+      transition={{ duration: 0.65, ease: premiumEase }}
+    >
+      <p className="about-eyebrow">
+        <span aria-hidden="true" />
+        {eyebrow}
+      </p>
+      <h2 className="display-font">{title}</h2>
+      {copy ? <p className="about-section-copy">{copy}</p> : null}
+    </Motion.div>
+  );
+}
+
+function CareerConstellation({ reduceMotion, content }) {
+  return (
+    <Motion.div
+      className="career-constellation"
+      data-motion={reduceMotion ? "paused" : "running"}
+      initial={reduceMotion ? false : { opacity: 0, scale: 0.94, rotate: -2 }}
+      animate={{ opacity: 1, scale: 1, rotate: 0 }}
+      transition={{ duration: 0.9, delay: 0.15, ease: premiumEase }}
+      aria-label={content.aria}
+    >
+      <div className="career-constellation-grid" aria-hidden="true" />
+      <div className="career-orbit career-orbit--outer" aria-hidden="true" />
+      <div className="career-orbit career-orbit--inner" aria-hidden="true" />
+      <div className="career-constellation-glow" aria-hidden="true" />
+
+      <div className="career-core">
+        <BrandMark className="h-12 w-[4.5rem] sm:h-14 sm:w-[5.25rem]" />
+        <span className="career-core-role">{content.role}</span>
+        <strong className="career-core-name display-font">Eiad Soufan</strong>
       </div>
 
-      {/* المحتوى */}
-      <div className="relative z-10 px-6 py-16 md:py-20 max-w-6xl mx-auto">
-        {/* ===== About Eiad ===== */}
-        <motion.section
-          className="scroll-mt-24"
-          variants={sectionParent}
+      <span className="career-node career-node--backend">
+        <i aria-hidden="true" /> {content.nodes[0]}
+      </span>
+      <span className="career-node career-node--ai">
+        <i aria-hidden="true" /> {content.nodes[1]}
+      </span>
+      <span className="career-node career-node--product">
+        <i aria-hidden="true" /> {content.nodes[2]}
+      </span>
+      <span className="career-node career-node--delivery">
+        <i aria-hidden="true" /> {content.nodes[3]}
+      </span>
+
+      <div className="career-signal" aria-hidden="true">
+        <span />
+        <span />
+        <span />
+        <span />
+      </div>
+
+      <div className="career-constellation-caption">
+        {content.captions.map((caption) => <span key={caption}>{caption}</span>)}
+      </div>
+    </Motion.div>
+  );
+}
+
+function CapabilityCard({ pillar, index, reduceMotion, skillsAria }) {
+  return (
+    <Motion.article
+      className={`capability-card capability-card--${pillar.accent}`}
+      variants={reveal}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.28 }}
+      transition={{ duration: 0.62, delay: reduceMotion ? 0 : index * 0.055, ease: premiumEase }}
+    >
+      <div className="capability-card-topline">
+        <span className="capability-icon">
+          <CapabilityIcon index={pillar.index} />
+        </span>
+        <span className="capability-index">{pillar.index}</span>
+      </div>
+      <h3 className="display-font">{pillar.title}</h3>
+      <p>{pillar.summary}</p>
+      <ul aria-label={`${pillar.title} — ${skillsAria}`}>
+        {pillar.skills.map((skill) => (
+          <li key={skill} dir="auto">{skill}</li>
+        ))}
+      </ul>
+    </Motion.article>
+  );
+}
+
+function CareerTimeline({ reduceMotion, items, currentLabel }) {
+  const timelineRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ["start 76%", "end 64%"],
+  });
+  const lineProgress = useSpring(scrollYProgress, {
+    stiffness: 105,
+    damping: 24,
+    restDelta: 0.001,
+  });
+
+  return (
+    <div className="career-timeline" ref={timelineRef}>
+      <span className="career-timeline-line" aria-hidden="true" />
+      <Motion.span
+        className="career-timeline-progress"
+        style={{ scaleY: reduceMotion ? 1 : lineProgress }}
+        aria-hidden="true"
+      />
+
+      {items.map((position, index) => (
+        <Motion.article
+          className="career-entry"
+          key={`${position.company}-${position.period}`}
+          variants={reveal}
           initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.35 }}   // ← مرة واحدة فقط
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.65, delay: reduceMotion ? 0 : index * 0.04, ease: premiumEase }}
         >
-          <SectionTitle className="mt-4 mb-8">About Eiad</SectionTitle>
-
-          <motion.p
-            className="max-w-3xl mx-auto text-lg mb-12 text-indigo-100/90 text-center"
-            variants={fadeUp}
-          >
-            I’m <span className="font-bold text-indigo-200">Eiad Abdulhadi Soufan</span>,
-            a senior full-stack engineer focused on{" "}
-            <strong>modern React frontends</strong>,{" "}
-            <strong>reliable Django/DRF APIs</strong>, and{" "}
-            <strong>applied AI</strong> features. I lead roadmaps, ship to production,
-            and teach best practices that teams can adopt quickly.
-          </motion.p>
-
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 gap-8"
-            variants={fadeUp}
-          >
-            <GlassCard title="Frontend Engineer" icon="🖥️">
-              React with Tailwind & Framer Motion. Accessible, responsive UIs with
-              component systems that feel fast and polished.
-            </GlassCard>
-            <GlassCard title="Backend Engineer" icon="🔗">
-              Django/DRF with versioned REST endpoints, JWT/OAuth, caching & pagination,
-              plus PostgreSQL modeling and performance tuning.
-            </GlassCard>
-            <GlassCard title="AI Engineer" icon="🧠">
-              LLM integration, RAG with embeddings/vector search, prompt design, and
-              data pipelines that unlock real product value.
-            </GlassCard>
-            <GlassCard title="Leader & Educator" icon="👥">
-              Roadmaps, estimates, code reviews, onboarding docs, and workshops that
-              lift teams while keeping delivery predictable.
-            </GlassCard>
-            <GlassCard title="Data & Analytics" icon="📊">
-              Python/SQL pipelines, metrics and dashboards, and exports/reporting for
-              decision-making across product and ops.
-            </GlassCard>
-            <GlassCard title="Research & Publications" icon="🧪">
-              Evidence-driven experiments and peer-reviewed work; when needed, I validate
-              approaches with benchmarks—not guesswork.
-            </GlassCard>
-          </motion.div>
-        </motion.section>
-
-        {/* ===== Professional Experience ===== */}
-        <motion.section
-          className="mt-16 scroll-mt-24"
-          variants={sectionParent}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.38 }}   // ← مرة واحدة فقط
-        >
-          <SectionTitle>Professional Experience</SectionTitle>
-
-          <div className="space-y-10 text-left">
-            <GlassCard title="Berkat Madinah Sdn. Bhd. · Kuala Lumpur, Malaysia" icon="🏢">
-              <p className="mt-2">
-                Food & retail group with multiple branches undergoing digital transformation.
-              </p>
-              <p className="mt-2">
-                <strong>Software Engineer (Mar 2025 – Present):</strong> Company portal,
-                internal forms/complaints workflows, dashboards, and reporting APIs with
-                CI/CD and observability.
-              </p>
-            </GlassCard>
-
-            <GlassCard title="Yalla Baggage · Dubai, UAE" icon="✈️">
-              <p className="mt-2">
-                Airport logistics platform enabling smart baggage tracking and delivery.
-              </p>
-              <p className="mt-2">
-                <strong>Team Lead — Platform (Feb 2025 – Jun 2025):</strong> Real-time
-                tracking, scalable Django/DRF backend, JWT auth, Flutter client, and admin
-                dashboards—iterated with measurable APIs.
-              </p>
-            </GlassCard>
-
-            <GlassCard title="Homs University · Homs, Syria" icon="🎓">
-              <p className="mt-2">
-                4th ranked university in Syria with a leading informatics faculty.
-              </p>
-              <p className="mt-2">
-                <strong>Information Systems Developer (Oct 2021 – Jan 2025):</strong>{" "}
-                Automation for university processes and faculty websites.
-              </p>
-              <p>
-                <strong>Teacher (Mar 2019 – Jan 2025):</strong> AI, software engineering,
-                databases, multimedia, and more across six faculties.
-              </p>
-            </GlassCard>
-
-            <GlassCard title="Al-Andalus Hospital · Homs, Syria" icon="🏥">
-              <p className="mt-2">
-                Major healthcare facility; designed the 13-floor network and database
-                infrastructure to support hospital operations.
-              </p>
-              <p className="mt-2">
-                <strong>Network/IT/DB Designer (Jan 2022 – Jan 2024):</strong> End-to-end
-                documentation and implementation with the construction team.
-              </p>
-            </GlassCard>
-
-            <GlassCard title="Shababek Institute · Homs, Syria" icon="🏫">
-              <p className="mt-2">
-                Private training institute focused on practical digital skills.
-              </p>
-              <p className="mt-2">
-                <strong>Teacher & IT Trainer (Mar 2019 – Jan 2025):</strong> Courses in AI,
-                software engineering, networks, and programming (Java, C++, Python).
-              </p>
-            </GlassCard>
+          <div className="career-entry-marker" aria-hidden="true">
+            <span />
           </div>
-        </motion.section>
 
-        {/* ===== Contributions ===== */}
-        <motion.section
-          className="mt-16 scroll-mt-24"
-          variants={sectionParent}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.4 }}    // ← مرة واحدة فقط
-        >
-          <SectionTitle>Contributions</SectionTitle>
-
-          <div className="space-y-10 text-left">
-            <GlassCard title="MTN · Syria" icon="📺">
-              <p className="mt-2">
-                Telecommunications provider. Contributed to IPTV app updates and a YouTube
-                service integration using React.
-              </p>
-            </GlassCard>
-
-            <GlassCard title="ShamFM · Syria" icon="🛰️">
-              <p className="mt-2">
-                Popular Syrian station. Rebuilt backend with Django as part of a full
-                website redevelopment.
-              </p>
-            </GlassCard>
+          <div className="career-entry-meta">
+            <span className="career-period">{position.period}</span>
+            <span>{position.location}</span>
           </div>
-        </motion.section>
 
-        {/* ===== Freelance & Projects ===== */}
-        <motion.section
-          className="mt-16 scroll-mt-24"
-          variants={sectionParent}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.42 }}   // ← مرة واحدة فقط
-        >
-          <SectionTitle>Freelance & Projects</SectionTitle>
-
-          <div className="space-y-10 text-left">
-            <GlassCard title="ProCafe Restaurant Management System" icon="🍽️">
-              <ul className="list-disc pl-6 mt-2 space-y-1">
-                <li><strong>Inventory:</strong> Real-time/monthly/annual tracking and alerts.</li>
-                <li><strong>Staff & Performance:</strong> Activity monitoring and audit trails.</li>
-                <li><strong>Billing:</strong> Sales/purchase invoicing with exports & reports.</li>
-              </ul>
-            </GlassCard>
-
-            <GlassCard title="Network Intrusion Detection (DL)" icon="🛡️">
-              <ul className="list-disc pl-6 mt-2 space-y-1">
-                <li>CNN/RNN pipelines for anomaly detection in network traffic.</li>
-                <li>Improved precision/recall with feature engineering and tuning.</li>
-              </ul>
-            </GlassCard>
-
-            <GlassCard title="Crypto Price Prediction (RNN)" icon="📈">
-              <p className="mt-2">
-                Time-series modeling for cryptocurrency prices using recurrent networks.
-              </p>
-            </GlassCard>
-
-            <GlassCard title="Sign Language Recognition" icon="🤟">
-              <p className="mt-2">
-                Deep-learning models to interpret sign language for assistive interfaces.
-              </p>
-            </GlassCard>
-
-            <GlassCard title="Synthetic Medical Images (GANs)" icon="🧬">
-              <ul className="list-disc pl-6 mt-2 space-y-1">
-                <li>GAN-based augmentation for COVID-19 datasets to improve diagnostic accuracy.</li>
-                <li>Boosted generalization with controlled synthesis and validation.</li>
-              </ul>
-            </GlassCard>
-          </div>
-        </motion.section>
-
-        {/* ===== Publications ===== */}
-        <motion.section
-          className="mt-16 scroll-mt-24"
-          variants={sectionParent}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.42 }}   // ← مرة واحدة فقط
-        >
-          <SectionTitle>Publications</SectionTitle>
-
-          <div className="space-y-10 text-left">
-            <GlassCard>
-              <h3 className="text-lg font-bold text-indigo-100">
-                How do college courses and materials affect students’ logical thinking of the Medical College at Al Baath University in Syria
-              </h3>
-              <p className="text-sm text-indigo-200 mt-1">
-                Soufan EA, Bairkdar BO, Soufan BA, Samaan M. Educ Médica. 2023;24(3):100797.{` `}
-                <a
-                  href="http://dx.doi.org/10.1016/j.edumed.2023.100797"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline hover:text-white"
-                >
-                  View Paper
-                </a>
-              </p>
-              <ul className="list-disc pl-6 mt-2 space-y-1">
-                <li>Pioneering research on logical thinking; cited in the 2024 Homs University accreditation report.</li>
-                <li>Proposed a modified Test of Logical Thinking (TOLT).</li>
-                <li>Top-20 most-read in Educación Médica for 3 months (Feb–Apr 2023).</li>
-                <li>Invited lecture at Faculty of Medicine, Homs University (May 2023).</li>
-                <li>Cited by 3 research studies.</li>
-              </ul>
-            </GlassCard>
-
-            <GlassCard>
-              <h3 className="text-lg font-bold text-indigo-100">
-                Studying the effect of COVID-19 on mental health: Comparing levels of anxiety in the Arab society before and after the COVID-19 pandemic
-              </h3>
-              <p className="text-sm text-indigo-200 mt-1">
-                Soufan EA, Bairkdar BO & Soufan BA. QScience Connect. 2022;2022(2).{` `}
-                <a
-                  href="http://dx.doi.org/10.5339/connect.2022.spt.3"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline hover:text-white"
-                >
-                  View Paper
-                </a>
-              </p>
-            </GlassCard>
-
-            <GlassCard>
-              <h3 className="text-lg font-bold text-indigo-100">
-                Assessing the validity of society individuals' information about COVID-19 and its references nature that reflect to disease spreading
-              </h3>
-              <p className="text-sm text-indigo-200 mt-1">
-                Soufan EA & Soufan BA. AJSP. 2020;2020 (25).{` `}
-                <a
-                  href="https://www.ajsp.net/research/%D8%AA%D9%82%D9%8A%D9%8A%D9%85_%D8%B5%D8%AD%D8%A9_%D9%85%D8%B9%D9%84%D9%88%D9%85%D8%A7%D8%AA_%D8%A3%D9%81%D8%B1%D8%A7%D8%AF_%D8%A7%D9%84%D9%85%D8%AC%D8%AA%D9%85%D8%B9_%D8%AD%D9%88%D9%84_%D9%83%D9%88%D9%81%D9%8A%D8%AF_19.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline hover:text-white"
-                >
-                  View PDF
-                </a>
-              </p>
-            </GlassCard>
-          </div>
-        </motion.section>
-
-        {/* ===== Core Skills ===== */}
-        <motion.section
-          className="mt-16 scroll-mt-24"
-          variants={sectionParent}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.45 }}   // ← مرة واحدة فقط
-        >
-          <SectionTitle>Core Skills</SectionTitle>
-
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
-            variants={fadeUp}
-          >
-            {/* Advanced — Rose Glass */}
-            <div className="relative rounded-2xl p-[1px]
-                    bg-gradient-to-br from-rose-500/55 via-rose-400/35 to-rose-600/45">
-              <div className="relative overflow-hidden rounded-2xl h-full w-full
-                      bg-white/[0.06] backdrop-blur-xl p-6 ring-1 ring-white/15
-                      shadow-[0_10px_35px_-10px_rgba(244,63,94,0.35)]
-                      transition-colors duration-300 hover:bg-white/[0.08] hover:ring-white/25">
-                <div aria-hidden className="pointer-events-none absolute -inset-24 opacity-25 blur-3xl"
-                  style={{ background: 'radial-gradient(60% 60% at 30% 30%, rgba(244,63,94,0.45), transparent 60%)' }} />
-                <div aria-hidden className="pointer-events-none absolute top-0 left-0 w-40 h-40 opacity-20 rotate-12"
-                  style={{ background: 'conic-gradient(from 0deg, rgba(255,255,255,0.35), transparent 40%)' }} />
-                <div aria-hidden className="pointer-events-none absolute inset-0 mix-blend-soft-light opacity-[0.07]"
-                  style={{ backgroundImage: 'radial-gradient(1px 1px at 25% 35%, #fff 1px, transparent 1px), radial-gradient(1px 1px at 70% 65%, #fff 1px, transparent 1px)', backgroundSize: '200px 200px' }} />
-                <h3 className="relative text-xl font-bold text-rose-200/95 mb-4 drop-shadow">Advanced</h3>
-                <div className="relative flex flex-wrap gap-2">
-                  {[
-                    'React', 'Tailwind CSS', 'Framer Motion',
-                    'Django', 'Django REST Framework', 'Python',
-                    'PostgreSQL', 'Docker', 'GitHub Actions', 'Nginx',
-                    'RAG', 'Embeddings', 'Prompt Engineering',
-                    'Software Engineering', 'Team Leading'
-                  ].map((s, i) => (
-                    <span key={i}
-                      className="inline-flex items-center px-3 py-1 rounded-full
-                         bg-rose-400/10 text-rose-50 ring-1 ring-rose-300/30
-                         hover:bg-rose-400/15 hover:ring-rose-200/40 transition-colors text-sm">
-                      {s}
-                    </span>
-                  ))}
-                </div>
+          <div className="career-entry-card">
+            <div className="career-entry-heading">
+              <div>
+                <p>{position.role}</p>
+                <h3 className="display-font">{position.company}</h3>
               </div>
+              {position.current ? (
+                <span className="career-current">
+                  <i aria-hidden="true" /> {currentLabel}
+                </span>
+              ) : null}
+            </div>
+            <p className="career-entry-summary">{position.summary}</p>
+            <ul>
+              {position.highlights.map((highlight) => (
+                <li key={highlight}>{highlight}</li>
+              ))}
+            </ul>
+          </div>
+        </Motion.article>
+      ))}
+    </div>
+  );
+}
+
+function EducationCard({ item, index, reduceMotion, researchLabel }) {
+  return (
+    <Motion.article
+      className="education-card"
+      variants={reveal}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.35 }}
+      transition={{ duration: 0.6, delay: reduceMotion ? 0 : index * 0.05, ease: premiumEase }}
+    >
+      <div className="education-card-year">{item.period}</div>
+      <div>
+        {item.status ? <span className="education-status">{item.status}</span> : null}
+        <h3 className="display-font">{item.degree}</h3>
+        <p className="education-institution">{item.institution}</p>
+        {item.detail ? <p className="education-detail">{item.detail}</p> : null}
+        {item.research ? (
+          <p className="education-research">
+            <span>{researchLabel}</span>
+            {item.research}
+          </p>
+        ) : null}
+      </div>
+    </Motion.article>
+  );
+}
+
+export default function AboutUs() {
+  const reduceMotion = useHydrationSafeReducedMotion();
+  const { copy, locale, path } = useLocale();
+  const content = copy.about;
+  const capabilityPillars = useMemo(
+    () => baseCapabilityPillars.map((item, index) => ({ ...item, ...content.capabilities[index] })),
+    [content.capabilities],
+  );
+  const career = useMemo(
+    () => baseCareer.map((item, index) => ({ ...item, ...content.career[index] })),
+    [content.career],
+  );
+  const education = useMemo(
+    () => baseEducation.map((item, index) => ({ ...item, ...content.education[index] })),
+    [content.education],
+  );
+  const recognitions = useMemo(
+    () => baseRecognitions.map((item, index) => ({ ...item, ...content.recognitions[index] })),
+    [content.recognitions],
+  );
+  const publications = useMemo(
+    () => basePublications.map((item, index) => ({
+      ...item,
+      title: content.publications[index],
+      titleLanguage: content.publications[index] === item.title ? "en" : undefined,
+    })),
+    [content.publications],
+  );
+
+  return (
+    <div className="about-page">
+      <section className="about-hero">
+        <div className="about-hero-noise" aria-hidden="true" />
+        <div className="about-hero-aurora about-hero-aurora--one" aria-hidden="true" />
+        <div className="about-hero-aurora about-hero-aurora--two" aria-hidden="true" />
+
+        <div className="site-container about-hero-grid">
+          <Motion.div
+            className="about-hero-copy"
+            initial={reduceMotion ? false : "hidden"}
+            animate="visible"
+            transition={{ staggerChildren: reduceMotion ? 0 : 0.07 }}
+          >
+            <Motion.p
+              className="about-eyebrow"
+              variants={reveal}
+              transition={{ duration: 0.5, ease: premiumEase }}
+            >
+              <span aria-hidden="true" /> {content.hero.eyebrow}
+            </Motion.p>
+
+            <Motion.h1
+              className="hero-title-scale display-font"
+              variants={reveal}
+              transition={{ duration: 0.65, ease: premiumEase }}
+            >
+              {content.hero.titleBefore} <em>{content.hero.titleAccent}</em>
+            </Motion.h1>
+
+            <Motion.p
+              className="about-hero-lead"
+              variants={reveal}
+              transition={{ duration: 0.62, ease: premiumEase }}
+            >
+              {content.hero.leadBefore} <strong>{copy.common.name}</strong>
+              {locale === "ar" ? "،" : ","}{" "}
+              {content.hero.leadAfter}
+            </Motion.p>
+
+            <Motion.div
+              className="about-hero-actions"
+              variants={reveal}
+              transition={{ duration: 0.58, ease: premiumEase }}
+            >
+              <Link to={path("home", "#selected-work")} className="about-action about-action--primary">
+                {content.hero.explore} <ArrowIcon />
+              </Link>
+              <Link to={path("contact")} className="about-action about-action--secondary">
+                {content.hero.start}
+              </Link>
+            </Motion.div>
+
+            <Motion.dl
+              className="about-hero-facts"
+              variants={reveal}
+              transition={{ duration: 0.6, ease: premiumEase }}
+            >
+              {content.hero.facts.map((fact) => (
+                <div key={fact.label}>
+                  <dt>{fact.label}</dt>
+                  <dd>{fact.value}</dd>
+                </div>
+              ))}
+            </Motion.dl>
+          </Motion.div>
+
+          <CareerConstellation reduceMotion={reduceMotion} content={content.constellation} />
+        </div>
+      </section>
+
+      <section className="about-capabilities">
+        <div className="site-container">
+          <div className="about-capability-layout">
+            <div className="about-capability-sticky">
+              <SectionIntro
+                eyebrow={content.capabilitiesIntro.eyebrow}
+                title={content.capabilitiesIntro.title}
+                copy={content.capabilitiesIntro.copy}
+              />
+
+              <Motion.div
+                className="about-principle"
+                variants={reveal}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.6 }}
+                transition={{ duration: 0.65, ease: premiumEase }}
+              >
+                <span>{content.capabilitiesIntro.principleLabel}</span>
+                <blockquote>
+                  {locale === "ar" ? "«" : "“"}
+                  {content.capabilitiesIntro.principle}
+                  {locale === "ar" ? "»" : "”"}
+                </blockquote>
+              </Motion.div>
             </div>
 
-            {/* Intermediate — Amber Glass */}
-            <div className="relative rounded-2xl p-[1px]
-                    bg-gradient-to-br from-amber-400/60 via-amber-300/35 to-yellow-300/45">
-              <div className="relative overflow-hidden rounded-2xl h-full w-full
-                      bg-white/[0.06] backdrop-blur-xl p-6 ring-1 ring-white/15
-                      shadow-[0_10px_35px_-10px_rgba(245,158,11,0.35)]
-                      transition-colors duration-300 hover:bg-white/[0.08] hover:ring-white/25">
-                <div aria-hidden className="pointer-events-none absolute -inset-24 opacity-25 blur-3xl"
-                  style={{ background: 'radial-gradient(60% 60% at 70% 30%, rgba(245,158,11,0.45), transparent 60%)' }} />
-                <div aria-hidden className="pointer-events-none absolute top-0 left-0 w-40 h-40 opacity-20 rotate-12"
-                  style={{ background: 'conic-gradient(from 0deg, rgba(255,255,255,0.35), transparent 40%)' }} />
-                <div aria-hidden className="pointer-events-none absolute inset-0 mix-blend-soft-light opacity-[0.07]"
-                  style={{ backgroundImage: 'radial-gradient(1px 1px at 25% 35%, #fff 1px, transparent 1px), radial-gradient(1px 1px at 70% 65%, #fff 1px, transparent 1px)', backgroundSize: '200px 200px' }} />
-                <h3 className="relative text-xl font-bold text-amber-200/95 mb-4 drop-shadow">Intermediate</h3>
-                <div className="relative flex flex-wrap gap-2">
-                  {[
-                    'Node.js', 'Flutter', 'Java', 'C++',
-                    'Analytics', 'Testing', 'API Security'
-                  ].map((s, i) => (
-                    <span key={i}
-                      className="inline-flex items-center px-3 py-1 rounded-full
-                         bg-amber-400/10 text-amber-50 ring-1 ring-amber-300/30
-                         hover:bg-amber-400/15 hover:ring-amber-200/40 transition-colors text-sm">
-                      {s}
-                    </span>
-                  ))}
-                </div>
-              </div>
+            <div className="capability-grid">
+              {capabilityPillars.map((pillar, index) => (
+                <CapabilityCard
+                  key={pillar.index}
+                  pillar={pillar}
+                  index={index}
+                  reduceMotion={reduceMotion}
+                  skillsAria={copy.common.stackAria}
+                />
+              ))}
             </div>
+          </div>
+        </div>
+      </section>
 
-            {/* Beginner — Emerald Glass */}
-            <div className="relative rounded-2xl p-[1px]
-                bg-gradient-to-br from-emerald-400/60 via-emerald-300/35 to-green-400/45">
-              <div className="relative overflow-hidden rounded-2xl h-full w-full
-                  bg-white/[0.06] backdrop-blur-xl p-6 ring-1 ring-white/15
-                  shadow-[0_10px_35px_-10px_rgba(16,185,129,0.35)]
-                  transition-colors duration-300 hover:bg-white/[0.08] hover:ring-white/25">
-                <div aria-hidden
-                  className="pointer-events-none absolute -inset-24 opacity-25 blur-3xl"
-                  style={{ background: 'radial-gradient(60% 60% at 50% 70%, rgba(16,185,129,0.45), transparent 60%)' }} />
-                <div aria-hidden
-                  className="pointer-events-none absolute top-0 left-0 w-40 h-40 opacity-20 rotate-12"
-                  style={{ background: 'conic-gradient(from 0deg, rgba(255,255,255,0.35), transparent 40%)' }} />
-                <div aria-hidden
-                  className="pointer-events-none absolute inset-0 mix-blend-soft-light opacity-[0.07]"
-                  style={{ backgroundImage: 'radial-gradient(1px 1px at 25% 35%, #fff 1px, transparent 1px), radial-gradient(1px 1px at 70% 65%, #fff 1px, transparent 1px)', backgroundSize: '200px 200px' }} />
-                <h3 className="relative text-xl font-bold text-emerald-200/95 mb-4 drop-shadow">
-                  Beginner
-                </h3>
-                <div className="relative flex flex-wrap gap-2">
-                  {['WordPress', 'Figma', 'Statistics'].map((s, i) => (
-                    <span key={i}
-                      className="inline-flex items-center px-3 py-1 rounded-full
-                     bg-emerald-400/10 text-emerald-50 ring-1 ring-emerald-300/30
-                     hover:bg-emerald-400/15 hover:ring-emerald-200/40 transition-colors text-sm">
-                      {s}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* فاصل بصري خفيف */}
-          <motion.div
-            className="mt-10 h-px w-full bg-gradient-to-r from-transparent via-white/15 to-transparent"
-            variants={fadeUp}
+      <section className="about-career">
+        <div className="site-container">
+          <SectionIntro
+            eyebrow={content.careerIntro.eyebrow}
+            title={content.careerIntro.title}
+            copy={content.careerIntro.copy}
+            align="center"
           />
-        </motion.section>
-      </div>
-    </section>
+          <CareerTimeline
+            reduceMotion={reduceMotion}
+            items={career}
+            currentLabel={content.careerIntro.current}
+          />
+        </div>
+      </section>
+
+      <section className="about-academia">
+        <div className="site-container">
+          <div className="about-academia-heading">
+            <SectionIntro
+              eyebrow={content.academicIntro.eyebrow}
+              title={content.academicIntro.title}
+              copy={content.academicIntro.copy}
+            />
+
+            <Motion.div
+              className="about-academia-signal"
+              variants={reveal}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.6 }}
+              transition={{ duration: 0.65, ease: premiumEase }}
+            >
+              <span>2</span>
+              <p>{content.academicIntro.degreesCount}</p>
+              <i aria-hidden="true" />
+              <span>1</span>
+              <p>{content.academicIntro.mastersCount}</p>
+            </Motion.div>
+          </div>
+
+          <div className="education-list">
+            {education.map((item, index) => (
+              <EducationCard
+                key={`${item.degree}-${item.period}`}
+                item={item}
+                index={index}
+                reduceMotion={reduceMotion}
+                researchLabel={content.academicIntro.research}
+              />
+            ))}
+          </div>
+
+          <div className="recognition-grid">
+            {recognitions.map((item, index) => (
+              <Motion.article
+                key={item.label}
+                className="recognition-card"
+                variants={reveal}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{
+                  duration: 0.6,
+                  delay: reduceMotion ? 0 : index * 0.05,
+                  ease: premiumEase,
+                }}
+              >
+                <strong className="display-font">{item.value}</strong>
+                <h3>{item.label}</h3>
+                <p>{item.detail}</p>
+              </Motion.article>
+            ))}
+          </div>
+
+          <Motion.div
+            className="publications-panel"
+            variants={reveal}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.68, ease: premiumEase }}
+          >
+            <div className="publications-heading">
+              <p className="about-eyebrow">
+                <span aria-hidden="true" /> {content.publicationsIntro.eyebrow}
+              </p>
+              <h2 className="display-font">{content.publicationsIntro.title}</h2>
+              <p>{content.publicationsIntro.copy}</p>
+            </div>
+
+            <ol className="publications-list">
+              {publications.map((publication, index) => (
+                <li key={publication.href}>
+                  <a href={publication.href} target="_blank" rel="noreferrer">
+                    <span className="publication-number">0{index + 1}</span>
+                    <span className="publication-copy">
+                      <small>
+                        {publication.year} · {publication.journal}
+                      </small>
+                      <strong
+                        lang={publication.titleLanguage}
+                        dir={publication.titleLanguage ? "ltr" : "auto"}
+                      >
+                        {publication.title}
+                      </strong>
+                    </span>
+                    <span className="publication-arrow">
+                      <ArrowIcon external />
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </Motion.div>
+        </div>
+      </section>
+
+      <section className="about-outro">
+        <div className="site-container">
+          <Motion.div
+            className="about-outro-card"
+            variants={reveal}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 0.7, ease: premiumEase }}
+          >
+            <div>
+              <p className="about-eyebrow">
+                <span aria-hidden="true" /> {content.outro.eyebrow}
+              </p>
+              <h2 className="display-font">{content.outro.title}</h2>
+              <p>{content.outro.copy}</p>
+            </div>
+            <div className="about-outro-actions">
+              <Link to={path("contact")} className="about-action about-action--primary">
+                {content.outro.talk} <ArrowIcon />
+              </Link>
+              <a
+                href={profile.linkedin}
+                target="_blank"
+                rel="noreferrer"
+                className="about-action about-action--secondary"
+              >
+                LinkedIn <ArrowIcon external />
+              </a>
+            </div>
+          </Motion.div>
+        </div>
+      </section>
+    </div>
   );
 }

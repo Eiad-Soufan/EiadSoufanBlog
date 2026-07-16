@@ -57,7 +57,7 @@ export default function SectionTitle({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.8 }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-        className="mt-2 text-3xl md:text-4xl font-extrabold tracking-tight leading-tight"
+        className="type-section-title mt-2 font-extrabold tracking-tight leading-tight"
       >
         <span className={titleClass}>{title}</span>
       </motion.h2>

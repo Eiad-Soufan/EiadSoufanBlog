@@ -1,0 +1,159 @@
+@keyframes signature-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes signature-orbit-reverse {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes status-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.88);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes hero-aurora-drift-cyan {
+  0%,
+  100% {
+    opacity: 0.32;
+    transform: translate3d(-8%, -7%, 0) scale(0.92) rotate(-7deg);
+  }
+  50% {
+    opacity: 0.62;
+    transform: translate3d(17%, 11%, 0) scale(1.16) rotate(8deg);
+  }
+}
+
+@keyframes hero-aurora-drift-violet {
+  0%,
+  100% {
+    opacity: 0.22;
+    transform: translate3d(9%, -5%, 0) scale(1.08) rotate(8deg);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translate3d(-15%, 13%, 0) scale(0.9) rotate(-9deg);
+  }
+}
+
+@keyframes hero-grid-drift {
+  to {
+    background-position: 72px 72px;
+  }
+}
+
+.hero-aurora {
+  position: absolute;
+  width: min(64vw, 58rem);
+  aspect-ratio: 1.35;
+  border-radius: 50%;
+  filter: blur(78px);
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+}
+
+.hero-aurora--cyan {
+  top: -28%;
+  right: -12%;
+  background: radial-gradient(
+    ellipse,
+    rgb(var(--color-cyan) / 0.18),
+    rgb(var(--color-brand) / 0.08) 42%,
+    transparent 72%
+  );
+  animation: hero-aurora-drift-cyan 16s ease-in-out infinite;
+}
+
+.hero-aurora--violet {
+  right: 18%;
+  bottom: -34%;
+  background: radial-gradient(
+    ellipse,
+    rgb(var(--color-violet) / 0.16),
+    rgb(var(--color-brand) / 0.07) 44%,
+    transparent 72%
+  );
+  animation: hero-aurora-drift-violet 21s ease-in-out infinite;
+}
+
+.hero-neural-grid {
+  opacity: 0.14;
+  background-image:
+    linear-gradient(rgb(143 166 205 / 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(143 166 205 / 0.07) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(to bottom, black 0%, transparent 82%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 82%);
+  animation: hero-grid-drift 24s linear infinite;
+}
+
+.neural-cosmos[data-motion="paused"] .hero-aurora,
+.neural-cosmos[data-motion="paused"] .hero-neural-grid {
+  animation-play-state: paused;
+}
+
+.hero-readability-veil {
+  background:
+    linear-gradient(
+      90deg,
+      rgb(var(--color-canvas) / 0.82) 0%,
+      rgb(var(--color-canvas) / 0.52) 38%,
+      rgb(var(--color-canvas) / 0.12) 68%,
+      transparent 88%
+    ),
+    linear-gradient(
+      180deg,
+      rgb(var(--color-canvas) / 0.16),
+      transparent 38%,
+      rgb(var(--color-canvas) / 0.34)
+    );
+}
+
+.signature-orbit {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: signature-orbit 34s linear infinite;
+  will-change: transform;
+}
+
+.signature-orbit--reverse {
+  animation-name: signature-orbit-reverse;
+  animation-duration: 46s;
+}
+
+.status-pulse {
+  animation: status-pulse 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .signature-orbit,
+  .signature-orbit--reverse,
+  .status-pulse,
+  .hero-aurora,
+  .hero-neural-grid {
+    animation: none !important;
+  }
+}

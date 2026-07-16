@@ -1,6 +1,8 @@
 // src/pages/NotFound.jsx
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import useHydrationSafeReducedMotion from "../hooks/useHydrationSafeReducedMotion";
+import { useLocale } from "../i18n/LocaleContext";
 
 /**
  * 404 — Dark Aurora + Glass Card
@@ -9,7 +11,8 @@ import { Link } from "react-router-dom";
  * - أنيميشن دخول المحتوى مطابق للنسخة الأولى (fade/slide لطيف)
  */
 export default function NotFound() {
-  const reduce = useReducedMotion();
+  const reduce = useHydrationSafeReducedMotion();
+  const { copy, path } = useLocale();
 
   return (
     <div className="relative min-h-[calc(100vh-72px)] overflow-hidden isolate">
@@ -65,9 +68,9 @@ export default function NotFound() {
       <div className="relative z-10 mx-auto max-w-5xl px-6 py-24 md:py-28">
         {/* نفس أنيميشن الدخول القديم */}
         <motion.div
-          initial={{ opacity: 0, y: 14 }}
+          initial={reduce ? false : { opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: reduce ? 0 : 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="mx-auto max-w-xl rounded-3xl p-8 md:p-10 text-center bg-white/8 backdrop-blur-lg ring-1 ring-white/12 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.5)] relative overflow-hidden"
         >
           {/* inner border */}
@@ -79,9 +82,9 @@ export default function NotFound() {
           {/* ✂️ أُزيل الشِيمر الذي كان يمرّ عمودياً هنا */}
 
           <motion.h1
-            initial={{ opacity: 0, y: 10, scale: 0.98 }}
+            initial={reduce ? false : { opacity: 0, y: 10, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: reduce ? 0 : 0.55, ease: [0.22, 1, 0.36, 1] }}
             className="text-[64px] md:text-[88px] font-extrabold leading-none"
           >
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-300 via-violet-300 to-sky-300 drop-shadow">
@@ -90,34 +93,34 @@ export default function NotFound() {
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 8 }}
+            initial={reduce ? false : { opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: reduce ? 0 : 0.5, delay: reduce ? 0 : 0.05, ease: [0.22, 1, 0.36, 1] }}
             className="mt-3 text-xl md:text-2xl font-bold text-indigo-100"
           >
-            Oops! Page not found
+            {copy.notFound.title}
           </motion.p>
 
           <motion.p
-            initial={{ opacity: 0, y: 8 }}
+            initial={reduce ? false : { opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: reduce ? 0 : 0.5, delay: reduce ? 0 : 0.1, ease: [0.22, 1, 0.36, 1] }}
             className="mt-3 text-slate-200/85"
           >
-            The page you're looking for doesn't exist or has been moved.
+            {copy.notFound.copy}
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
+            initial={reduce ? false : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: reduce ? 0 : 0.55, delay: reduce ? 0 : 0.15, ease: [0.22, 1, 0.36, 1] }}
             className="mt-7 flex justify-center"
           >
             <Link
-              to="/"
+              to={path("home")}
               className="inline-flex items-center justify-center rounded-xl px-5 py-3 font-semibold text-slate-900 bg-white hover:bg-white/95 transition"
             >
-              Back to Home
+              {copy.notFound.back}
             </Link>
           </motion.div>
         </motion.div>

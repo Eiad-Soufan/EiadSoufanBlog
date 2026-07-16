@@ -1,13 +1,15 @@
 {
-  "name": "quote-your-store",
+  "name": "eiad-soufan-portfolio",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/generate-seo-pages.mjs dist && node scripts/verify-seo.mjs dist",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "verify:seo": "node scripts/verify-seo.mjs dist",
+    "verify:geo": "node scripts/verify-locale-gateway.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.23.24",

@@ -1,1 +1,17 @@
-/*    /index.html   200
+https://www.eiadsoufan.blog/*              https://eiadsoufan.blog/:splat  301!
+https://eiadsoufanblog.netlify.app/*       https://eiadsoufan.blog/:splat  301!
+
+/about      /en/about/      301!
+/about-us   /en/about/      301!
+/approach   /en/approach/   301!
+/why-us     /en/approach/   301!
+/whyus      /en/approach/   301!
+/contact    /en/contact/    301!
+
+/ar/*       /ar/404.html   404
+/ms/*       /ms/404.html   404
+/fr/*       /fr/404.html   404
+/de/*       /de/404.html   404
+/en/*       /en/404.html   404
+
+/*          /404.html      404
