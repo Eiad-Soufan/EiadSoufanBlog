@@ -114,8 +114,23 @@ export async function verifySeoPages(outputDirectory = "dist") {
       `${filePath}: application HTML was not rendered with the hydration guard`,
     );
     assert(html.includes("<h1"), `${filePath}: rendered page has no primary heading`);
+    assert(
+      !html.includes('id="S:') && !html.includes("$RC("),
+      `${filePath}: route content is hidden behind a streamed Suspense payload`,
+    );
     assert(!html.includes("/src/assets/"), `${filePath}: unresolved source asset URL`);
     assert(html.includes("/og-cover.png"), `${filePath}: missing social sharing image`);
+
+    const renderedApplication = html.slice(html.indexOf('<div id="root"'));
+    for (const alternate of getAlternateLinks(entry.page).filter(
+      ({ hreflang }) => hreflang !== "x-default",
+    )) {
+      const alternatePath = new URL(alternate.href).pathname;
+      assert(
+        renderedApplication.includes(`href="${alternatePath}"`),
+        `${filePath}: missing crawlable ${alternate.hreflang} language link`,
+      );
+    }
 
     for (const alternate of getAlternateLinks(entry.page)) {
       assert(

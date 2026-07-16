@@ -1,4 +1,4 @@
-import en from "./en";
+import en from "./en.js";
 
 function defineLocale(base, override) {
   if (!base || typeof base !== "object") {

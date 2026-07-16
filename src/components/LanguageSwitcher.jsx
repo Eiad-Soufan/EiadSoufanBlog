@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, useState } from "react";
-import { LOCALES, LOCALE_META } from "../i18n/config";
+import { useLocation } from "react-router-dom";
+import { LOCALES, LOCALE_META, replaceLocaleInPath } from "../i18n/config";
 import { useLocale } from "../i18n/LocaleContext";
 
 const ACCESSIBLE_COPY = {
@@ -67,6 +68,7 @@ export default function LanguageSwitcher({
   onSelect,
 }) {
   const { locale, localeMeta, switchLocale } = useLocale();
+  const location = useLocation();
   const [open, setOpen] = useState(false);
   const rootRef = useRef(null);
   const triggerRef = useRef(null);
@@ -142,6 +144,9 @@ export default function LanguageSwitcher({
     } else if (event.key === "End") {
       event.preventDefault();
       focusItem(LOCALES.length - 1);
+    } else if (event.key === " ") {
+      event.preventDefault();
+      selectLocale(LOCALES[index]);
     } else if (event.key === "Tab") {
       closeMenu();
     }
@@ -151,6 +156,25 @@ export default function LanguageSwitcher({
     closeMenu({ restoreFocus: !onSelect });
     if (nextLocale !== locale) switchLocale(nextLocale);
     onSelect?.(nextLocale);
+  };
+
+  const localeHref = (nextLocale) =>
+    `${replaceLocaleInPath(location.pathname, nextLocale)}${location.search}${location.hash}`;
+
+  const handleLocaleClick = (event, nextLocale) => {
+    if (
+      event.defaultPrevented ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
+
+    event.preventDefault();
+    selectLocale(nextLocale);
   };
 
   const handleRootKeyDown = (event) => {
@@ -190,50 +214,50 @@ export default function LanguageSwitcher({
         </span>
       </button>
 
-      {open ? (
-        <div
-          id={menuId}
-          className="locale-switcher__menu"
-          role="menu"
-          aria-label={labels.menu}
-        >
-          <span className="locale-switcher__menu-kicker" aria-hidden="true">
-            {labels.change}
-          </span>
-          <div className="locale-switcher__options">
-            {LOCALES.map((code, index) => {
-              const option = LOCALE_META[code];
-              const active = code === locale;
+      <div
+        id={menuId}
+        className="locale-switcher__menu"
+        role="menu"
+        aria-label={labels.menu}
+        hidden={!open}
+      >
+        <span className="locale-switcher__menu-kicker" aria-hidden="true">
+          {labels.change}
+        </span>
+        <div className="locale-switcher__options">
+          {LOCALES.map((code, index) => {
+            const option = LOCALE_META[code];
+            const active = code === locale;
 
-              return (
-                <button
-                  key={code}
-                  ref={(node) => {
-                    itemRefs.current[index] = node;
-                  }}
-                  type="button"
-                  className={`locale-switcher__option ${active ? "locale-switcher__option--active" : ""}`}
-                  role="menuitemradio"
-                  aria-checked={active}
-                  dir="ltr"
-                  onClick={() => selectLocale(code)}
-                  onKeyDown={(event) => handleItemKeyDown(event, index)}
-                >
-                  <span className="locale-switcher__code" dir="ltr">
-                    {option.shortLabel}
-                  </span>
-                  <span className="locale-switcher__label" lang={code} dir={option.dir}>
-                    {option.label}
-                  </span>
-                  <span className="locale-switcher__check" aria-hidden="true">
-                    {active ? <CheckIcon /> : null}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+            return (
+              <a
+                key={code}
+                ref={(node) => {
+                  itemRefs.current[index] = node;
+                }}
+                href={localeHref(code)}
+                className={`locale-switcher__option ${active ? "locale-switcher__option--active" : ""}`}
+                role="menuitemradio"
+                aria-checked={active}
+                aria-current={active ? "page" : undefined}
+                dir="ltr"
+                onClick={(event) => handleLocaleClick(event, code)}
+                onKeyDown={(event) => handleItemKeyDown(event, index)}
+              >
+                <span className="locale-switcher__code" dir="ltr">
+                  {option.shortLabel}
+                </span>
+                <span className="locale-switcher__label" lang={code} dir={option.dir}>
+                  {option.label}
+                </span>
+                <span className="locale-switcher__check" aria-hidden="true">
+                  {active ? <CheckIcon /> : null}
+                </span>
+              </a>
+            );
+          })}
         </div>
-      ) : null}
+      </div>
     </div>
   );
 }

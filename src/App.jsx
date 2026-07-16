@@ -18,6 +18,13 @@ const Contact = lazy(() => import("./pages/Contact"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const WhyUs = lazy(() => import("./pages/WhyUs"));
 
+const CLIENT_ROUTE_COMPONENTS = Object.freeze({
+  AboutUs,
+  Contact,
+  NotFound,
+  WhyUs,
+});
+
 function RouteEffects() {
   const location = useLocation();
   const previousPathRef = useRef(location.pathname);
@@ -69,14 +76,20 @@ function RootGateway() {
   return <Navigate replace to={localizedPath(getBrowserLocale())} />;
 }
 
-function LocaleRoute({ children }) {
+function LocaleRoute({ children, notFoundElement }) {
   const { locale } = useParams();
-  if (!isLocale(locale)) return <NotFound />;
+  if (!isLocale(locale)) return notFoundElement;
   return children;
 }
 
-export default function App() {
+export default function App({ routeComponents = CLIENT_ROUTE_COMPONENTS }) {
   const { copy } = useLocale();
+  const {
+    AboutUs: AboutPage,
+    Contact: ContactPage,
+    NotFound: NotFoundPage,
+    WhyUs: ApproachPage,
+  } = routeComponents;
 
   return (
     <div className="site-shell flex min-h-screen flex-col">
@@ -97,10 +110,38 @@ export default function App() {
         <Suspense fallback={<PageFallback />}>
           <Routes>
             <Route path="/" element={<RootGateway />} />
-            <Route path="/:locale" element={<LocaleRoute><Home /></LocaleRoute>} />
-            <Route path="/:locale/about" element={<LocaleRoute><AboutUs /></LocaleRoute>} />
-            <Route path="/:locale/approach" element={<LocaleRoute><WhyUs /></LocaleRoute>} />
-            <Route path="/:locale/contact" element={<LocaleRoute><Contact /></LocaleRoute>} />
+            <Route
+              path="/:locale"
+              element={
+                <LocaleRoute notFoundElement={<NotFoundPage />}>
+                  <Home />
+                </LocaleRoute>
+              }
+            />
+            <Route
+              path="/:locale/about"
+              element={
+                <LocaleRoute notFoundElement={<NotFoundPage />}>
+                  <AboutPage />
+                </LocaleRoute>
+              }
+            />
+            <Route
+              path="/:locale/approach"
+              element={
+                <LocaleRoute notFoundElement={<NotFoundPage />}>
+                  <ApproachPage />
+                </LocaleRoute>
+              }
+            />
+            <Route
+              path="/:locale/contact"
+              element={
+                <LocaleRoute notFoundElement={<NotFoundPage />}>
+                  <ContactPage />
+                </LocaleRoute>
+              }
+            />
             {Object.entries(LEGACY_PAGE_PATHS).map(([legacyPath, page]) => (
               <Route
                 key={legacyPath}
@@ -108,7 +149,7 @@ export default function App() {
                 element={<Navigate replace to={localizedPath("en", page)} />}
               />
             ))}
-            <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>
       </main>
