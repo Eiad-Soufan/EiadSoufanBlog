@@ -3,6 +3,7 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { LOCALE_META, getPageFromPath } from "../src/i18n/config.js";
 import {
+  SITE_URL,
   getAlternateLinks,
   getSeoCopy,
   getSitemapEntries,
@@ -180,16 +181,41 @@ export async function verifySeoPages(outputDirectory = "dist") {
     path.join(absoluteOutputDirectory, "_redirects"),
     "utf8",
   );
+  const redirectLines = redirects
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+  const firstPathRuleIndex = redirectLines.findIndex((line) => line.startsWith("/"));
   for (const alternateHost of [
+    "eiadsoufan.blog",
     "www.eiadsoufan.blog",
-    "eiadsoufan.netlify.app",
     "eiadsoufanblog.netlify.app",
   ]) {
+    const source = `https://${alternateHost}/*`;
+    const lineIndex = redirectLines.findIndex((candidate) =>
+      candidate.startsWith(source),
+    );
+    const line = redirectLines[lineIndex];
     assert(
-      redirects.includes(`https://${alternateHost}/*`),
+      line,
       `Missing permanent redirect from ${alternateHost}`,
     );
+    const [actualSource, actualTarget, status] = line.split(/\s+/);
+    assert(actualSource === source, `Incorrect redirect source for ${alternateHost}`);
+    assert(
+      actualTarget === `${SITE_URL}/:splat`,
+      `${alternateHost} must redirect to the canonical production origin`,
+    );
+    assert(status === "301!", `${alternateHost} redirect must be a forced 301`);
+    assert(
+      firstPathRuleIndex === -1 || lineIndex < firstPathRuleIndex,
+      `${alternateHost} host redirect must appear before path-only rules`,
+    );
   }
+  assert(
+    !redirectLines.some((line) => line.startsWith(`${SITE_URL}/*`)),
+    "Canonical production origin must not redirect to an alternate hostname",
+  );
 
   for (const [locale, meta] of Object.entries(LOCALE_META)) {
     const notFound = await readFile(

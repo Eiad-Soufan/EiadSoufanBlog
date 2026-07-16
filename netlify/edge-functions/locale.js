@@ -1,4 +1,10 @@
 const SUPPORTED_LOCALES = new Set(["en", "ar", "ms", "fr", "de"]);
+const PRODUCTION_ORIGIN = "https://eiadsoufan.netlify.app";
+const LEGACY_HOSTS = new Set([
+  "eiadsoufan.blog",
+  "www.eiadsoufan.blog",
+  "eiadsoufanblog.netlify.app",
+]);
 
 const ARABIC_COUNTRIES = new Set([
   "AE",
@@ -79,6 +85,17 @@ export default async function localeGateway(request, context) {
     return context.next();
   }
 
+  if (LEGACY_HOSTS.has(url.hostname)) {
+    const canonicalUrl = new URL(`${url.pathname}${url.search}`, PRODUCTION_ORIGIN);
+    return new Response(null, {
+      status: 301,
+      headers: {
+        location: canonicalUrl.toString(),
+        "cache-control": "public, max-age=3600",
+      },
+    });
+  }
+
   const savedLocale = readCookie(request.headers.get("cookie"), "eiad_locale");
   const countryLocale = localeFromCountry(context.geo?.country?.code);
   const browserLocale = localeFromAcceptLanguage(
@@ -96,8 +113,7 @@ export default async function localeGateway(request, context) {
     vary: "Cookie, Accept-Language",
   });
 
-  const hostname = new URL(request.url).hostname;
-  if (!["eiadsoufan.blog", "www.eiadsoufan.blog"].includes(hostname)) {
+  if (url.hostname !== new URL(PRODUCTION_ORIGIN).hostname) {
     headers.set("x-robots-tag", "noindex, nofollow, noarchive");
   }
 

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://eiadsoufan.blog/sitemap.xml
+Sitemap: https://eiadsoufan.netlify.app/sitemap.xml

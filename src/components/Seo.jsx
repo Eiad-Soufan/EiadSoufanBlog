@@ -12,7 +12,7 @@ import {
   normalizeSeoPage,
 } from "../seo/site.js";
 
-const PRODUCTION_HOSTS = new Set(["eiadsoufan.blog", "www.eiadsoufan.blog"]);
+const PRODUCTION_HOSTS = new Set(["eiadsoufan.netlify.app"]);
 
 function getOrCreateMeta(attribute, key) {
   const selector = `meta[${attribute}="${key}"]`;
