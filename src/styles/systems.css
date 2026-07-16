@@ -154,7 +154,7 @@
 .systems-unified-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-auto-rows: 1fr;
+  grid-auto-rows: auto;
   gap: clamp(1rem, 2vw, 1.35rem);
   align-items: stretch;
 }
@@ -341,7 +341,7 @@
 }
 
 .systems-card--uniform .systems-card-title-row {
-  min-height: 3.65rem;
+  min-height: 3.2rem;
 }
 
 .systems-tagline {
@@ -355,8 +355,8 @@
 }
 
 .systems-card--uniform .systems-tagline {
-  min-height: 3.3rem;
-  margin-top: 1.35rem;
+  min-height: 3.05rem;
+  margin-top: 1rem;
   font-size: clamp(1.08rem, 1.7vw, 1.35rem);
 }
 
@@ -368,13 +368,15 @@
 }
 
 .systems-card--uniform .systems-summary {
-  min-height: 5rem;
+  min-height: 3.6rem;
+  margin-top: 0.75rem;
+  line-height: 1.7;
 }
 
 .systems-metrics {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin: 1.5rem 0 0;
+  margin: 1rem 0 0;
   overflow: hidden;
   border: 1px solid rgb(var(--color-line) / 0.1);
   border-radius: 1.1rem;
@@ -383,7 +385,7 @@
 
 .systems-metrics > div {
   min-width: 0;
-  padding: 1rem;
+  padding: 0.82rem 0.9rem;
 }
 
 .systems-metrics > div + div {
@@ -441,18 +443,18 @@
 }
 
 .systems-role--uniform {
-  margin-top: 1.35rem;
+  margin-top: 1rem;
 }
 
 .systems-card--uniform .systems-role {
-  min-height: 6.3rem;
+  min-height: 4.5rem;
 }
 
 .systems-stack {
   display: flex;
   flex-wrap: wrap;
   gap: 0.45rem;
-  margin: 1.55rem 0 0;
+  margin: 1rem 0 0;
   padding: 0;
   list-style: none;
 }
@@ -469,7 +471,7 @@
 }
 
 .systems-card--uniform .systems-stack {
-  min-height: 4rem;
+  min-height: 2.2rem;
   align-content: flex-start;
 }
 
@@ -478,7 +480,7 @@
   flex-wrap: wrap;
   gap: 0.55rem;
   margin-top: auto;
-  padding-top: 1.65rem;
+  padding-top: 1rem;
 }
 
 .systems-card--uniform .systems-links {
@@ -609,7 +611,7 @@
   min-width: 0;
   flex: 1;
   flex-direction: column;
-  padding: clamp(1.35rem, 2.7vw, 2rem);
+  padding: clamp(1.2rem, 2vw, 1.6rem);
 }
 
 .systems-capability-rail {
@@ -831,6 +833,14 @@
     grid-auto-rows: auto;
   }
 
+  .systems-card--uniform .systems-card-title-row,
+  .systems-card--uniform .systems-tagline,
+  .systems-card--uniform .systems-summary,
+  .systems-card--uniform .systems-role,
+  .systems-card--uniform .systems-stack {
+    min-height: 0;
+  }
+
   .systems-card-media {
     aspect-ratio: 16 / 9;
   }
@@ -869,14 +879,6 @@
 
   .systems-tagline {
     font-size: 1.25rem;
-  }
-
-  .systems-card--uniform .systems-card-title-row,
-  .systems-card--uniform .systems-tagline,
-  .systems-card--uniform .systems-summary,
-  .systems-card--uniform .systems-role,
-  .systems-card--uniform .systems-stack {
-    min-height: 0;
   }
 
   .systems-metrics > div {
