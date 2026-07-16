@@ -9,18 +9,24 @@ export default function BrandMark({ className = "h-10 w-10" }) {
         className="h-full w-full"
         focusable="false"
       >
-        <rect x="3" y="3" width="42" height="42" rx="13" fill="#101827" />
+        <rect
+          x="3"
+          y="3"
+          width="42"
+          height="42"
+          rx="13"
+          fill="#101827"
+          stroke="#8ea6c8"
+          strokeOpacity="0.2"
+        />
         <path
-          d="M32.5 14.5H16.5V33.5H32.5M16.5 24H28.5"
+          d="M35 13.5H14V24H34V34.5H13"
           fill="none"
-          stroke="#eaf7ff"
-          strokeWidth="2.6"
+          stroke="#f4f7fb"
+          strokeWidth="3.6"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-        <circle cx="32.5" cy="14.5" r="1.55" fill="#5be0ff" />
-        <circle cx="28.5" cy="24" r="1.55" fill="#cfefff" />
-        <circle cx="32.5" cy="33.5" r="1.55" fill="#a584ff" />
       </svg>
     </span>
   );
