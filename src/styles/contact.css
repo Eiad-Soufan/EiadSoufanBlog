@@ -531,7 +531,7 @@ button.contact-action {
   max-width: 14ch;
   margin: 1.25rem 0 0;
   color: rgb(var(--color-text));
-  font-size: clamp(2rem, 4vw, 3.55rem);
+  font-size: var(--section-title-size);
   font-weight: 650;
   letter-spacing: -0.055em;
   line-height: 1.02;
@@ -909,7 +909,7 @@ button.contact-action {
   max-width: 17ch;
   margin: 1rem 0 0;
   color: rgb(var(--color-text));
-  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-size: var(--cta-title-size);
   font-weight: 650;
   letter-spacing: -0.052em;
   line-height: 1.03;
@@ -1170,7 +1170,11 @@ button.contact-action {
 
   .contact-section-heading h2,
   .contact-outro-card h2 {
-    font-size: clamp(2rem, 10.5vw, 3.1rem);
+    font-size: var(--section-title-size);
+  }
+
+  .contact-outro-card h2 {
+    font-size: var(--cta-title-size);
   }
 }
 

@@ -124,7 +124,7 @@
   margin: 0;
   color: rgb(var(--color-text));
   font-family: var(--font-display);
-  font-size: clamp(2.3rem, 5vw, 4.9rem);
+  font-size: var(--section-title-size);
   font-weight: 650;
   letter-spacing: -0.055em;
   line-height: 0.98;
@@ -704,7 +704,7 @@
 }
 
 .systems-outro h2 {
-  font-size: clamp(2rem, 4vw, 3.55rem);
+  font-size: var(--cta-title-size);
 }
 
 .systems-outro p {
@@ -854,7 +854,7 @@
   }
 
   .systems-intro h2 {
-    font-size: clamp(2.15rem, 12vw, 3.35rem);
+    font-size: var(--section-title-size);
   }
 
   .systems-card-meta {

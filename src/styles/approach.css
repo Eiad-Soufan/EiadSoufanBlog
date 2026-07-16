@@ -559,7 +559,7 @@
 .approach-section-intro h2 {
   margin: 1.15rem 0 0;
   color: rgb(var(--color-text));
-  font-size: clamp(2.2rem, 4.5vw, 4.15rem);
+  font-size: var(--section-title-size);
   font-weight: 620;
   letter-spacing: -0.052em;
   line-height: 1.03;
@@ -907,7 +907,7 @@
   max-width: 13ch;
   margin: 3.4rem 0 0;
   color: rgb(var(--color-text));
-  font-size: clamp(1.65rem, 3.5vw, 2.7rem);
+  font-size: var(--feature-title-size);
   font-weight: 630;
   letter-spacing: -0.045em;
   line-height: 1.06;
@@ -1025,7 +1025,7 @@
 .rhythm-heading h2 {
   margin: 1rem 0 0;
   color: rgb(var(--color-text));
-  font-size: clamp(2rem, 3.6vw, 3.25rem);
+  font-size: var(--section-title-size);
   font-weight: 620;
   letter-spacing: -0.052em;
   line-height: 1.04;
@@ -1174,7 +1174,7 @@
   max-width: 15ch;
   margin: 1.15rem 0 0;
   color: rgb(var(--color-text));
-  font-size: clamp(2.15rem, 4.5vw, 4rem);
+  font-size: var(--cta-title-size);
   font-weight: 620;
   letter-spacing: -0.052em;
   line-height: 1.03;
@@ -1455,7 +1455,7 @@
   }
 
   .approach-section-intro h2 {
-    font-size: clamp(2rem, 10.5vw, 3.15rem);
+    font-size: var(--section-title-size);
   }
 
   .process-stage {
@@ -1513,7 +1513,7 @@
   }
 
   .approach-outro-card h2 {
-    font-size: clamp(2.05rem, 10.5vw, 3.2rem);
+    font-size: var(--cta-title-size);
   }
 }
 

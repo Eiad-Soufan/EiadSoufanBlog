@@ -95,7 +95,7 @@
   max-width: 18ch;
   margin: 0.95rem 0 0;
   color: rgb(var(--color-text));
-  font-size: clamp(1.8rem, 3.6vw, 3rem);
+  font-size: var(--cta-title-size);
   font-weight: 650;
   letter-spacing: -0.05em;
   line-height: 1.04;
