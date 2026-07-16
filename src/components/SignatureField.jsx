@@ -136,9 +136,9 @@ export default function SignatureField() {
             />
           </svg>
 
-          <div className="absolute left-1/2 top-1/2 z-10 flex h-[112px] w-[112px] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full sm:h-[126px] sm:w-[126px]">
-            <BrandMark className="h-14 w-14 sm:h-16 sm:w-16" />
-            <span className="mt-2 text-center text-[0.46rem] font-bold uppercase tracking-[0.16em] text-muted sm:text-[0.5rem]">
+          <div className="absolute left-1/2 top-1/2 z-10 h-14 w-14 -translate-x-1/2 -translate-y-1/2 sm:h-16 sm:w-16">
+            <BrandMark className="h-full w-full" />
+            <span className="absolute left-1/2 top-[calc(100%+0.45rem)] block w-[8.5rem] -translate-x-1/2 text-center text-[0.46rem] font-bold uppercase leading-[1.35] tracking-[0.16em] text-muted sm:top-[calc(100%+0.5rem)] sm:text-[0.5rem]">
               Architect · Build · Scale
             </span>
           </div>
