@@ -5,7 +5,7 @@ function assert(condition, message) {
 }
 
 async function execute({
-  url = "https://deploy-preview-1--eiadsoufanblog.netlify.app/",
+  url = "https://eiadsoufan.netlify.app/",
   method = "GET",
   country,
   cookie,
