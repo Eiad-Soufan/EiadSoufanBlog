@@ -176,6 +176,21 @@ export async function verifySeoPages(outputDirectory = "dist") {
     );
   }
 
+  const redirects = await readFile(
+    path.join(absoluteOutputDirectory, "_redirects"),
+    "utf8",
+  );
+  for (const alternateHost of [
+    "www.eiadsoufan.blog",
+    "eiadsoufan.netlify.app",
+    "eiadsoufanblog.netlify.app",
+  ]) {
+    assert(
+      redirects.includes(`https://${alternateHost}/*`),
+      `Missing permanent redirect from ${alternateHost}`,
+    );
+  }
+
   for (const [locale, meta] of Object.entries(LOCALE_META)) {
     const notFound = await readFile(
       path.join(absoluteOutputDirectory, locale, "404.html"),
