@@ -45,7 +45,9 @@ export function localeFromPath(pathname) {
 export function localizedPath(locale, page = "home", hash = "") {
   const safeLocale = isLocale(locale) ? locale : DEFAULT_LOCALE;
   const pagePath = PAGE_PATHS[page] ?? "";
-  const pathname = pagePath ? `/${safeLocale}/${pagePath}` : `/${safeLocale}/`;
+  const pathname = pagePath
+    ? `/${safeLocale}/${pagePath}/`
+    : `/${safeLocale}/`;
   return `${pathname}${hash || ""}`;
 }
 
@@ -73,7 +75,7 @@ export function replaceLocaleInPath(pathname, targetLocale) {
   else parts.unshift(targetLocale);
 
   const result = `/${parts.join("/")}`;
-  return parts.length === 1 ? `${result}/` : result;
+  return `${result}/`;
 }
 
 export function getBrowserLocale() {

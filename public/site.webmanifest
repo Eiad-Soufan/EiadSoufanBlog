@@ -22,15 +22,15 @@
   "shortcuts": [
     {
       "name": "About Eiad",
-      "url": "/en/about"
+      "url": "/en/about/"
     },
     {
       "name": "Engineering approach",
-      "url": "/en/approach"
+      "url": "/en/approach/"
     },
     {
       "name": "Contact",
-      "url": "/en/contact"
+      "url": "/en/contact/"
     }
   ]
 }
