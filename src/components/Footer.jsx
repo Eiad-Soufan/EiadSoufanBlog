@@ -1,25 +1,9 @@
 import { FaGithub, FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { profile } from "../data/profile";
+import { useLocale } from "../i18n/LocaleContext";
 import "../styles/footer.css";
 import BrandMark from "./BrandMark";
-
-const footerLinks = [
-  { label: "Work", to: "/#selected-work" },
-  { label: "About", to: "/about-us" },
-  { label: "Approach", to: "/why-us" },
-  { label: "Contact", to: "/contact" },
-];
-
-const socialLinks = [
-  { label: "GitHub", href: profile.github, icon: <FaGithub aria-hidden="true" /> },
-  { label: "LinkedIn", href: profile.linkedin, icon: <FaLinkedinIn aria-hidden="true" /> },
-  {
-    label: "WhatsApp",
-    href: `${profile.whatsapp}?text=${encodeURIComponent("Hello Eiad — I found your portfolio.")}`,
-    icon: <FaWhatsapp aria-hidden="true" />,
-  },
-];
 
 function ArrowIcon() {
   return (
@@ -31,6 +15,22 @@ function ArrowIcon() {
 
 export default function Footer() {
   const year = new Date().getFullYear();
+  const { copy, path } = useLocale();
+  const footerLinks = [
+    { label: copy.common.nav.work, to: path("home", "#selected-work") },
+    { label: copy.common.nav.about, to: path("about") },
+    { label: copy.common.nav.approach, to: path("approach") },
+    { label: copy.common.nav.contact, to: path("contact") },
+  ];
+  const socialLinks = [
+    { label: "GitHub", href: profile.github, icon: <FaGithub aria-hidden="true" /> },
+    { label: "LinkedIn", href: profile.linkedin, icon: <FaLinkedinIn aria-hidden="true" /> },
+    {
+      label: "WhatsApp",
+      href: `${profile.whatsapp}?text=${encodeURIComponent(copy.footer.whatsapp)}`,
+      icon: <FaWhatsapp aria-hidden="true" />,
+    },
+  ];
 
   return (
     <footer className="site-footer">
@@ -40,28 +40,28 @@ export default function Footer() {
       <div className="site-container site-footer-inner">
         <div className="site-footer-cta">
           <div>
-            <p><span aria-hidden="true" /> Next system</p>
-            <h2 className="display-font">Complex problem? Let’s make it legible.</h2>
+            <p><span aria-hidden="true" /> {copy.footer.kicker}</p>
+            <h2 className="display-font">{copy.footer.title}</h2>
           </div>
-          <Link to="/contact" className="site-footer-cta-link">
-            Start a conversation <ArrowIcon />
+          <Link to={path("contact")} className="site-footer-cta-link">
+            {copy.footer.start} <ArrowIcon />
           </Link>
         </div>
 
         <div className="site-footer-main">
           <div className="site-footer-brand">
-            <Link to="/" className="site-footer-identity" aria-label="Eiad Soufan — Home">
+            <Link to={path("home")} className="site-footer-identity" aria-label={copy.common.nav.homeAria}>
               <BrandMark className="site-footer-mark" />
               <span>
                 <strong className="display-font">Eiad Soufan</strong>
-                <small>{profile.role}</small>
+                <small>{copy.common.role}</small>
               </span>
             </Link>
-            <p>{profile.headline}</p>
+            <p>{copy.profile.headlineText}</p>
           </div>
 
-          <nav className="site-footer-nav" aria-label="Footer navigation">
-            <p>Navigate</p>
+          <nav className="site-footer-nav" aria-label={copy.common.nav.footerAria}>
+            <p>{copy.footer.navigate}</p>
             <ul>
               {footerLinks.map((link) => (
                 <li key={link.label}>
@@ -72,14 +72,14 @@ export default function Footer() {
           </nav>
 
           <div className="site-footer-contact">
-            <p>Direct</p>
-            <a href={`mailto:${profile.email}`}>{profile.email}</a>
-            <a href={`tel:${profile.phoneHref}`}>{profile.phone}</a>
-            <span>{profile.location}</span>
+            <p>{copy.footer.direct}</p>
+            <a href={`mailto:${profile.email}`} dir="ltr">{profile.email}</a>
+            <a href={`tel:${profile.phoneHref}`} dir="ltr">{profile.phone}</a>
+            <span>{copy.common.location}</span>
           </div>
 
           <div className="site-footer-social">
-            <p>Elsewhere</p>
+            <p>{copy.footer.elsewhere}</p>
             <div>
               {socialLinks.map(({ label, href, icon }) => (
                 <a key={label} href={href} target="_blank" rel="noreferrer" aria-label={label}>
@@ -92,8 +92,8 @@ export default function Footer() {
         </div>
 
         <div className="site-footer-bottom">
-          <p>© {year} Eiad Abdulhadi Soufan.</p>
-          <p>Engineered with clarity, depth, and care.</p>
+          <p>© {year} {copy.footer.copyright}</p>
+          <p>{copy.footer.note}</p>
         </div>
       </div>
     </footer>

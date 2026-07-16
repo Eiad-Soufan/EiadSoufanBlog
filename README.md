@@ -1,12 +1,50 @@
-# React + Vite
+# Eiad Soufan Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A multilingual React portfolio for Eiad Soufan, built with Vite and deployed on Netlify.
 
-Currently, two official plugins are available:
+## Language architecture
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The complete interface and page content are available in:
 
-## Expanding the ESLint configuration
+- English: `/en/`
+- Arabic: `/ar/` with native RTL layout and Arabic typography
+- Bahasa Melayu: `/ms/`
+- French: `/fr/`
+- German: `/de/`
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Each locale has dedicated Home, About, Approach, and Contact URLs. The root URL is a Netlify Edge language gateway: a saved user choice wins, then an unambiguous country match, then `Accept-Language`, with English as the final fallback. Explicit locale URLs are never geo-redirected.
+
+## Development
+
+```bash
+npm install
+npm run dev
+```
+
+Quality checks:
+
+```bash
+npm run lint
+npm run verify:geo
+npm run verify:seo
+```
+
+## Build and indexing policy
+
+Preview and local builds are deliberately `noindex`:
+
+```bash
+npm run build
+```
+
+Only a production build should become indexable:
+
+```bash
+CONTEXT=production npm run build
+```
+
+Netlify sets `CONTEXT` automatically. The build generates fully rendered HTML for all 20 localized routes, localized 404 documents, canonical and reciprocal `hreflang` links, Open Graph and Twitter metadata, Person/ProfilePage/WebPage/Breadcrumb JSON-LD, and the XML sitemap. Automated verification fails the build if these contracts drift.
+
+## Production checklist
+
+Before publishing, attach `eiadsoufan.blog` to this Netlify site as the primary domain and keep `www` redirected to the apex domain. After launch, verify the domain property in Google Search Console and submit `https://eiadsoufan.blog/sitemap.xml`.

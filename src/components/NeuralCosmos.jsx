@@ -1,4 +1,4 @@
-import { useReducedMotion } from "framer-motion";
+import useHydrationSafeReducedMotion from "../hooks/useHydrationSafeReducedMotion";
 import { useEffect, useRef } from "react";
 
 const LINK_COLORS = [
@@ -52,7 +52,7 @@ function createStars(width, height, count) {
 export default function NeuralCosmos() {
   const hostRef = useRef(null);
   const canvasRef = useRef(null);
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useHydrationSafeReducedMotion();
 
   useEffect(() => {
     const host = hostRef.current;

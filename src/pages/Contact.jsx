@@ -1,7 +1,9 @@
-import { motion as Motion, useReducedMotion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { motion as Motion } from "framer-motion";
+import { useState } from "react";
 import BrandMark from "../components/BrandMark";
 import { profile } from "../data/profile";
+import useHydrationSafeReducedMotion from "../hooks/useHydrationSafeReducedMotion";
+import { useLocale } from "../i18n/LocaleContext";
 import "../styles/contact.css";
 
 const premiumEase = [0.22, 1, 0.36, 1];
@@ -10,15 +12,6 @@ const reveal = {
   hidden: { opacity: 0, y: 22, filter: "blur(7px)" },
   visible: { opacity: 1, y: 0, filter: "blur(0px)" },
 };
-
-const projectTypes = [
-  "Product platform",
-  "Applied AI or RAG",
-  "Backend, APIs, or architecture",
-  "Web or mobile experience",
-  "Technical consultation",
-  "Something else",
-];
 
 const initialForm = {
   name: "",
@@ -69,7 +62,7 @@ function ChannelIcon({ type }) {
   );
 }
 
-function ConversationSignal({ reduceMotion }) {
+function ConversationSignal({ reduceMotion, content }) {
   return (
     <Motion.div
       className="contact-signal"
@@ -90,38 +83,38 @@ function ConversationSignal({ reduceMotion }) {
       </svg>
 
       <div className="contact-signal-toolbar">
-        <span><i /> Conversation map</span>
-        <small>Signal / 04</small>
+        <span><i /> {content.map}</span>
+        <small>{content.count}</small>
       </div>
 
       <div className="contact-signal-node contact-signal-node--context">
         <small>01</small>
-        <strong>Context</strong>
+        <strong>{content.nodes[0]}</strong>
       </div>
       <div className="contact-signal-node contact-signal-node--constraint">
         <small>02</small>
-        <strong>Constraint</strong>
+        <strong>{content.nodes[1]}</strong>
       </div>
       <div className="contact-signal-node contact-signal-node--outcome">
         <small>03</small>
-        <strong>Outcome</strong>
+        <strong>{content.nodes[2]}</strong>
       </div>
       <div className="contact-signal-node contact-signal-node--evidence">
         <small>04</small>
-        <strong>Evidence</strong>
+        <strong>{content.nodes[3]}</strong>
       </div>
 
       <div className="contact-signal-core">
         <span className="contact-signal-core-ring" />
         <BrandMark className="contact-signal-mark" />
-        <strong>Next move</strong>
-        <small>made explicit</small>
+        <strong>{content.next}</strong>
+        <small>{content.explicit}</small>
       </div>
 
       <div className="contact-signal-readout">
-        <span>Ambiguity</span>
+        <span>{content.ambiguity}</span>
         <i><b /></i>
-        <strong>Reduced</strong>
+        <strong>{content.reduced}</strong>
       </div>
     </Motion.div>
   );
@@ -141,99 +134,33 @@ function DirectChannel({ type, label, value, href }) {
 }
 
 export default function Contact() {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useHydrationSafeReducedMotion();
   const [form, setForm] = useState(initialForm);
-
-  useEffect(() => {
-    const pageTitle = "Contact Eiad Soufan — Start a Conversation";
-    const description =
-      "Discuss a software platform, applied AI system, backend architecture, or product engineering challenge with Eiad Soufan.";
-    const previousTitle = document.title;
-    const canonicalUrl = `${window.location.origin}/contact`;
-    document.title = pageTitle;
-
-    const upsertMeta = (key, content, attribute = "name") => {
-      let element = document.querySelector(`meta[${attribute}="${key}"]`);
-      if (!element) {
-        element = document.createElement("meta");
-        element.setAttribute(attribute, key);
-        document.head.appendChild(element);
-      }
-      const previousContent = element.getAttribute("content");
-      element.setAttribute("content", content);
-      return () => {
-        if (previousContent) element.setAttribute("content", previousContent);
-        else element.remove();
-      };
-    };
-
-    const cleanups = [
-      upsertMeta("description", description),
-      upsertMeta("og:title", pageTitle, "property"),
-      upsertMeta("og:description", description, "property"),
-      upsertMeta("og:type", "website", "property"),
-      upsertMeta("og:url", canonicalUrl, "property"),
-    ];
-
-    let canonical = document.querySelector('link[rel="canonical"]');
-    const canonicalWasCreated = !canonical;
-    if (!canonical) {
-      canonical = document.createElement("link");
-      canonical.setAttribute("rel", "canonical");
-      document.head.appendChild(canonical);
-    }
-    const previousCanonical = canonical.getAttribute("href");
-    canonical.setAttribute("href", canonicalUrl);
-
-    const schema = document.createElement("script");
-    schema.id = "contact-page-schema";
-    schema.type = "application/ld+json";
-    schema.textContent = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "ContactPage",
-      name: pageTitle,
-      url: canonicalUrl,
-      description,
-      mainEntity: {
-        "@type": "Person",
-        name: "Eiad Abdulhadi Soufan",
-        jobTitle: profile.role,
-        email: `mailto:${profile.email}`,
-        telephone: profile.phoneHref,
-      },
-    });
-    document.head.appendChild(schema);
-
-    return () => {
-      document.title = previousTitle;
-      cleanups.forEach((cleanup) => cleanup());
-      if (canonicalWasCreated) canonical.remove();
-      else if (previousCanonical) canonical.setAttribute("href", previousCanonical);
-      schema.remove();
-    };
-  }, []);
+  const { copy } = useLocale();
+  const content = copy.contact;
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setForm((current) => ({ ...current, [name]: value }));
   };
 
+  const selectedProject = content.projectTypes.find((type) => type.id === form.projectType);
   const messageLines = [
-    "Hello Eiad — portfolio enquiry",
+    content.message.greeting,
     "",
-    `Name: ${form.name || "Not provided"}`,
-    `Email: ${form.email || "Not provided"}`,
-    `Organisation: ${form.organization || "Not provided"}`,
-    `Project focus: ${form.projectType || "Not selected"}`,
+    `${content.message.name}: ${form.name || content.message.notProvided}`,
+    `${content.message.email}: ${form.email || content.message.notProvided}`,
+    `${content.message.organization}: ${form.organization || content.message.notProvided}`,
+    `${content.message.focus}: ${selectedProject?.label || content.message.notSelected}`,
     "",
-    "What I am trying to solve:",
-    form.message || "Not provided",
+    content.message.problem,
+    form.message || content.message.notProvided,
   ];
 
   const encodedMessage = encodeURIComponent(messageLines.join("\n"));
   const whatsappHref = `${profile.whatsapp}?text=${encodedMessage}`;
   const emailHref = `mailto:${profile.email}?subject=${encodeURIComponent(
-    form.projectType ? `Project enquiry — ${form.projectType}` : "Project enquiry",
+    selectedProject ? `${content.message.subject} — ${selectedProject.label}` : content.message.subject,
   )}&body=${encodedMessage}`;
 
   const handleSubmit = (event) => {
@@ -256,35 +183,34 @@ export default function Contact() {
             transition={{ staggerChildren: reduceMotion ? 0 : 0.07 }}
           >
             <Motion.p className="contact-eyebrow" variants={reveal} transition={{ duration: 0.5, ease: premiumEase }}>
-              <span aria-hidden="true" /> Start a conversation
+              <span aria-hidden="true" /> {content.hero.eyebrow}
             </Motion.p>
 
             <Motion.h1 className="hero-title-scale display-font" variants={reveal} transition={{ duration: 0.66, ease: premiumEase }}>
-              The right system starts with a <em>clear problem.</em>
+              {content.hero.titleBefore} <em>{content.hero.titleAccent}</em>
             </Motion.h1>
 
             <Motion.p className="contact-hero-lead" variants={reveal} transition={{ duration: 0.6, ease: premiumEase }}>
-              Tell me what is difficult, what already exists, and what success must look
-              like. We can turn that context into a useful technical next move.
+              {content.hero.lead}
             </Motion.p>
 
             <Motion.div className="contact-hero-actions" variants={reveal} transition={{ duration: 0.58, ease: premiumEase }}>
               <a href="#project-brief" className="contact-action contact-action--primary">
-                Share the problem <ArrowIcon />
+                {content.hero.share} <ArrowIcon />
               </a>
               <a href={`mailto:${profile.email}`} className="contact-action contact-action--secondary">
-                Email directly
+                {content.hero.email}
               </a>
             </Motion.div>
 
             <Motion.dl className="contact-hero-facts" variants={reveal} transition={{ duration: 0.6, ease: premiumEase }}>
-              <div><dt>Based in</dt><dd>{profile.location}</dd></div>
-              <div><dt>Useful context</dt><dd>Problem · Constraint · Outcome</dd></div>
-              <div><dt>Best for</dt><dd>Systems that need clarity and depth</dd></div>
+              {content.hero.facts.map((fact) => (
+                <div key={fact.label}><dt>{fact.label}</dt><dd>{fact.value}</dd></div>
+              ))}
             </Motion.dl>
           </Motion.div>
 
-          <ConversationSignal reduceMotion={reduceMotion} />
+          <ConversationSignal reduceMotion={reduceMotion} content={content.signal} />
         </div>
       </section>
 
@@ -299,12 +225,11 @@ export default function Contact() {
             transition={{ duration: 0.65, ease: premiumEase }}
           >
             <div>
-              <p className="contact-eyebrow"><span aria-hidden="true" /> Project brief</p>
-              <h2 className="display-font">Start with the part that is hardest to explain.</h2>
+              <p className="contact-eyebrow"><span aria-hidden="true" /> {content.brief.eyebrow}</p>
+              <h2 className="display-font">{content.brief.title}</h2>
             </div>
             <p>
-              A polished specification is not required. A few honest details are enough to
-              begin framing the opportunity, the risk, and the smallest useful next step.
+              {content.brief.copy}
             </p>
           </Motion.div>
 
@@ -319,65 +244,65 @@ export default function Contact() {
               transition={{ duration: 0.68, ease: premiumEase }}
             >
               <div className="contact-form-toolbar">
-                <span><i /> Secure handoff</span>
-                <small>Brief / 01</small>
+                <span><i /> {content.form.secure}</span>
+                <small>{content.form.count}</small>
               </div>
 
               <div className="contact-form-grid">
                 <label className="contact-field">
-                  <span>Your name</span>
+                  <span>{content.form.name}</span>
                   <input
                     type="text"
                     name="name"
                     value={form.name}
                     onChange={handleChange}
                     autoComplete="name"
-                    placeholder="How should I address you?"
+                    placeholder={content.form.namePlaceholder}
                     required
                   />
                 </label>
 
                 <label className="contact-field">
-                  <span>Email address</span>
+                  <span>{content.form.email}</span>
                   <input
                     type="email"
                     name="email"
                     value={form.email}
                     onChange={handleChange}
                     autoComplete="email"
-                    placeholder="you@company.com"
+                    placeholder="name@example.com"
                     required
                   />
                 </label>
 
                 <label className="contact-field">
-                  <span>Organisation <small>Optional</small></span>
+                  <span>{content.form.organization} <small>{content.form.optional}</small></span>
                   <input
                     type="text"
                     name="organization"
                     value={form.organization}
                     onChange={handleChange}
                     autoComplete="organization"
-                    placeholder="Company or team"
+                    placeholder={content.form.organizationPlaceholder}
                   />
                 </label>
 
                 <label className="contact-field">
-                  <span>Project focus</span>
+                  <span>{content.form.focus}</span>
                   <select name="projectType" value={form.projectType} onChange={handleChange} required>
-                    <option value="" disabled>Select the closest fit</option>
-                    {projectTypes.map((type) => <option key={type} value={type}>{type}</option>)}
+                    <option value="" disabled>{content.form.select}</option>
+                    {content.projectTypes.map((type) => <option key={type.id} value={type.id}>{type.label}</option>)}
                   </select>
                 </label>
 
                 <label className="contact-field contact-field--wide">
-                  <span>What are you trying to solve?</span>
+                  <span>{content.form.problem}</span>
                   <textarea
                     name="message"
                     value={form.message}
                     onChange={handleChange}
                     rows={7}
-                    placeholder="The current situation, the constraint that matters, and the outcome you need…"
+                    placeholder={content.form.problemPlaceholder}
                     required
                   />
                 </label>
@@ -386,13 +311,13 @@ export default function Contact() {
               <div className="contact-form-footer">
                 <div className="contact-form-actions">
                   <button type="submit" className="contact-action contact-action--primary">
-                    Continue in WhatsApp <ArrowIcon external />
+                    {content.form.whatsapp} <ArrowIcon external />
                   </button>
                   <a href={emailHref} className="contact-action contact-action--secondary">
-                    Compose email
+                    {content.form.compose}
                   </a>
                 </div>
-                <p>No account or portal. Your details are passed only to the channel you choose.</p>
+                <p>{content.form.privacy}</p>
               </div>
             </Motion.form>
 
@@ -405,20 +330,23 @@ export default function Contact() {
               transition={{ duration: 0.68, delay: reduceMotion ? 0 : 0.08, ease: premiumEase }}
             >
               <div className="contact-side-card">
-                <p className="contact-side-label">Direct channels</p>
+                <p className="contact-side-label">{content.sidebar.direct}</p>
                 <div className="contact-channels">
-                  <DirectChannel type="email" label="Email" value={profile.email} href={`mailto:${profile.email}`} />
+                  <DirectChannel type="email" label={content.sidebar.email} value={profile.email} href={`mailto:${profile.email}`} />
                   <DirectChannel type="whatsapp" label="WhatsApp" value={profile.phone} href={profile.whatsapp} />
-                  <DirectChannel type="linkedin" label="LinkedIn" value="Professional profile" href={profile.linkedin} />
+                  <DirectChannel type="linkedin" label="LinkedIn" value={content.sidebar.professional} href={profile.linkedin} />
                 </div>
               </div>
 
               <div className="contact-side-card contact-side-card--framework">
-                <p className="contact-side-label">A useful first message</p>
+                <p className="contact-side-label">{content.sidebar.firstMessage}</p>
                 <ol>
-                  <li><span>01</span><div><strong>Context</strong><p>What exists today and who depends on it?</p></div></li>
-                  <li><span>02</span><div><strong>Constraint</strong><p>What cannot be compromised?</p></div></li>
-                  <li><span>03</span><div><strong>Outcome</strong><p>What becomes measurably better?</p></div></li>
+                  {content.sidebar.prompts.map((prompt, index) => (
+                    <li key={prompt.title}>
+                      <span>0{index + 1}</span>
+                      <div><strong>{prompt.title}</strong><p>{prompt.copy}</p></div>
+                    </li>
+                  ))}
                 </ol>
               </div>
             </Motion.aside>
@@ -437,12 +365,12 @@ export default function Contact() {
         >
           <div className="contact-outro-card">
             <div>
-              <p className="contact-eyebrow"><span aria-hidden="true" /> Low-context is welcome</p>
-              <h2 className="display-font">One honest paragraph is enough to begin.</h2>
-              <p>Send the difficult part first. Structure can come after the signal is clear.</p>
+              <p className="contact-eyebrow"><span aria-hidden="true" /> {content.outro.eyebrow}</p>
+              <h2 className="display-font">{content.outro.title}</h2>
+              <p>{content.outro.copy}</p>
             </div>
             <a href={`mailto:${profile.email}`} className="contact-action contact-action--primary">
-              Write to Eiad <ArrowIcon />
+              {content.outro.write} <ArrowIcon />
             </a>
           </div>
         </Motion.div>

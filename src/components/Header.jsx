@@ -1,13 +1,10 @@
 import { AnimatePresence, motion as Motion } from "framer-motion";
 import { useEffect, useId, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import useHydrationSafeReducedMotion from "../hooks/useHydrationSafeReducedMotion";
+import { useLocale } from "../i18n/LocaleContext";
 import BrandMark from "./BrandMark";
-
-const NAV_ITEMS = [
-  { to: "/#selected-work", label: "Work" },
-  { to: "/about-us", label: "About" },
-  { to: "/why-us", label: "Approach" },
-];
+import LanguageSwitcher from "./LanguageSwitcher";
 
 function ArrowIcon() {
   return (
@@ -46,10 +43,11 @@ function MenuIcon({ open }) {
   );
 }
 
-function DesktopNavLink({ to, children }) {
+function DesktopNavLink({ to, children, end = false }) {
   return (
     <NavLink
       to={to}
+      end={end}
       className={({ isActive }) =>
         `group relative inline-flex min-h-11 items-center px-3 text-sm font-semibold transition-colors duration-200 ${
           isActive ? "text-ink" : "text-muted hover:text-ink"
@@ -75,6 +73,7 @@ function DesktopNavLink({ to, children }) {
 }
 
 export default function Header() {
+  const reduceMotion = useHydrationSafeReducedMotion();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
@@ -82,6 +81,12 @@ export default function Header() {
   const menuRef = useRef(null);
   const triggerRef = useRef(null);
   const firstLinkRef = useRef(null);
+  const { copy, path } = useLocale();
+  const navItems = [
+    { to: path("home", "#selected-work"), label: copy.common.nav.work, end: true },
+    { to: path("about"), label: copy.common.nav.about, end: true },
+    { to: path("approach"), label: copy.common.nav.approach, end: true },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -97,8 +102,6 @@ export default function Header() {
   useEffect(() => {
     if (!menuOpen) return undefined;
 
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
     const focusTimer = window.setTimeout(() => firstLinkRef.current?.focus(), 80);
 
     const onKeyDown = (event) => {
@@ -122,7 +125,6 @@ export default function Header() {
 
     return () => {
       window.clearTimeout(focusTimer);
-      document.body.style.overflow = previousOverflow;
       document.removeEventListener("keydown", onKeyDown);
       document.removeEventListener("pointerdown", onPointerDown);
     };
@@ -137,9 +139,9 @@ export default function Header() {
 
       <div className="site-container relative z-10 flex h-full items-center justify-between">
         <Link
-          to="/"
-          className="group inline-flex min-h-11 items-center gap-3 rounded-xl pr-2"
-          aria-label="Eiad Soufan — Home"
+          to={path("home")}
+          className="group inline-flex min-h-11 items-center gap-3 rounded-xl pe-2"
+          aria-label={copy.common.nav.homeAria}
         >
           <BrandMark />
           <span className="leading-tight">
@@ -147,25 +149,27 @@ export default function Header() {
               Eiad Soufan
             </span>
             <span className="mt-0.5 hidden text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-muted sm:block">
-              Lead Software Engineer
+              {copy.common.role}
             </span>
           </span>
         </Link>
 
-        <div className="hidden items-center gap-1 md:flex">
-          <nav className="flex items-center" aria-label="Primary navigation">
-            {NAV_ITEMS.map((item) => (
-              <DesktopNavLink key={item.to} to={item.to}>
+        <div className="hidden items-center gap-1 lg:flex">
+          <nav className="flex items-center" aria-label={copy.common.nav.primaryAria}>
+            {navItems.map((item) => (
+              <DesktopNavLink key={item.to} to={item.to} end={item.end}>
                 {item.label}
               </DesktopNavLink>
             ))}
           </nav>
 
+          <LanguageSwitcher className="ms-2" />
+
           <Link
-            to="/contact"
-            className="ml-3 inline-flex min-h-11 items-center gap-2 rounded-[14px] border border-cyan/20 bg-ink px-4 text-sm font-bold text-canvas shadow-[0_10px_30px_-18px_rgb(var(--color-cyan)_/_0.75)] transition duration-200 ease-premium hover:-translate-y-0.5 hover:bg-white focus-visible:outline-offset-2"
+            to={path("contact")}
+            className="ms-3 inline-flex min-h-11 items-center gap-2 rounded-[14px] border border-cyan/20 bg-ink px-4 text-sm font-bold text-canvas shadow-[0_10px_30px_-18px_rgb(var(--color-cyan)_/_0.75)] transition duration-200 ease-premium hover:-translate-y-0.5 hover:bg-white focus-visible:outline-offset-2"
           >
-            Let&apos;s talk
+            {copy.common.nav.letsTalk}
             <ArrowIcon />
           </Link>
         </div>
@@ -173,8 +177,8 @@ export default function Header() {
         <button
           ref={triggerRef}
           type="button"
-          className="grid h-11 w-11 place-items-center rounded-[14px] border border-line/20 bg-surface/75 text-ink transition-colors hover:border-line/35 hover:bg-surface-raised md:hidden"
-          aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+          className="grid h-11 w-11 place-items-center rounded-[14px] border border-line/20 bg-surface/75 text-ink transition-colors hover:border-line/35 hover:bg-surface-raised lg:hidden"
+          aria-label={menuOpen ? copy.common.nav.closeMenu : copy.common.nav.openMenu}
           aria-expanded={menuOpen}
           aria-controls={menuId}
           onClick={() => setMenuOpen((current) => !current)}
@@ -188,22 +192,27 @@ export default function Header() {
           <Motion.div
             ref={menuRef}
             id={menuId}
-            initial={{ opacity: 0, y: -10 }}
+            initial={reduceMotion ? false : { opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-x-0 top-full z-20 border-b border-line/[0.24] bg-canvas/[0.86] px-[var(--site-gutter)] pb-5 pt-3 shadow-[0_28px_70px_-30px_rgb(0_0_0_/_0.95)] backdrop-blur-[24px] backdrop-saturate-[1.4] md:hidden"
+            exit={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
+            transition={{ duration: reduceMotion ? 0 : 0.22, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute inset-x-0 top-full z-20 max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-b border-line/[0.24] bg-canvas/[0.86] px-[var(--site-gutter)] pb-5 pt-3 shadow-[0_28px_70px_-30px_rgb(0_0_0_/_0.95)] backdrop-blur-[24px] backdrop-saturate-[1.4] lg:hidden"
           >
             <nav
               className="mx-auto flex max-w-[var(--site-width)] flex-col rounded-2xl border border-line/15 bg-surface/65 p-2"
-              aria-label="Mobile navigation"
+              aria-label={copy.common.nav.mobileAria}
             >
-              {[...NAV_ITEMS, { to: "/contact", label: "Contact" }].map(
+              {[
+                ...navItems,
+                { to: path("contact"), label: copy.common.nav.contact, end: true },
+              ].map(
                 (item, index) => (
                   <NavLink
                     ref={index === 0 ? firstLinkRef : undefined}
                     key={item.to}
                     to={item.to}
+                    end={item.end}
+                    onClick={() => setMenuOpen(false)}
                     className={({ isActive }) =>
                       `flex min-h-12 items-center justify-between rounded-xl px-4 text-sm font-semibold transition-colors ${
                         isActive
@@ -218,6 +227,12 @@ export default function Header() {
                 ),
               )}
             </nav>
+            <div className="mx-auto mt-2 max-w-[var(--site-width)]">
+              <LanguageSwitcher
+                variant="mobile"
+                onSelect={() => setMenuOpen(false)}
+              />
+            </div>
           </Motion.div>
         ) : null}
       </AnimatePresence>

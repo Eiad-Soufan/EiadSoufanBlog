@@ -1,20 +1,21 @@
 import {
   motion as Motion,
-  useReducedMotion,
   useScroll,
   useSpring,
 } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { useMemo, useRef } from "react";
 import { Link } from "react-router-dom";
 import BrandMark from "../components/BrandMark";
 import {
-  capabilityPillars,
-  career,
-  education,
-  publications,
-  recognitions,
+  capabilityPillars as baseCapabilityPillars,
+  career as baseCareer,
+  education as baseEducation,
+  publications as basePublications,
+  recognitions as baseRecognitions,
 } from "../data/about";
 import { profile } from "../data/profile";
+import useHydrationSafeReducedMotion from "../hooks/useHydrationSafeReducedMotion";
+import { useLocale } from "../i18n/LocaleContext";
 import "../styles/about.css";
 
 const premiumEase = [0.22, 1, 0.36, 1];
@@ -95,7 +96,7 @@ function SectionIntro({ eyebrow, title, copy, align = "left" }) {
   );
 }
 
-function CareerConstellation({ reduceMotion }) {
+function CareerConstellation({ reduceMotion, content }) {
   return (
     <Motion.div
       className="career-constellation"
@@ -103,7 +104,7 @@ function CareerConstellation({ reduceMotion }) {
       initial={reduceMotion ? false : { opacity: 0, scale: 0.94, rotate: -2 }}
       animate={{ opacity: 1, scale: 1, rotate: 0 }}
       transition={{ duration: 0.9, delay: 0.15, ease: premiumEase }}
-      aria-label="Eiad's interconnected engineering disciplines"
+      aria-label={content.aria}
     >
       <div className="career-constellation-grid" aria-hidden="true" />
       <div className="career-orbit career-orbit--outer" aria-hidden="true" />
@@ -112,21 +113,21 @@ function CareerConstellation({ reduceMotion }) {
 
       <div className="career-core">
         <BrandMark className="h-14 w-14 sm:h-16 sm:w-16" />
-        <span className="career-core-role">Systems engineer</span>
+        <span className="career-core-role">{content.role}</span>
         <strong className="career-core-name display-font">Eiad Soufan</strong>
       </div>
 
       <span className="career-node career-node--backend">
-        <i aria-hidden="true" /> Backend
+        <i aria-hidden="true" /> {content.nodes[0]}
       </span>
       <span className="career-node career-node--ai">
-        <i aria-hidden="true" /> AI / RAG
+        <i aria-hidden="true" /> {content.nodes[1]}
       </span>
       <span className="career-node career-node--product">
-        <i aria-hidden="true" /> Product
+        <i aria-hidden="true" /> {content.nodes[2]}
       </span>
       <span className="career-node career-node--delivery">
-        <i aria-hidden="true" /> Delivery
+        <i aria-hidden="true" /> {content.nodes[3]}
       </span>
 
       <div className="career-signal" aria-hidden="true">
@@ -137,15 +138,13 @@ function CareerConstellation({ reduceMotion }) {
       </div>
 
       <div className="career-constellation-caption">
-        <span>Architecture</span>
-        <span>Intelligence</span>
-        <span>Production</span>
+        {content.captions.map((caption) => <span key={caption}>{caption}</span>)}
       </div>
     </Motion.div>
   );
 }
 
-function CapabilityCard({ pillar, index, reduceMotion }) {
+function CapabilityCard({ pillar, index, reduceMotion, skillsAria }) {
   return (
     <Motion.article
       className={`capability-card capability-card--${pillar.accent}`}
@@ -163,16 +162,16 @@ function CapabilityCard({ pillar, index, reduceMotion }) {
       </div>
       <h3 className="display-font">{pillar.title}</h3>
       <p>{pillar.summary}</p>
-      <ul aria-label={`${pillar.title} technologies`}>
+      <ul aria-label={`${pillar.title} — ${skillsAria}`}>
         {pillar.skills.map((skill) => (
-          <li key={skill}>{skill}</li>
+          <li key={skill} dir="auto">{skill}</li>
         ))}
       </ul>
     </Motion.article>
   );
 }
 
-function CareerTimeline({ reduceMotion }) {
+function CareerTimeline({ reduceMotion, items, currentLabel }) {
   const timelineRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: timelineRef,
@@ -193,7 +192,7 @@ function CareerTimeline({ reduceMotion }) {
         aria-hidden="true"
       />
 
-      {career.map((position, index) => (
+      {items.map((position, index) => (
         <Motion.article
           className="career-entry"
           key={`${position.company}-${position.period}`}
@@ -220,7 +219,7 @@ function CareerTimeline({ reduceMotion }) {
               </div>
               {position.current ? (
                 <span className="career-current">
-                  <i aria-hidden="true" /> Current
+                  <i aria-hidden="true" /> {currentLabel}
                 </span>
               ) : null}
             </div>
@@ -237,7 +236,7 @@ function CareerTimeline({ reduceMotion }) {
   );
 }
 
-function EducationCard({ item, index, reduceMotion }) {
+function EducationCard({ item, index, reduceMotion, researchLabel }) {
   return (
     <Motion.article
       className="education-card"
@@ -255,7 +254,7 @@ function EducationCard({ item, index, reduceMotion }) {
         {item.detail ? <p className="education-detail">{item.detail}</p> : null}
         {item.research ? (
           <p className="education-research">
-            <span>Research</span>
+            <span>{researchLabel}</span>
             {item.research}
           </p>
         ) : null}
@@ -265,65 +264,33 @@ function EducationCard({ item, index, reduceMotion }) {
 }
 
 export default function AboutUs() {
-  const reduceMotion = useReducedMotion();
-
-  useEffect(() => {
-    const pageTitle = "About Eiad Soufan — Lead Software Engineer";
-    const description =
-      "Lead Software Engineer building dependable backend systems, applied AI products, and production platforms across web and mobile.";
-    const previousTitle = document.title;
-    document.title = pageTitle;
-
-    const upsertMeta = (key, content, attribute = "name") => {
-      let element = document.querySelector(`meta[${attribute}="${key}"]`);
-      if (!element) {
-        element = document.createElement("meta");
-        element.setAttribute(attribute, key);
-        document.head.appendChild(element);
-      }
-      const previousContent = element.getAttribute("content");
-      element.setAttribute("content", content);
-      return () => {
-        if (previousContent) element.setAttribute("content", previousContent);
-        else element.remove();
-      };
-    };
-
-    const cleanups = [
-      upsertMeta("description", description),
-      upsertMeta("og:title", pageTitle, "property"),
-      upsertMeta("og:description", description, "property"),
-      upsertMeta("og:type", "profile", "property"),
-    ];
-
-    const schema = document.createElement("script");
-    schema.id = "about-person-schema";
-    schema.type = "application/ld+json";
-    schema.textContent = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Person",
-      name: "Eiad Abdulhadi Soufan",
-      jobTitle: "Lead Software Engineer",
-      homeLocation: "Kuala Lumpur, Malaysia",
-      url: `${window.location.origin}/about-us`,
-      sameAs: [profile.github, profile.linkedin],
-      knowsAbout: [
-        "Python",
-        "Django",
-        "React",
-        "Flutter",
-        "Software Architecture",
-        "Retrieval-Augmented Generation",
-      ],
-    });
-    document.head.appendChild(schema);
-
-    return () => {
-      document.title = previousTitle;
-      cleanups.forEach((cleanup) => cleanup());
-      schema.remove();
-    };
-  }, []);
+  const reduceMotion = useHydrationSafeReducedMotion();
+  const { copy, locale, path } = useLocale();
+  const content = copy.about;
+  const capabilityPillars = useMemo(
+    () => baseCapabilityPillars.map((item, index) => ({ ...item, ...content.capabilities[index] })),
+    [content.capabilities],
+  );
+  const career = useMemo(
+    () => baseCareer.map((item, index) => ({ ...item, ...content.career[index] })),
+    [content.career],
+  );
+  const education = useMemo(
+    () => baseEducation.map((item, index) => ({ ...item, ...content.education[index] })),
+    [content.education],
+  );
+  const recognitions = useMemo(
+    () => baseRecognitions.map((item, index) => ({ ...item, ...content.recognitions[index] })),
+    [content.recognitions],
+  );
+  const publications = useMemo(
+    () => basePublications.map((item, index) => ({
+      ...item,
+      title: content.publications[index],
+      titleLanguage: content.publications[index] === item.title ? "en" : undefined,
+    })),
+    [content.publications],
+  );
 
   return (
     <div className="about-page">
@@ -344,7 +311,7 @@ export default function AboutUs() {
               variants={reveal}
               transition={{ duration: 0.5, ease: premiumEase }}
             >
-              <span aria-hidden="true" /> About the engineer
+              <span aria-hidden="true" /> {content.hero.eyebrow}
             </Motion.p>
 
             <Motion.h1
@@ -352,7 +319,7 @@ export default function AboutUs() {
               variants={reveal}
               transition={{ duration: 0.65, ease: premiumEase }}
             >
-              I turn complex operations into <em>systems people can trust.</em>
+              {content.hero.titleBefore} <em>{content.hero.titleAccent}</em>
             </Motion.h1>
 
             <Motion.p
@@ -360,9 +327,9 @@ export default function AboutUs() {
               variants={reveal}
               transition={{ duration: 0.62, ease: premiumEase }}
             >
-              I’m <strong>Eiad Soufan</strong>, a Lead Software Engineer based in Kuala
-              Lumpur. I connect backend architecture, applied AI, product interfaces, and
-              production delivery into one coherent engineering process.
+              {content.hero.leadBefore} <strong>{copy.common.name}</strong>
+              {locale === "ar" ? "،" : ","}{" "}
+              {content.hero.leadAfter}
             </Motion.p>
 
             <Motion.div
@@ -370,11 +337,11 @@ export default function AboutUs() {
               variants={reveal}
               transition={{ duration: 0.58, ease: premiumEase }}
             >
-              <Link to="/#selected-work" className="about-action about-action--primary">
-                Explore selected work <ArrowIcon />
+              <Link to={path("home", "#selected-work")} className="about-action about-action--primary">
+                {content.hero.explore} <ArrowIcon />
               </Link>
-              <Link to="/contact" className="about-action about-action--secondary">
-                Start a conversation
+              <Link to={path("contact")} className="about-action about-action--secondary">
+                {content.hero.start}
               </Link>
             </Motion.div>
 
@@ -383,22 +350,16 @@ export default function AboutUs() {
               variants={reveal}
               transition={{ duration: 0.6, ease: premiumEase }}
             >
-              <div>
-                <dt>Current focus</dt>
-                <dd>Lead Software Engineering</dd>
-              </div>
-              <div>
-                <dt>Working across</dt>
-                <dd>Backend · AI · Web · Mobile</dd>
-              </div>
-              <div>
-                <dt>Languages</dt>
-                <dd>Arabic · English C1</dd>
-              </div>
+              {content.hero.facts.map((fact) => (
+                <div key={fact.label}>
+                  <dt>{fact.label}</dt>
+                  <dd>{fact.value}</dd>
+                </div>
+              ))}
             </Motion.dl>
           </Motion.div>
 
-          <CareerConstellation reduceMotion={reduceMotion} />
+          <CareerConstellation reduceMotion={reduceMotion} content={content.constellation} />
         </div>
       </section>
 
@@ -407,9 +368,9 @@ export default function AboutUs() {
           <div className="about-capability-layout">
             <div className="about-capability-sticky">
               <SectionIntro
-                eyebrow="Operating range"
-                title="Depth where it matters. Range where the product needs it."
-                copy="The strongest systems are not assembled from isolated specialties. They are designed as one continuous experience—from data and intelligence to interface and deployment."
+                eyebrow={content.capabilitiesIntro.eyebrow}
+                title={content.capabilitiesIntro.title}
+                copy={content.capabilitiesIntro.copy}
               />
 
               <Motion.div
@@ -420,9 +381,11 @@ export default function AboutUs() {
                 viewport={{ once: true, amount: 0.6 }}
                 transition={{ duration: 0.65, ease: premiumEase }}
               >
-                <span>Engineering principle</span>
+                <span>{content.capabilitiesIntro.principleLabel}</span>
                 <blockquote>
-                  “Make complexity invisible to the people who depend on the product.”
+                  {locale === "ar" ? "«" : "“"}
+                  {content.capabilitiesIntro.principle}
+                  {locale === "ar" ? "»" : "”"}
                 </blockquote>
               </Motion.div>
             </div>
@@ -434,6 +397,7 @@ export default function AboutUs() {
                   pillar={pillar}
                   index={index}
                   reduceMotion={reduceMotion}
+                  skillsAria={copy.common.stackAria}
                 />
               ))}
             </div>
@@ -444,12 +408,16 @@ export default function AboutUs() {
       <section className="about-career">
         <div className="site-container">
           <SectionIntro
-            eyebrow="Career trajectory"
-            title="A path shaped by ownership—not just output."
-            copy="Each chapter expanded the surface I could own: from institutional systems to multi-branch operations, then full-cycle product leadership."
+            eyebrow={content.careerIntro.eyebrow}
+            title={content.careerIntro.title}
+            copy={content.careerIntro.copy}
             align="center"
           />
-          <CareerTimeline reduceMotion={reduceMotion} />
+          <CareerTimeline
+            reduceMotion={reduceMotion}
+            items={career}
+            currentLabel={content.careerIntro.current}
+          />
         </div>
       </section>
 
@@ -457,9 +425,9 @@ export default function AboutUs() {
         <div className="site-container">
           <div className="about-academia-heading">
             <SectionIntro
-              eyebrow="Academic foundation"
-              title="Research depth with production instincts."
-              copy="Software engineering gave me the structure; research trained me to challenge assumptions, measure outcomes, and keep learning."
+              eyebrow={content.academicIntro.eyebrow}
+              title={content.academicIntro.title}
+              copy={content.academicIntro.copy}
             />
 
             <Motion.div
@@ -471,10 +439,10 @@ export default function AboutUs() {
               transition={{ duration: 0.65, ease: premiumEase }}
             >
               <span>2</span>
-              <p>completed engineering degrees</p>
+              <p>{content.academicIntro.degreesCount}</p>
               <i aria-hidden="true" />
               <span>1</span>
-              <p>IT master’s in progress</p>
+              <p>{content.academicIntro.mastersCount}</p>
             </Motion.div>
           </div>
 
@@ -485,6 +453,7 @@ export default function AboutUs() {
                 item={item}
                 index={index}
                 reduceMotion={reduceMotion}
+                researchLabel={content.academicIntro.research}
               />
             ))}
           </div>
@@ -521,13 +490,10 @@ export default function AboutUs() {
           >
             <div className="publications-heading">
               <p className="about-eyebrow">
-                <span aria-hidden="true" /> Selected research
+                <span aria-hidden="true" /> {content.publicationsIntro.eyebrow}
               </p>
-              <h2 className="display-font">Published thinking.</h2>
-              <p>
-                Three peer-reviewed studies applying evidence and analysis to real human
-                questions.
-              </p>
+              <h2 className="display-font">{content.publicationsIntro.title}</h2>
+              <p>{content.publicationsIntro.copy}</p>
             </div>
 
             <ol className="publications-list">
@@ -539,7 +505,12 @@ export default function AboutUs() {
                       <small>
                         {publication.year} · {publication.journal}
                       </small>
-                      <strong>{publication.title}</strong>
+                      <strong
+                        lang={publication.titleLanguage}
+                        dir={publication.titleLanguage ? "ltr" : "auto"}
+                      >
+                        {publication.title}
+                      </strong>
                     </span>
                     <span className="publication-arrow">
                       <ArrowIcon external />
@@ -564,17 +535,14 @@ export default function AboutUs() {
           >
             <div>
               <p className="about-eyebrow">
-                <span aria-hidden="true" /> The next system
+                <span aria-hidden="true" /> {content.outro.eyebrow}
               </p>
-              <h2 className="display-font">Building something genuinely difficult?</h2>
-              <p>
-                I’m interested in products where thoughtful architecture and reliable
-                delivery create a meaningful advantage.
-              </p>
+              <h2 className="display-font">{content.outro.title}</h2>
+              <p>{content.outro.copy}</p>
             </div>
             <div className="about-outro-actions">
-              <Link to="/contact" className="about-action about-action--primary">
-                Let’s talk <ArrowIcon />
+              <Link to={path("contact")} className="about-action about-action--primary">
+                {content.outro.talk} <ArrowIcon />
               </Link>
               <a
                 href={profile.linkedin}

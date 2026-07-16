@@ -1,11 +1,13 @@
-import { motion as Motion, useReducedMotion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
+import useHydrationSafeReducedMotion from "../hooks/useHydrationSafeReducedMotion";
+import { useLocale } from "../i18n/LocaleContext";
 import BrandMark from "./BrandMark";
 
-const NODES = [
-  { label: "Django", detail: "Backend", className: "left-[5%] top-[24%]" },
-  { label: "React", detail: "Interface", className: "right-[4%] top-[19%]" },
-  { label: "AI / RAG", detail: "Intelligence", className: "right-[2%] bottom-[20%]" },
-  { label: "Flutter", detail: "Mobile", className: "left-[4%] bottom-[18%]" },
+const NODE_POSITIONS = [
+  "left-[5%] top-[24%]",
+  "right-[4%] top-[19%]",
+  "right-[2%] bottom-[20%]",
+  "left-[4%] bottom-[18%]",
 ];
 
 function NodeLabel({ label, detail, className }) {
@@ -24,7 +26,8 @@ function NodeLabel({ label, detail, className }) {
 }
 
 export default function SignatureField() {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useHydrationSafeReducedMotion();
+  const { copy } = useLocale();
 
   return (
     <Motion.div
@@ -49,11 +52,11 @@ export default function SignatureField() {
           }}
         />
 
-        <div className="relative z-20 flex items-center justify-between text-[0.58rem] font-bold uppercase tracking-[0.18em] text-muted sm:text-[0.64rem]">
-          <span>Systems / In motion</span>
-          <span className="inline-flex items-center gap-2 text-success/85">
-            <span className="status-pulse h-1.5 w-1.5 rounded-full bg-success" />
-            Production minded
+        <div className="relative z-20 flex items-start justify-between gap-3 text-[0.52rem] font-bold uppercase leading-[1.35] tracking-[0.12em] text-muted sm:text-[0.64rem] sm:tracking-[0.18em]">
+          <span className="max-w-[47%]">{copy.home.signature.systems}</span>
+          <span className="inline-flex max-w-[49%] items-start justify-end gap-2 text-end text-success/85">
+            <span className="status-pulse mt-[0.2em] h-1.5 w-1.5 shrink-0 rounded-full bg-success" />
+            {copy.home.signature.production}
           </span>
         </div>
 
@@ -139,21 +142,21 @@ export default function SignatureField() {
           <div className="absolute left-1/2 top-1/2 z-10 h-14 w-14 -translate-x-1/2 -translate-y-1/2 sm:h-16 sm:w-16">
             <BrandMark className="h-full w-full" />
             <span className="absolute left-1/2 top-[calc(100%+0.45rem)] block w-[8.5rem] -translate-x-1/2 text-center text-[0.46rem] font-bold uppercase leading-[1.35] tracking-[0.16em] text-muted sm:top-[calc(100%+0.5rem)] sm:text-[0.5rem]">
-              Architect · Build · Scale
+              {copy.home.signature.core}
             </span>
           </div>
 
-          {NODES.map((node) => (
-            <NodeLabel key={node.label} {...node} />
+          {copy.home.signature.nodes.map((node, index) => (
+            <NodeLabel key={node.label} {...node} className={NODE_POSITIONS[index]} />
           ))}
         </div>
 
         <div className="absolute inset-x-5 bottom-4 z-20 flex items-center justify-between border-t border-line/10 pt-3 text-[0.55rem] font-bold uppercase tracking-[0.14em] text-muted sm:bottom-5 sm:text-[0.6rem]">
-          <span>Architecture</span>
+          <span>{copy.home.signature.architecture}</span>
           <span className="h-px flex-1 bg-gradient-to-r from-transparent via-line/20 to-transparent mx-3" />
-          <span>Delivery</span>
+          <span>{copy.home.signature.delivery}</span>
           <span className="h-px flex-1 bg-gradient-to-r from-transparent via-line/20 to-transparent mx-3" />
-          <span>Impact</span>
+          <span>{copy.home.signature.impact}</span>
         </div>
       </div>
 

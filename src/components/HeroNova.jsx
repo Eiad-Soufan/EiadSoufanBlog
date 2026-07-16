@@ -1,6 +1,8 @@
-import { motion as Motion, useReducedMotion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { profile } from "../data/profile";
+import useHydrationSafeReducedMotion from "../hooks/useHydrationSafeReducedMotion";
+import { useLocale } from "../i18n/LocaleContext";
 import ImpactMetrics from "./ImpactMetrics";
 import NeuralCosmos from "./NeuralCosmos";
 import SignatureField from "./SignatureField";
@@ -41,8 +43,9 @@ function ExternalIcon() {
 }
 
 export default function HeroNova() {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useHydrationSafeReducedMotion();
   const initial = reduceMotion ? "visible" : "hidden";
+  const { copy, path } = useLocale();
 
   return (
     <section className="relative isolate overflow-hidden border-b border-line/10">
@@ -65,7 +68,7 @@ export default function HeroNova() {
             >
               <span className="inline-flex items-center gap-2 text-[0.66rem] font-bold uppercase tracking-[0.15em] text-ink/90 sm:text-[0.7rem]">
                 <span className="status-pulse h-1.5 w-1.5 rounded-full bg-success" />
-                {profile.location}
+                {copy.common.location}
               </span>
             </Motion.div>
 
@@ -74,7 +77,7 @@ export default function HeroNova() {
               transition={{ duration: 0.52, ease: [0.22, 1, 0.36, 1] }}
               className="eyebrow-label mt-8"
             >
-              {profile.name} — {profile.role}
+              {copy.common.name} — {copy.common.role}
             </Motion.p>
 
             <Motion.h1
@@ -82,16 +85,17 @@ export default function HeroNova() {
               transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
               className="hero-title-scale display-font mt-4 max-w-[19ch] font-bold leading-[1.06] tracking-[-0.045em] text-ink"
             >
-              I engineer <span className="text-gradient">intelligent systems</span> for
-              real-world complexity.
+              {copy.profile.headline.before}{" "}
+              <span className="text-gradient">{copy.profile.headline.accent}</span>{" "}
+              {copy.profile.headline.after}
             </Motion.h1>
 
             <Motion.p
               variants={entrance}
               transition={{ duration: 0.58, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-6 max-w-[66ch] text-[0.98rem] leading-[1.8] text-muted sm:text-[1.06rem] lg:max-w-[61ch]"
+              className="hero-lead mt-6 max-w-[66ch] text-[0.98rem] leading-[1.8] text-muted sm:text-[1.06rem] lg:max-w-[61ch]"
             >
-              {profile.summary}
+              {copy.profile.summary}
             </Motion.p>
 
             <Motion.div
@@ -100,20 +104,20 @@ export default function HeroNova() {
               className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
             >
               <Link
-                to="/#selected-work"
+                to={path("home", "#selected-work")}
                 className="group inline-flex min-h-12 items-center justify-center gap-2.5 rounded-[15px] bg-ink px-5 text-sm font-extrabold text-canvas shadow-[0_18px_45px_-25px_rgb(var(--color-cyan)_/_0.75)] transition duration-200 ease-premium hover:-translate-y-0.5 hover:bg-white sm:justify-start"
               >
-                Explore selected work
+                {copy.home.hero.explore}
                 <span className="transition-transform duration-200 group-hover:translate-x-0.5">
                   <ArrowIcon />
                 </span>
               </Link>
 
               <Link
-                to="/contact"
+                to={path("contact")}
                 className="inline-flex min-h-12 items-center justify-center rounded-[15px] border border-line/20 bg-surface/55 px-5 text-sm font-bold text-ink transition duration-200 ease-premium hover:-translate-y-0.5 hover:border-line/35 hover:bg-surface-raised sm:justify-start"
               >
-                Start a conversation
+                {copy.home.hero.start}
               </Link>
             </Motion.div>
 
@@ -123,7 +127,7 @@ export default function HeroNova() {
               className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-line/10 pt-5"
             >
               <span className="text-[0.66rem] font-bold uppercase tracking-[0.15em] text-muted">
-                Profiles
+                {copy.home.hero.profiles}
               </span>
               <a
                 href={profile.github}
@@ -142,7 +146,7 @@ export default function HeroNova() {
                 LinkedIn <ExternalIcon />
               </a>
               <span className="hidden h-3 w-px bg-line/20 sm:block" aria-hidden="true" />
-              <span className="text-xs font-semibold text-muted">
+              <span className="text-xs font-semibold text-muted" dir="ltr">
                 Python · Django · React · Flutter · RAG
               </span>
             </Motion.div>

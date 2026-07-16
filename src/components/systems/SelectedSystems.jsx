@@ -2,21 +2,18 @@ import {
   animate,
   motion as Motion,
   useInView,
-  useReducedMotion,
 } from "framer-motion";
 import { useEffect, useMemo, useRef } from "react";
 import { Link } from "react-router-dom";
 import systems from "../../data/systems";
+import useHydrationSafeReducedMotion from "../../hooks/useHydrationSafeReducedMotion";
+import { useLocale } from "../../i18n/LocaleContext";
 import "../../styles/systems.css";
 
 const reveal = {
   hidden: { opacity: 0, y: 28 },
   visible: { opacity: 1, y: 0 },
 };
-
-const numberFormatter = new Intl.NumberFormat("en-US", {
-  maximumFractionDigits: 0,
-});
 
 function parseMetric(value) {
   const match = value.match(/^(~?)([\d,]+)(K?)(\+?)$/);
@@ -30,22 +27,23 @@ function parseMetric(value) {
   };
 }
 
-function formatMetric(metric, value) {
-  const rendered = metric.unit === "K" ? Math.round(value) : numberFormatter.format(Math.round(value));
+function formatMetric(metric, value, formatter) {
+  const rendered = metric.unit === "K" ? Math.round(value) : formatter.format(Math.round(value));
   return `${metric.prefix}${rendered}${metric.unit}${metric.suffix}`;
 }
 
-function AnimatedMetric({ metric, delay = 0 }) {
-  const reduceMotion = useReducedMotion();
+function AnimatedMetric({ metric, delay = 0, formatter }) {
+  const reduceMotion = useHydrationSafeReducedMotion();
   const valueRef = useRef(null);
   const inView = useInView(valueRef, { once: true, amount: 0.75 });
   const parsed = useMemo(() => parseMetric(metric.value), [metric.value]);
+  const finalText = parsed ? formatMetric(parsed, parsed.value, formatter) : metric.value;
 
   useEffect(() => {
     const node = valueRef.current;
     if (!node || !parsed) return undefined;
 
-    node.textContent = metric.value;
+    node.textContent = finalText;
     if (!inView || reduceMotion) return undefined;
 
     const controls = animate(0, parsed.value, {
@@ -53,19 +51,19 @@ function AnimatedMetric({ metric, delay = 0 }) {
       delay,
       ease: [0.22, 1, 0.36, 1],
       onUpdate: (latest) => {
-        node.textContent = formatMetric(parsed, latest);
+        node.textContent = formatMetric(parsed, latest, formatter);
       },
     });
 
     return () => controls.stop();
-  }, [delay, inView, metric.value, parsed, reduceMotion]);
+  }, [delay, finalText, formatter, inView, parsed, reduceMotion]);
 
   return (
     <>
       <span ref={valueRef} aria-hidden="true">
-        {metric.value}
+        {finalText}
       </span>
-      <span className="sr-only">{metric.value}</span>
+      <span className="sr-only">{finalText}</span>
     </>
   );
 }
@@ -111,9 +109,9 @@ function ProjectMark({ project }) {
   );
 }
 
-function Stack({ stack }) {
+function Stack({ stack, ariaLabel }) {
   return (
-    <ul className="systems-stack" aria-label="Technology stack">
+    <ul className="systems-stack" aria-label={ariaLabel} dir="ltr">
       {stack.map((technology) => (
         <li key={technology}>{technology}</li>
       ))}
@@ -121,7 +119,7 @@ function Stack({ stack }) {
   );
 }
 
-function ProjectLinks({ links }) {
+function ProjectLinks({ links, externalTab }) {
   return (
     <div className="systems-links">
       {links.map((link, index) => (
@@ -131,7 +129,7 @@ function ProjectLinks({ links }) {
           target="_blank"
           rel="noreferrer"
           className={index === 0 ? "systems-link systems-link--primary" : "systems-link"}
-          aria-label={`${link.label} — opens in a new tab`}
+          aria-label={`${link.label} — ${externalTab}`}
         >
           <span>{link.label}</span>
           <ExternalArrow />
@@ -141,7 +139,7 @@ function ProjectLinks({ links }) {
   );
 }
 
-function Metrics({ metrics }) {
+function Metrics({ metrics, formatter }) {
   if (!metrics.length) return null;
 
   return (
@@ -150,7 +148,7 @@ function Metrics({ metrics }) {
         <div key={metric.label}>
           <dt>{metric.label}</dt>
           <dd>
-            <AnimatedMetric metric={metric} delay={index * 0.08} />
+            <AnimatedMetric metric={metric} delay={index * 0.08} formatter={formatter} />
           </dd>
         </div>
       ))}
@@ -181,8 +179,8 @@ function ProjectPreview({ project }) {
   );
 }
 
-function SystemCard({ project }) {
-  const reduceMotion = useReducedMotion();
+function SystemCard({ project, labels, common, formatter }) {
+  const reduceMotion = useHydrationSafeReducedMotion();
 
   return (
     <Motion.article
@@ -198,7 +196,7 @@ function SystemCard({ project }) {
       <div className="systems-card-meta">
         <span>{project.index}</span>
         <span>{project.category}</span>
-        <span>{project.tier === "flagship" ? "Flagship" : "Production system"}</span>
+        <span>{project.tier === "flagship" ? labels.flagship : labels.production}</span>
       </div>
 
       <div className="systems-card-media">
@@ -208,26 +206,26 @@ function SystemCard({ project }) {
       <div className="systems-card-copy">
         <div className="systems-card-title-row">
           <ProjectMark project={project} />
-          <h3>{project.title}</h3>
+          <h3 dir="auto">{project.title}</h3>
         </div>
         <p className="systems-tagline">{project.tagline}</p>
         <p className="systems-summary">{project.summary}</p>
-        <Metrics metrics={project.metrics} />
+        <Metrics metrics={project.metrics} formatter={formatter} />
 
         <div className="systems-role systems-role--uniform">
-          <span>My contribution</span>
+          <span>{labels.contribution}</span>
           <p>{project.role}</p>
         </div>
 
-        <Stack stack={project.stack} />
-        <ProjectLinks links={project.links} />
+        <Stack stack={project.stack} ariaLabel={common.stackAria} />
+        <ProjectLinks links={project.links} externalTab={common.externalTab} />
       </div>
     </Motion.article>
   );
 }
 
 function SystemsThread() {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useHydrationSafeReducedMotion();
 
   return (
     <svg
@@ -262,7 +260,39 @@ function SystemsThread() {
 }
 
 export default function SelectedSystems() {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useHydrationSafeReducedMotion();
+  const { copy, localeMeta, path } = useLocale();
+  const numberFormatter = useMemo(
+    () => new Intl.NumberFormat(localeMeta.intl, { maximumFractionDigits: 0 }),
+    [localeMeta.intl],
+  );
+  const localizedSystems = useMemo(
+    () =>
+      systems.map((project) => {
+        const localized = copy.systems[project.id];
+        return {
+          ...project,
+          category: localized.category,
+          title: localized.title,
+          tagline: localized.tagline,
+          summary: localized.summary,
+          role: localized.role,
+          stack: project.stack.map((technology) =>
+            technology === "AI / RAG" ? copy.common.aiRag : technology,
+          ),
+          metrics: project.metrics.map((metric, index) => ({
+            ...metric,
+            label: localized.metricLabels[index] || metric.label,
+          })),
+          links: project.links.map((link, index) => ({
+            ...link,
+            label: localized.linkLabels[index] || link.label,
+          })),
+          preview: { ...project.preview, alt: localized.alt },
+        };
+      }),
+    [copy.common.aiRag, copy.systems],
+  );
 
   return (
     <section id="selected-work" className="systems-section scroll-mt-20">
@@ -284,28 +314,33 @@ export default function SelectedSystems() {
         >
           <div className="systems-intro-kicker">
             <span>02</span>
-            <span>Selected systems</span>
+            <span>{copy.home.systems.kicker}</span>
           </div>
           <div className="systems-intro-grid">
             <h2>
-              Built for complexity.
-              <span> Proven in production.</span>
+              {copy.home.systems.titleBefore}
+              <span> {copy.home.systems.titleAfter}</span>
             </h2>
             <div>
               <p>
-                Selected products and platforms delivered across legal intelligence,
-                enterprise operations, logistics, and digital commerce.
+                {copy.home.systems.description}
               </p>
               <span className="systems-intro-count">
-                06 production systems · Across web &amp; mobile
+                {copy.home.systems.count}
               </span>
             </div>
           </div>
         </Motion.header>
 
         <div className="systems-unified-grid">
-          {systems.map((project) => (
-            <SystemCard key={project.id} project={project} />
+          {localizedSystems.map((project) => (
+            <SystemCard
+              key={project.id}
+              project={project}
+              labels={copy.home.systems}
+              common={copy.common}
+              formatter={numberFormatter}
+            />
           ))}
         </div>
 
@@ -317,13 +352,11 @@ export default function SelectedSystems() {
           variants={reveal}
           transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
         >
-          <span className="systems-capability-label">Engineering range</span>
+          <span className="systems-capability-label">{copy.home.systems.range}</span>
           <ul>
-            <li>Architecture</li>
-            <li>Backend systems</li>
-            <li>Product interfaces</li>
-            <li>Applied AI</li>
-            <li>Production delivery</li>
+            {copy.home.systems.capabilities.map((capability) => (
+              <li key={capability}>{capability}</li>
+            ))}
           </ul>
         </Motion.div>
 
@@ -336,15 +369,13 @@ export default function SelectedSystems() {
           transition={{ duration: 0.68, ease: [0.22, 1, 0.36, 1] }}
         >
           <div>
-            <span className="systems-outro-kicker">Have a complex system in mind?</span>
-            <h2>Let&apos;s make it feel simple.</h2>
-            <p>
-              From architecture and APIs to polished interfaces and production delivery.
-            </p>
+            <span className="systems-outro-kicker">{copy.home.systems.outroKicker}</span>
+            <h2>{copy.home.systems.outroTitle}</h2>
+            <p>{copy.home.systems.outroCopy}</p>
           </div>
           <div className="systems-outro-actions">
-            <Link to="/contact" className="systems-outro-primary">
-              Start a conversation <Arrow />
+            <Link to={path("contact")} className="systems-outro-primary">
+              {copy.home.systems.start} <Arrow />
             </Link>
             <a
               href="https://github.com/Eiad-Soufan"
@@ -352,7 +383,7 @@ export default function SelectedSystems() {
               rel="noreferrer"
               className="systems-outro-secondary"
             >
-              Explore GitHub <ExternalArrow />
+              {copy.home.systems.github} <ExternalArrow />
             </a>
           </div>
         </Motion.div>

@@ -1,0 +1,36 @@
+{
+  "id": "/",
+  "name": "Eiad Soufan — Software Engineering & Applied AI",
+  "short_name": "Eiad Soufan",
+  "description": "Engineering leadership, production software systems, SaaS, and applied AI.",
+  "start_url": "/",
+  "scope": "/",
+  "lang": "en",
+  "dir": "ltr",
+  "display": "standalone",
+  "background_color": "#05080e",
+  "theme_color": "#05080e",
+  "categories": ["business", "productivity", "technology"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "About Eiad",
+      "url": "/en/about"
+    },
+    {
+      "name": "Engineering approach",
+      "url": "/en/approach"
+    },
+    {
+      "name": "Contact",
+      "url": "/en/contact"
+    }
+  ]
+}

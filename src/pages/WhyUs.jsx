@@ -1,17 +1,18 @@
 import {
   motion as Motion,
-  useReducedMotion,
   useScroll,
   useSpring,
 } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { useMemo, useRef } from "react";
 import { Link } from "react-router-dom";
 import BrandMark from "../components/BrandMark";
 import {
-  approachPrinciples,
-  approachStages,
-  workingRhythm,
+  approachPrinciples as baseApproachPrinciples,
+  approachStages as baseApproachStages,
+  workingRhythm as baseWorkingRhythm,
 } from "../data/approach";
+import useHydrationSafeReducedMotion from "../hooks/useHydrationSafeReducedMotion";
+import { useLocale } from "../i18n/LocaleContext";
 import "../styles/approach.css";
 
 const premiumEase = [0.22, 1, 0.36, 1];
@@ -90,12 +91,12 @@ function SectionIntro({ eyebrow, title, copy, center = false }) {
   );
 }
 
-function SystemBlueprint({ reduceMotion }) {
+function SystemBlueprint({ reduceMotion, content }) {
   return (
     <Motion.div
       className="system-blueprint"
       data-motion={reduceMotion ? "paused" : "running"}
-      aria-label="A connected engineering process from problem framing to production"
+      aria-label={content.aria}
       initial={reduceMotion ? false : { opacity: 0, scale: 0.95, rotate: 1.5 }}
       animate={{ opacity: 1, scale: 1, rotate: 0 }}
       transition={{ duration: 0.9, delay: 0.14, ease: premiumEase }}
@@ -103,8 +104,8 @@ function SystemBlueprint({ reduceMotion }) {
       <div className="blueprint-grid" aria-hidden="true" />
 
       <div className="blueprint-toolbar">
-        <span><i aria-hidden="true" /> System map</span>
-        <small>LIVE PROCESS · 05 STAGES</small>
+        <span><i aria-hidden="true" /> {content.map}</span>
+        <small>{content.live}</small>
       </div>
 
       <svg className="blueprint-connections" viewBox="0 0 520 430" aria-hidden="true">
@@ -123,36 +124,34 @@ function SystemBlueprint({ reduceMotion }) {
 
       <div className="blueprint-core">
         <BrandMark className="h-12 w-12" />
-        <span className="blueprint-core-label">COHERENT</span>
-        <strong className="blueprint-core-name display-font">System</strong>
+        <span className="blueprint-core-label">{content.coherent}</span>
+        <strong className="blueprint-core-name display-font">{content.system}</strong>
       </div>
 
-      <span className="blueprint-node blueprint-node--problem"><i />Problem</span>
-      <span className="blueprint-node blueprint-node--architecture"><i />Architecture</span>
-      <span className="blueprint-node blueprint-node--product"><i />Product</span>
-      <span className="blueprint-node blueprint-node--production"><i />Production</span>
+      <span className="blueprint-node blueprint-node--problem"><i />{content.nodes[0]}</span>
+      <span className="blueprint-node blueprint-node--architecture"><i />{content.nodes[1]}</span>
+      <span className="blueprint-node blueprint-node--product"><i />{content.nodes[2]}</span>
+      <span className="blueprint-node blueprint-node--production"><i />{content.nodes[3]}</span>
 
       <div className="blueprint-readout blueprint-readout--risk">
-        <span>Risk</span>
-        <strong>Visible early</strong>
+        <span>{content.risk}</span>
+        <strong>{content.early}</strong>
         <i><b /></i>
       </div>
       <div className="blueprint-readout blueprint-readout--feedback">
-        <span>Feedback</span>
-        <strong>Continuous</strong>
+        <span>{content.feedback}</span>
+        <strong>{content.continuous}</strong>
         <i><b /></i>
       </div>
 
       <div className="blueprint-status">
-        <span><i /> Decisions visible</span>
-        <span><i /> Release ready</span>
-        <span><i /> Learning active</span>
+        {content.statuses.map((status) => <span key={status}><i /> {status}</span>)}
       </div>
     </Motion.div>
   );
 }
 
-function ProcessStage({ stage, index, reduceMotion }) {
+function ProcessStage({ stage, index, reduceMotion, outcomeLabel, deliverablesLabel }) {
   return (
     <Motion.article
       className={`process-stage process-stage--${stage.accent}`}
@@ -168,23 +167,23 @@ function ProcessStage({ stage, index, reduceMotion }) {
       </div>
 
       <div className="process-stage-body">
-        <span className="process-stage-code">{stage.code}</span>
+        <span className="process-stage-code" lang="en" dir="ltr">{stage.code}</span>
         <h3 className="display-font">{stage.title}</h3>
         <p>{stage.summary}</p>
-        <ul aria-label={`${stage.code.toLowerCase()} deliverables`}>
+        <ul aria-label={`${stage.title} — ${deliverablesLabel}`}>
           {stage.details.map((detail) => <li key={detail}>{detail}</li>)}
         </ul>
       </div>
 
       <div className="process-stage-output">
-        <span>Outcome</span>
+        <span>{outcomeLabel}</span>
         <strong>{stage.output}</strong>
       </div>
     </Motion.article>
   );
 }
 
-function ProcessSequence({ reduceMotion }) {
+function ProcessSequence({ reduceMotion, items, labels }) {
   const processRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: processRef,
@@ -204,12 +203,14 @@ function ProcessSequence({ reduceMotion }) {
         style={{ scaleY: reduceMotion ? 1 : progress }}
         aria-hidden="true"
       />
-      {approachStages.map((stage, index) => (
+      {items.map((stage, index) => (
         <ProcessStage
           key={stage.code}
           stage={stage}
           index={index}
           reduceMotion={reduceMotion}
+          outcomeLabel={labels.outcome}
+          deliverablesLabel={labels.deliverables}
         />
       ))}
     </div>
@@ -233,7 +234,11 @@ function PrincipleCard({ principle, index, reduceMotion }) {
       <h3 className="display-font">{principle.title}</h3>
       <p>{principle.summary}</p>
       {principle.featured ? (
-        <div className="principle-signal" aria-hidden="true">
+        <div
+          className="principle-signal"
+          data-label={principle.signalLabel}
+          aria-hidden="true"
+        >
           <span />
           <span />
           <span />
@@ -246,42 +251,21 @@ function PrincipleCard({ principle, index, reduceMotion }) {
 }
 
 export default function WhyUs() {
-  const reduceMotion = useReducedMotion();
-
-  useEffect(() => {
-    const pageTitle = "Engineering Approach — Eiad Soufan";
-    const description =
-      "How Eiad Soufan takes complex software from problem framing and architecture through delivery, production, and continuous improvement.";
-    const previousTitle = document.title;
-    document.title = pageTitle;
-
-    const upsertMeta = (key, content, attribute = "name") => {
-      let element = document.querySelector(`meta[${attribute}="${key}"]`);
-      if (!element) {
-        element = document.createElement("meta");
-        element.setAttribute(attribute, key);
-        document.head.appendChild(element);
-      }
-      const previousContent = element.getAttribute("content");
-      element.setAttribute("content", content);
-      return () => {
-        if (previousContent) element.setAttribute("content", previousContent);
-        else element.remove();
-      };
-    };
-
-    const cleanups = [
-      upsertMeta("description", description),
-      upsertMeta("og:title", pageTitle, "property"),
-      upsertMeta("og:description", description, "property"),
-      upsertMeta("og:type", "website", "property"),
-    ];
-
-    return () => {
-      document.title = previousTitle;
-      cleanups.forEach((cleanup) => cleanup());
-    };
-  }, []);
+  const reduceMotion = useHydrationSafeReducedMotion();
+  const { copy, path } = useLocale();
+  const content = copy.approach;
+  const approachStages = useMemo(
+    () => baseApproachStages.map((item, index) => ({ ...item, ...content.stages[index] })),
+    [content.stages],
+  );
+  const approachPrinciples = useMemo(
+    () => baseApproachPrinciples.map((item, index) => ({ ...item, ...content.principles[index] })),
+    [content.principles],
+  );
+  const workingRhythm = useMemo(
+    () => baseWorkingRhythm.map((item, index) => ({ ...item, ...content.workingRhythm[index] })),
+    [content.workingRhythm],
+  );
 
   return (
     <div className="approach-page">
@@ -298,36 +282,34 @@ export default function WhyUs() {
             transition={{ staggerChildren: reduceMotion ? 0 : 0.07 }}
           >
             <Motion.p className="approach-eyebrow" variants={reveal} transition={{ duration: 0.5, ease: premiumEase }}>
-              <span aria-hidden="true" /> Engineering approach
+              <span aria-hidden="true" /> {content.hero.eyebrow}
             </Motion.p>
 
             <Motion.h1 className="hero-title-scale display-font" variants={reveal} transition={{ duration: 0.68, ease: premiumEase }}>
-              From uncertain idea to <em>reliable system.</em>
+              {content.hero.titleBefore} <em>{content.hero.titleAccent}</em>
             </Motion.h1>
 
             <Motion.p className="approach-hero-lead" variants={reveal} transition={{ duration: 0.62, ease: premiumEase }}>
-              I reduce uncertainty early, connect architecture to experience, and ship in
-              increments that already resemble production. The goal is not merely to build
-              more—it is to make every decision compound.
+              {content.hero.lead}
             </Motion.p>
 
             <Motion.div className="approach-actions" variants={reveal} transition={{ duration: 0.6, ease: premiumEase }}>
-              <Link to="/contact" className="approach-action approach-action--primary">
-                Discuss a system <ArrowIcon />
+              <Link to={path("contact")} className="approach-action approach-action--primary">
+                {content.hero.discuss} <ArrowIcon />
               </Link>
-              <Link to="/#selected-work" className="approach-action approach-action--secondary">
-                See the outcomes
+              <Link to={path("home", "#selected-work")} className="approach-action approach-action--secondary">
+                {content.hero.outcomes}
               </Link>
             </Motion.div>
 
             <Motion.dl className="approach-hero-signals" variants={reveal} transition={{ duration: 0.6, ease: premiumEase }}>
-              <div><dt>01</dt><dd>Risk front-loaded</dd></div>
-              <div><dt>02</dt><dd>Decisions visible</dd></div>
-              <div><dt>03</dt><dd>Production included</dd></div>
+              {content.hero.signals.map((signal, index) => (
+                <div key={signal}><dt>0{index + 1}</dt><dd>{signal}</dd></div>
+              ))}
             </Motion.dl>
           </Motion.div>
 
-          <SystemBlueprint reduceMotion={reduceMotion} />
+          <SystemBlueprint reduceMotion={reduceMotion} content={content.blueprint} />
         </div>
       </section>
 
@@ -335,9 +317,9 @@ export default function WhyUs() {
         <div className="site-container approach-process-layout">
           <div className="approach-process-sticky">
             <SectionIntro
-              eyebrow="The delivery sequence"
-              title="Five moves. One continuous system."
-              copy="The phases are distinct enough to create clarity, but connected enough to avoid hand-off gaps. Learning flows forward—and production insight flows back."
+              eyebrow={content.processIntro.eyebrow}
+              title={content.processIntro.title}
+              copy={content.processIntro.copy}
             />
             <Motion.div
               className="process-loop-note"
@@ -347,24 +329,28 @@ export default function WhyUs() {
               viewport={{ once: true, amount: 0.6 }}
               transition={{ duration: 0.62, ease: premiumEase }}
             >
-              <span>Continuous loop</span>
+              <span>{content.processIntro.loop}</span>
               <svg viewBox="0 0 64 24" aria-hidden="true">
                 <path d="M6 12h48m-8-7 8 7-8 7" />
               </svg>
-              <strong>Frame · Architect · Prove · Build · Evolve</strong>
+              <strong>{content.processIntro.sequence}</strong>
             </Motion.div>
           </div>
 
-          <ProcessSequence reduceMotion={reduceMotion} />
+          <ProcessSequence
+            reduceMotion={reduceMotion}
+            items={approachStages}
+            labels={content.processIntro}
+          />
         </div>
       </section>
 
       <section className="approach-principles">
         <div className="site-container">
           <SectionIntro
-            eyebrow="Decision principles"
-            title="The standards behind the work."
-            copy="Technology changes quickly. These decisions stay useful because they protect clarity, reliability, and long-term product value."
+            eyebrow={content.principlesIntro.eyebrow}
+            title={content.principlesIntro.title}
+            copy={content.principlesIntro.copy}
             center
           />
 
@@ -392,12 +378,9 @@ export default function WhyUs() {
             transition={{ duration: 0.68, ease: premiumEase }}
           >
             <div className="rhythm-heading">
-              <p className="approach-eyebrow"><span aria-hidden="true" /> Working rhythm</p>
-              <h2 className="display-font">No black box between brief and release.</h2>
-              <p>
-                Collaboration stays concrete: what we know, what we chose, what is working,
-                and what the next release will prove.
-              </p>
+              <p className="approach-eyebrow"><span aria-hidden="true" /> {content.rhythm.eyebrow}</p>
+              <h2 className="display-font">{content.rhythm.title}</h2>
+              <p>{content.rhythm.copy}</p>
             </div>
 
             <ol className="rhythm-steps">
@@ -414,12 +397,9 @@ export default function WhyUs() {
             </ol>
 
             <div className="rhythm-contract">
-              <span>You always know</span>
+              <span>{content.rhythm.always}</span>
               <ul>
-                <li><i /> What is being solved now</li>
-                <li><i /> Why the current decision exists</li>
-                <li><i /> What “ready” means</li>
-                <li><i /> What production taught us</li>
+                {content.rhythm.promises.map((promise) => <li key={promise}><i /> {promise}</li>)}
               </ul>
             </div>
           </Motion.div>
@@ -437,16 +417,16 @@ export default function WhyUs() {
             transition={{ duration: 0.7, ease: premiumEase }}
           >
             <div>
-              <p className="approach-eyebrow"><span aria-hidden="true" /> Start with the real problem</p>
-              <h2 className="display-font">Bring the complexity. We’ll find the shape.</h2>
-              <p>A useful first conversation needs no polished specification—only an honest problem worth solving.</p>
+              <p className="approach-eyebrow"><span aria-hidden="true" /> {content.outro.eyebrow}</p>
+              <h2 className="display-font">{content.outro.title}</h2>
+              <p>{content.outro.copy}</p>
             </div>
             <div className="approach-outro-actions">
-              <Link to="/contact" className="approach-action approach-action--primary">
-                Start a conversation <ArrowIcon />
+              <Link to={path("contact")} className="approach-action approach-action--primary">
+                {content.outro.start} <ArrowIcon />
               </Link>
-              <Link to="/about-us" className="approach-action approach-action--secondary">
-                About Eiad
+              <Link to={path("about")} className="approach-action approach-action--secondary">
+                {content.outro.about}
               </Link>
             </div>
           </Motion.div>

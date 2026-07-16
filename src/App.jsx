@@ -1,8 +1,16 @@
-import { lazy, Suspense, useEffect } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { lazy, Suspense, useEffect, useRef } from "react";
+import { Navigate, Route, Routes, useLocation, useParams } from "react-router-dom";
 
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import Seo from "./components/Seo";
+import {
+  LEGACY_PAGE_PATHS,
+  getBrowserLocale,
+  isLocale,
+  localizedPath,
+} from "./i18n/config";
+import { useLocale } from "./i18n/LocaleContext";
 import Home from "./pages/Home";
 
 const AboutUs = lazy(() => import("./pages/AboutUs"));
@@ -12,10 +20,14 @@ const WhyUs = lazy(() => import("./pages/WhyUs"));
 
 function RouteEffects() {
   const location = useLocation();
+  const previousPathRef = useRef(location.pathname);
 
   useEffect(() => {
     let firstFrame;
     let secondFrame;
+    let focusFrame;
+    const pathChanged = previousPathRef.current !== location.pathname;
+    previousPathRef.current = location.pathname;
 
     if (location.hash) {
       firstFrame = window.requestAnimationFrame(() => {
@@ -26,11 +38,17 @@ function RouteEffects() {
       });
     } else {
       window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      if (pathChanged) {
+        focusFrame = window.requestAnimationFrame(() => {
+          document.getElementById("main-content")?.focus({ preventScroll: true });
+        });
+      }
     }
 
     return () => {
       if (firstFrame) window.cancelAnimationFrame(firstFrame);
       if (secondFrame) window.cancelAnimationFrame(secondFrame);
+      if (focusFrame) window.cancelAnimationFrame(focusFrame);
     };
   }, [location.pathname, location.hash]);
 
@@ -38,21 +56,36 @@ function RouteEffects() {
 }
 
 function PageFallback() {
+  const { copy } = useLocale();
+
   return (
     <div className="site-container grid min-h-[45vh] place-items-center" role="status">
-      <span className="text-sm font-semibold text-muted">Loading page…</span>
+      <span className="text-sm font-semibold text-muted">{copy.common.loading}</span>
     </div>
   );
 }
 
+function RootGateway() {
+  return <Navigate replace to={localizedPath(getBrowserLocale())} />;
+}
+
+function LocaleRoute({ children }) {
+  const { locale } = useParams();
+  if (!isLocale(locale)) return <NotFound />;
+  return children;
+}
+
 export default function App() {
+  const { copy } = useLocale();
+
   return (
     <div className="site-shell flex min-h-screen flex-col">
       <a href="#main-content" className="skip-link">
-        Skip to content
+        {copy.common.skipToContent}
       </a>
 
       <RouteEffects />
+      <Seo />
       <Header />
 
       <main
@@ -63,12 +96,18 @@ export default function App() {
       >
         <Suspense fallback={<PageFallback />}>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<AboutUs />} />
-            <Route path="/about-us" element={<AboutUs />} />
-            <Route path="/why-us" element={<WhyUs />} />
-            <Route path="/whyus" element={<WhyUs />} />
-            <Route path="/contact" element={<Contact />} />
+            <Route path="/" element={<RootGateway />} />
+            <Route path="/:locale" element={<LocaleRoute><Home /></LocaleRoute>} />
+            <Route path="/:locale/about" element={<LocaleRoute><AboutUs /></LocaleRoute>} />
+            <Route path="/:locale/approach" element={<LocaleRoute><WhyUs /></LocaleRoute>} />
+            <Route path="/:locale/contact" element={<LocaleRoute><Contact /></LocaleRoute>} />
+            {Object.entries(LEGACY_PAGE_PATHS).map(([legacyPath, page]) => (
+              <Route
+                key={legacyPath}
+                path={`/${legacyPath}`}
+                element={<Navigate replace to={localizedPath("en", page)} />}
+              />
+            ))}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
