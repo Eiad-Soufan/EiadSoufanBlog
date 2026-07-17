@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/verify-translations.mjs && vite build && node scripts/generate-seo-pages.mjs dist && node scripts/verify-seo.mjs dist",
+    "build": "node scripts/verify-layout-contracts.mjs && node scripts/verify-translations.mjs && vite build && node scripts/generate-seo-pages.mjs dist && node scripts/verify-seo.mjs dist",
     "lint": "eslint .",
     "preview": "vite preview",
     "verify:i18n": "node scripts/verify-translations.mjs",
+    "verify:layout": "node scripts/verify-layout-contracts.mjs",
     "verify:seo": "node scripts/verify-seo.mjs dist",
     "verify:geo": "node scripts/verify-locale-gateway.mjs"
   },

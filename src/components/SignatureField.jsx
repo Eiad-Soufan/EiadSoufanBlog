@@ -34,7 +34,7 @@ export default function SignatureField() {
       initial={reduceMotion ? false : { opacity: 0, scale: 0.975, y: 18 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ duration: 0.72, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
-      className="relative mx-auto w-full max-w-[540px]"
+      className="home-signature-field relative w-full"
       aria-hidden="true"
     >
       <div className="relative aspect-[0.94/1] min-h-[340px] overflow-hidden rounded-[30px] border border-line/15 bg-[linear-gradient(145deg,rgb(var(--color-surface-raised)/0.78),rgb(var(--color-canvas-soft)/0.55))] p-4 shadow-card sm:aspect-square sm:p-5">
