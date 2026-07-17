@@ -41,6 +41,18 @@ assert(
   "site-container must use symmetric physical auto margins",
 );
 assert(
+  /\.site-container\.home-hero-container\s*\{[\s\S]*?max-width:\s*var\(--site-width\);/.test(
+    base,
+  ),
+  "Home hero must retain the same maximum rail width as every site container",
+);
+
+const fullWidthRules = [...base.matchAll(/([^{}]+)\{([^{}]*max-width:\s*100%[^{}]*)\}/g)];
+assert(
+  fullWidthRules.every(([, selectors]) => !selectors.includes(".home-hero-container")),
+  "Home hero container must never be widened beyond the shared site rail",
+);
+assert(
   /\.home-hero-grid\s*\{[\s\S]*?direction:\s*ltr;[\s\S]*?grid-template-areas:[\s\S]*?"copy"[\s\S]*?"visual";[\s\S]*?grid-template-columns:\s*minmax\(0,\s*1fr\);/.test(
     base,
   ),
@@ -72,4 +84,4 @@ assert(
   "HeroNova must not introduce viewport-width or negative-margin overflow",
 );
 
-process.stdout.write("Layout contract verification passed: 15 checks.\n");
+process.stdout.write("Layout contract verification passed: 17 checks.\n");
