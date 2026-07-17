@@ -39,7 +39,7 @@ const en = {
     metricsAria: "Selected impact metrics",
     metrics: [
       "Active users across my applications",
-      "Legal units handled at scale",
+      "Data units managed at scale",
       "Employees across 5 branches",
       "Scientific publications",
     ],

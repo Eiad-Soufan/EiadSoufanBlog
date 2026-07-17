@@ -19,7 +19,7 @@ export const impactMetrics = [
     suffix: "+",
     label: "Active users across my applications",
   },
-  { value: 200000, suffix: "+", label: "Legal units handled at scale" },
+  { value: 2000000, suffix: "+", label: "Data units managed at scale" },
   { value: 100, suffix: "+", label: "Employees across 5 branches" },
   { value: 3, suffix: "", label: "Scientific publications" },
 ];
