@@ -48,18 +48,18 @@ export default function HeroNova() {
   const { copy, path } = useLocale();
 
   return (
-    <section className="relative isolate overflow-hidden border-b border-line/10">
+    <section className="home-hero relative isolate overflow-hidden border-b border-line/10">
       <div className="pointer-events-none absolute inset-0 -z-30 bg-[linear-gradient(180deg,rgb(var(--color-canvas))_0%,rgb(var(--color-canvas-soft))_68%,rgb(11_16_28)_100%)]" />
       <NeuralCosmos />
       <div className="hero-readability-veil pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
 
-      <div className="site-container relative z-10 pb-14 pt-14 sm:pb-16 sm:pt-20 lg:pb-20 lg:pt-24">
-        <div className="grid items-center gap-14 lg:grid-cols-12 lg:gap-12 xl:gap-16">
+      <div className="home-hero-container site-container relative z-10 pb-14 pt-14 sm:pb-16 sm:pt-20 lg:pb-20 lg:pt-24">
+        <div className="home-hero-grid">
           <Motion.div
             initial={initial}
             animate="visible"
             transition={{ staggerChildren: reduceMotion ? 0 : 0.065 }}
-            className="lg:col-span-7"
+            className="home-hero-copy"
           >
             <Motion.div
               variants={entrance}
@@ -152,7 +152,7 @@ export default function HeroNova() {
             </Motion.div>
           </Motion.div>
 
-          <div className="lg:col-span-5">
+          <div className="home-hero-visual">
             <SignatureField />
           </div>
         </div>

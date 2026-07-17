@@ -151,10 +151,10 @@ export default function Header() {
         className={`header-glass ${scrolled ? "header-glass--scrolled" : ""}`}
       />
 
-      <div className="site-container relative z-10 flex h-full items-center justify-between">
+      <div className="header-container site-container relative z-10 flex h-full items-center justify-between">
         <Link
           to={path("home")}
-          className="group inline-flex min-h-11 items-center gap-3 rounded-xl pe-2"
+          className="group inline-flex min-h-11 shrink-0 items-center gap-3 rounded-xl pe-2"
           aria-label={copy.common.nav.homeAria}
         >
           <BrandMark />
@@ -168,7 +168,7 @@ export default function Header() {
           </span>
         </Link>
 
-        <div className="hidden items-center gap-2 lg:flex">
+        <div className="header-desktop-tools hidden shrink-0 items-center gap-2 lg:flex">
           <nav className="flex items-center gap-1" aria-label={copy.common.nav.primaryAria}>
             {navItems.map((item) => (
               <DesktopNavLink
