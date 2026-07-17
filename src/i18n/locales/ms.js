@@ -29,12 +29,12 @@ const ms = {
   },
   profile: {
     headline: {
-      before: "Saya membina",
+      before: "Saya mengubah idea kompleks menjadi",
       accent: "sistem pintar",
-      after: "untuk menangani kerumitan dunia sebenar.",
+      after: "yang direka untuk bertahan.",
     },
     headlineText:
-      "Saya membina sistem pintar untuk menangani kerumitan dunia sebenar.",
+      "Saya mengubah idea kompleks menjadi sistem pintar yang direka untuk bertahan.",
     summary:
       "Jurutera perisian kanan yang mengkhusus dalam Python, Django dan React, serta peneraju teknikal yang membina platform perusahaan berkuasa AI dan produk SaaS untuk web dan mudah alih — daripada seni bina dan API hingga pelancaran serta penambahbaikan berterusan.",
     metricsAria: "Metrik impak terpilih",

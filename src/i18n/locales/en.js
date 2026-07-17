@@ -29,11 +29,11 @@ const en = {
   },
   profile: {
     headline: {
-      before: "I engineer",
+      before: "I turn complex ideas into",
       accent: "intelligent systems",
-      after: "for real-world complexity.",
+      after: "built to last.",
     },
-    headlineText: "I engineer intelligent systems for real-world complexity.",
+    headlineText: "I turn complex ideas into intelligent systems built to last.",
     summary:
       "Senior software engineer specializing in Python, Django, and React, and a technical lead building AI-powered enterprise platforms and SaaS products for web and mobile — from architecture and APIs through launch and continuous improvement.",
     metricsAria: "Selected impact metrics",

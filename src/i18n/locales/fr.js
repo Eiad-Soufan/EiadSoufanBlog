@@ -29,12 +29,12 @@ const fr = {
   },
   profile: {
     headline: {
-      before: "Je conçois",
-      accent: "des systèmes intelligents",
-      after: "pour la complexité du monde réel.",
+      before: "Je transforme des idées complexes en",
+      accent: "systèmes intelligents",
+      after: "conçus pour durer.",
     },
     headlineText:
-      "Je conçois des systèmes intelligents pour la complexité du monde réel.",
+      "Je transforme des idées complexes en systèmes intelligents conçus pour durer.",
     summary:
       "Ingénieur logiciel senior et responsable technique, spécialisé en Python, Django et React, je conçois des plateformes d’entreprise propulsées par l’IA et des produits SaaS pour le web et le mobile — de l’architecture système et des API jusqu’à la mise en production et à l’évolution continue.",
     metricsAria: "Indicateurs d’impact sélectionnés",

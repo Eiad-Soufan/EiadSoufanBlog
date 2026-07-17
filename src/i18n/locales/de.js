@@ -29,12 +29,12 @@ const de = {
   },
   profile: {
     headline: {
-      before: "Ich entwickle",
-      accent: "intelligente Systeme",
-      after: "für komplexe Herausforderungen der realen Welt.",
+      before: "Ich entwickle aus komplexen Ideen",
+      accent: "intelligente Systeme,",
+      after: "die Bestand haben.",
     },
     headlineText:
-      "Ich entwickle intelligente Systeme für komplexe Herausforderungen der realen Welt.",
+      "Ich entwickle aus komplexen Ideen intelligente Systeme, die Bestand haben.",
     summary:
       "Als Senior Software Engineer und Technical Lead mit Schwerpunkt auf Python, Django und React entwickle ich KI-gestützte Unternehmensplattformen und SaaS-Produkte für Web und Mobile – von Systemarchitektur und APIs bis zum Produktivstart und zur kontinuierlichen Weiterentwicklung.",
     metricsAria: "Ausgewählte Wirkungskennzahlen",
