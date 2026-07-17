@@ -132,12 +132,20 @@ canvas {
 /* Home hero geometry ----------------------------------------------------- */
 
 .home-hero,
-.home-hero-container,
 .home-hero-grid,
 .home-hero-copy,
 .home-hero-visual {
   min-width: 0;
   max-width: 100%;
+}
+
+/*
+ * HeroNova also carries .site-container. Keep that shared rail authoritative:
+ * the hero must align with Header, SelectedSystems, internal pages and Footer.
+ */
+.site-container.home-hero-container {
+  min-width: 0;
+  max-width: var(--site-width);
 }
 
 .home-hero {
