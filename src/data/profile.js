@@ -4,7 +4,7 @@ export const profile = {
   location: "Kuala Lumpur, Malaysia",
   headline: "I engineer intelligent systems for real-world complexity.",
   summary:
-    "Senior Python/Django engineer and technical lead building enterprise platforms, AI-powered legal technology, and SaaS products across web and mobile — from architecture and APIs to deployment and continuous improvement.",
+    "Senior software engineer specializing in Python, Django, and React, and a technical lead building AI-powered enterprise platforms and SaaS products for web and mobile — from architecture and APIs through launch and continuous improvement.",
   email: "eiad.soufan.2@gmail.com",
   phone: "+60 18-303 5842",
   phoneHref: "+60183035842",
@@ -15,7 +15,7 @@ export const profile = {
 
 export const impactMetrics = [
   {
-    value: 5000,
+    value: 500000,
     suffix: "+",
     label: "Active users across my applications",
   },

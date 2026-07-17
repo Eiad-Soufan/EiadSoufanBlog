@@ -36,7 +36,7 @@ const fr = {
     headlineText:
       "Je conçois des systèmes intelligents pour la complexité du monde réel.",
     summary:
-      "Ingénieur senior Python/Django et responsable technique, je conçois des plateformes d’entreprise, des solutions juridiques propulsées par l’IA et des produits SaaS pour le web et le mobile — de l’architecture et des API jusqu’à la mise en production et à l’amélioration continue.",
+      "Ingénieur logiciel senior et responsable technique, spécialisé en Python, Django et React, je conçois des plateformes d’entreprise propulsées par l’IA et des produits SaaS pour le web et le mobile — de l’architecture système et des API jusqu’à la mise en production et à l’évolution continue.",
     metricsAria: "Indicateurs d’impact sélectionnés",
     metrics: [
       "Utilisateurs actifs sur mes applications",
@@ -47,8 +47,8 @@ const fr = {
   },
   home: {
     hero: {
-      explore: "Découvrir les réalisations",
-      start: "Démarrer une conversation",
+      explore: "Découvrir mes réalisations",
+      start: "Me contacter",
       profiles: "Profils",
     },
     signature: {
@@ -83,12 +83,11 @@ const fr = {
         "IA appliquée",
         "Mise en production",
       ],
-      outroKicker: "Vous avez un système complexe en tête ?",
-      outroTitle: "Rendons-le simple à utiliser.",
+      outroKicker: "Vous avez une idée de système ?",
+      outroTitle: "Transformons votre idée et votre vision en une expérience concrète.",
       outroCopy:
-        "De l’architecture et des API aux interfaces soignées et à la mise en production.",
-      start: "Démarrer une conversation",
-      github: "Explorer GitHub",
+        "Avec une qualité d’exécution conforme aux meilleurs standards internationaux — de l’architecture du système aux interfaces soignées et à une mise en production fiable.",
+      start: "Me contacter",
     },
   },
   systems: {
@@ -170,7 +169,7 @@ const fr = {
   footer: {
     kicker: "Prochain système",
     title: "Un problème complexe ? Rendons-le lisible.",
-    start: "Démarrer une conversation",
+    start: "Me contacter",
     navigate: "Navigation",
     direct: "Contact direct",
     elsewhere: "Ailleurs",
@@ -186,8 +185,8 @@ const fr = {
       leadBefore: "Je suis",
       leadAfter:
         "ingénieur logiciel principal basé à Kuala Lumpur. Je réunis architecture backend, IA appliquée, interfaces produit et mise en production au sein d’une démarche d’ingénierie cohérente.",
-      explore: "Découvrir les réalisations",
-      start: "Démarrer une conversation",
+      explore: "Découvrir mes réalisations",
+      start: "Me contacter",
       facts: [
         { label: "Domaine actuel", value: "Direction de l’ingénierie logicielle" },
         { label: "Domaines", value: "Backend · IA · Web · Mobile" },
@@ -522,7 +521,7 @@ const fr = {
       title: "Apportez la complexité. Nous lui donnerons la bonne forme.",
       copy:
         "Une première conversation utile n’exige aucune spécification parfaite — seulement un problème réel qui mérite d’être résolu.",
-      start: "Démarrer une conversation",
+      start: "Me contacter",
       about: "À propos d’Eiad",
     },
   },

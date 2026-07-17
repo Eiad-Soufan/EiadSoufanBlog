@@ -377,14 +377,6 @@ export default function SelectedSystems() {
             <Link to={path("contact")} className="systems-outro-primary">
               {copy.home.systems.start} <Arrow />
             </Link>
-            <a
-              href="https://github.com/Eiad-Soufan"
-              target="_blank"
-              rel="noreferrer"
-              className="systems-outro-secondary"
-            >
-              {copy.home.systems.github} <ExternalArrow />
-            </a>
           </div>
         </Motion.div>
       </div>

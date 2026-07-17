@@ -46,7 +46,7 @@ export const SEO_COPY = {
         label: "About",
         title: "About Eiad Soufan — Engineering Leadership & Applied AI",
         description:
-          "Meet Eiad Soufan: a senior Python and Django engineer, technical lead, published researcher, and builder of reliable products from architecture to production.",
+          "Meet Eiad Soufan: a senior Python, Django, and React engineer, technical lead, published researcher, and builder of AI-powered enterprise and SaaS products.",
       },
       approach: {
         label: "Approach",
@@ -84,7 +84,7 @@ export const SEO_COPY = {
         label: "عن إياد",
         title: "عن إياد صوفان — خبرة هندسية تصنع أثراً قابلاً للقياس",
         description:
-          "تعرّف إلى مسيرة إياد صوفان: قيادة تقنية، خبرة عميقة في Python وDjango، أبحاث منشورة، ومنتجات تنتقل بثبات من الفكرة إلى بيئة الإنتاج.",
+          "تعرّف إلى إياد صوفان: مهندس برمجيات أول وقائد تقني بخبرة عميقة في Python وDjango وReact، يبني منصات مؤسسية ومنتجات SaaS مدعومة بالذكاء الاصطناعي.",
       },
       approach: {
         label: "المنهج",
@@ -122,7 +122,7 @@ export const SEO_COPY = {
         label: "Tentang",
         title: "Tentang Eiad Soufan — Kepimpinan Kejuruteraan & AI Gunaan",
         description:
-          "Kenali Eiad Soufan, jurutera kanan Python dan Django, pemimpin teknikal, penyelidik berterbitan dan pembangun produk yang kukuh dari seni bina hingga produksi.",
+          "Kenali Eiad Soufan, jurutera kanan Python, Django dan React serta peneraju teknikal yang membina platform perusahaan berkuasa AI dan produk SaaS.",
       },
       approach: {
         label: "Pendekatan",
@@ -160,7 +160,7 @@ export const SEO_COPY = {
         label: "À propos",
         title: "À propos d’Eiad Soufan — Leadership technique & IA appliquée",
         description:
-          "Découvrez Eiad Soufan : ingénieur senior Python et Django, responsable technique, chercheur publié et créateur de produits fiables jusqu’à la production.",
+          "Découvrez Eiad Soufan : ingénieur senior Python, Django et React, responsable technique et créateur de plateformes d’entreprise et de produits SaaS propulsés par l’IA.",
       },
       approach: {
         label: "Méthode",
@@ -198,7 +198,7 @@ export const SEO_COPY = {
         label: "Über mich",
         title: "Über Eiad Soufan — Engineering Leadership & angewandte KI",
         description:
-          "Eiad Soufan ist Senior Python- und Django-Engineer, Technical Lead, veröffentlichter Forscher und Entwickler zuverlässiger Produkte bis zur Produktion.",
+          "Eiad Soufan ist Senior Engineer für Python, Django und React sowie Technical Lead für KI-gestützte Unternehmensplattformen und SaaS-Produkte.",
       },
       approach: {
         label: "Arbeitsweise",
