@@ -743,12 +743,6 @@
   color: rgb(var(--color-canvas));
 }
 
-.systems-outro-secondary {
-  border: 1px solid rgb(var(--color-line) / 0.18);
-  background: rgb(255 255 255 / 0.025);
-  color: rgb(var(--color-text) / 0.82);
-}
-
 @media (hover: hover) and (pointer: fine) {
   .systems-card:hover {
     border-color: rgb(var(--system-accent) / 0.27);
@@ -784,11 +778,6 @@
 
   .systems-outro-primary:hover {
     background: white;
-  }
-
-  .systems-outro-secondary:hover {
-    border-color: rgb(var(--color-line) / 0.34);
-    background: rgb(255 255 255 / 0.055);
   }
 }
 

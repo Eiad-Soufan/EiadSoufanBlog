@@ -179,7 +179,7 @@ export const systems = [
       "A focused marketing landing page supporting high-volume dates campaigns and online sales.",
     role:
       "Built the responsive React experience for campaign traffic and conversion-focused journeys.",
-    metrics: [{ value: "10K+", label: "Campaign visitors" }],
+    metrics: [{ value: "120K+", label: "Campaign visitors" }],
     stack: ["React"],
     links: [
       { label: "Visit landing page", href: "https://dates.madinah.com.my/" },

@@ -35,7 +35,7 @@ const en = {
     },
     headlineText: "I engineer intelligent systems for real-world complexity.",
     summary:
-      "Senior Python/Django engineer and technical lead building enterprise platforms, AI-powered legal technology, and SaaS products across web and mobile — from architecture and APIs to deployment and continuous improvement.",
+      "Senior software engineer specializing in Python, Django, and React, and a technical lead building AI-powered enterprise platforms and SaaS products for web and mobile — from architecture and APIs through launch and continuous improvement.",
     metricsAria: "Selected impact metrics",
     metrics: [
       "Active users across my applications",
@@ -46,8 +46,8 @@ const en = {
   },
   home: {
     hero: {
-      explore: "Explore selected work",
-      start: "Start a conversation",
+      explore: "Explore my work",
+      start: "Contact me",
       profiles: "Profiles",
     },
     signature: {
@@ -82,12 +82,11 @@ const en = {
         "Applied AI",
         "Production delivery",
       ],
-      outroKicker: "Have a complex system in mind?",
-      outroTitle: "Let's make it feel simple.",
+      outroKicker: "Have an idea for a system?",
+      outroTitle: "Let’s turn your idea and vision into a real experience.",
       outroCopy:
-        "From architecture and APIs to polished interfaces and production delivery.",
-      start: "Start a conversation",
-      github: "Explore GitHub",
+        "Built to a world-class standard — from system architecture to polished interfaces and a reliable launch.",
+      start: "Contact me",
     },
   },
   systems: {
@@ -167,7 +166,7 @@ const en = {
   footer: {
     kicker: "Next system",
     title: "Complex problem? Let’s make it legible.",
-    start: "Start a conversation",
+    start: "Contact me",
     navigate: "Navigate",
     direct: "Direct",
     elsewhere: "Elsewhere",
@@ -183,8 +182,8 @@ const en = {
       leadBefore: "I’m",
       leadAfter:
         "a Lead Software Engineer based in Kuala Lumpur. I connect backend architecture, applied AI, product interfaces, and production delivery into one coherent engineering process.",
-      explore: "Explore selected work",
-      start: "Start a conversation",
+      explore: "Explore my work",
+      start: "Contact me",
       facts: [
         { label: "Current focus", value: "Lead Software Engineering" },
         { label: "Working across", value: "Backend · AI · Web · Mobile" },
@@ -480,7 +479,7 @@ const en = {
       title: "Bring the complexity. We’ll find the shape.",
       copy:
         "A useful first conversation needs no polished specification—only an honest problem worth solving.",
-      start: "Start a conversation",
+      start: "Contact me",
       about: "About Eiad",
     },
   },

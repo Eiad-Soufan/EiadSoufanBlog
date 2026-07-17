@@ -36,7 +36,7 @@ const ms = {
     headlineText:
       "Saya membina sistem pintar untuk menangani kerumitan dunia sebenar.",
     summary:
-      "Jurutera kanan Python/Django dan peneraju teknikal yang membina platform perusahaan, teknologi undang-undang berkuasa AI dan produk SaaS untuk web serta mudah alih — daripada seni bina dan API hingga pelancaran serta penambahbaikan berterusan.",
+      "Jurutera perisian kanan yang mengkhusus dalam Python, Django dan React, serta peneraju teknikal yang membina platform perusahaan berkuasa AI dan produk SaaS untuk web dan mudah alih — daripada seni bina dan API hingga pelancaran serta penambahbaikan berterusan.",
     metricsAria: "Metrik impak terpilih",
     metrics: [
       "Pengguna aktif merentas aplikasi saya",
@@ -47,8 +47,8 @@ const ms = {
   },
   home: {
     hero: {
-      explore: "Terokai projek terpilih",
-      start: "Mulakan perbualan",
+      explore: "Terokai hasil kerja saya",
+      start: "Hubungi saya",
       profiles: "Profil",
     },
     signature: {
@@ -83,12 +83,11 @@ const ms = {
         "AI gunaan",
         "Pelancaran dan operasi produksi",
       ],
-      outroKicker: "Ada sistem kompleks yang ingin direalisasikan?",
-      outroTitle: "Mari jadikannya terasa mudah.",
+      outroKicker: "Ada idea untuk sebuah sistem?",
+      outroTitle: "Mari ubah idea dan visi itu menjadi pengalaman yang nyata.",
       outroCopy:
-        "Daripada seni bina dan API hingga antara muka yang kemas serta pelancaran produksi.",
-      start: "Mulakan perbualan",
-      github: "Terokai GitHub",
+        "Direalisasikan dengan mutu bertaraf dunia — daripada seni bina sistem hingga antara muka yang teliti dan pelancaran yang boleh dipercayai.",
+      start: "Hubungi saya",
     },
   },
   systems: {
@@ -171,7 +170,7 @@ const ms = {
   footer: {
     kicker: "Sistem seterusnya",
     title: "Masalah yang rumit? Mari jadikannya jelas.",
-    start: "Mulakan perbualan",
+    start: "Hubungi saya",
     navigate: "Navigasi",
     direct: "Hubungi terus",
     elsewhere: "Di platform lain",
@@ -187,8 +186,8 @@ const ms = {
       leadBefore: "Saya",
       leadAfter:
         "seorang Jurutera Perisian Utama yang berpangkalan di Kuala Lumpur. Saya menyatukan seni bina backend, AI gunaan, antara muka produk dan pelancaran produksi dalam satu proses kejuruteraan yang koheren.",
-      explore: "Terokai projek terpilih",
-      start: "Mulakan perbualan",
+      explore: "Terokai hasil kerja saya",
+      start: "Hubungi saya",
       facts: [
         { label: "Fokus semasa", value: "Kepimpinan kejuruteraan perisian" },
         { label: "Bidang kepakaran", value: "Backend · AI · Web · Mudah alih" },
@@ -502,7 +501,7 @@ const ms = {
       title: "Bawa kerumitannya. Kita akan menemui bentuk yang tepat.",
       copy:
         "Perbualan awal yang berguna tidak memerlukan spesifikasi sempurna — hanya masalah sebenar yang berbaloi untuk diselesaikan.",
-      start: "Mulakan perbualan",
+      start: "Hubungi saya",
       about: "Tentang Eiad",
     },
   },

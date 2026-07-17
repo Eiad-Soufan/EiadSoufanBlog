@@ -36,7 +36,7 @@ const de = {
     headlineText:
       "Ich entwickle intelligente Systeme für komplexe Herausforderungen der realen Welt.",
     summary:
-      "Als Senior Python-/Django-Engineer und technischer Leiter entwickle ich Unternehmensplattformen, KI-gestützte Legal-Tech-Lösungen und SaaS-Produkte für Web und Mobile – von Architektur und APIs bis zum Produktivstart und zur kontinuierlichen Weiterentwicklung.",
+      "Als Senior Software Engineer und Technical Lead mit Schwerpunkt auf Python, Django und React entwickle ich KI-gestützte Unternehmensplattformen und SaaS-Produkte für Web und Mobile – von Systemarchitektur und APIs bis zum Produktivstart und zur kontinuierlichen Weiterentwicklung.",
     metricsAria: "Ausgewählte Wirkungskennzahlen",
     metrics: [
       "Aktive Nutzer meiner Anwendungen",
@@ -47,8 +47,8 @@ const de = {
   },
   home: {
     hero: {
-      explore: "Ausgewählte Projekte ansehen",
-      start: "Gespräch beginnen",
+      explore: "Meine Projekte entdecken",
+      start: "Kontakt aufnehmen",
       profiles: "Profile",
     },
     signature: {
@@ -83,12 +83,11 @@ const de = {
         "Angewandte KI",
         "Überführung in den Produktivbetrieb",
       ],
-      outroKicker: "Sie planen ein komplexes System?",
-      outroTitle: "Machen wir es einfach erlebbar.",
+      outroKicker: "Sie haben eine Idee für ein System?",
+      outroTitle: "Verwandeln wir Ihre Idee und Vision in ein greifbares Produkterlebnis.",
       outroCopy:
-        "Von Architektur und APIs bis zu ausgereiften Oberflächen und dem Produktivstart.",
-      start: "Gespräch beginnen",
-      github: "GitHub ansehen",
+        "Mit höchstem Qualitätsanspruch und Professionalität auf internationalem Niveau – von der Systemarchitektur über ausgereifte Benutzeroberflächen bis zum zuverlässigen Produktivstart.",
+      start: "Kontakt aufnehmen",
     },
   },
   systems: {
@@ -171,7 +170,7 @@ const de = {
   footer: {
     kicker: "Das nächste System",
     title: "Ein komplexes Problem? Machen wir es verständlich.",
-    start: "Gespräch beginnen",
+    start: "Kontakt aufnehmen",
     navigate: "Navigation",
     direct: "Direkt",
     elsewhere: "Weitere Profile",
@@ -187,8 +186,8 @@ const de = {
       leadBefore: "Ich bin",
       leadAfter:
         "leitender Softwareingenieur in Kuala Lumpur. Ich verbinde Backend-Architektur, angewandte KI, Produktschnittstellen und Produktivbetrieb zu einem durchgängigen Engineering-Prozess.",
-      explore: "Ausgewählte Projekte ansehen",
-      start: "Gespräch beginnen",
+      explore: "Meine Projekte entdecken",
+      start: "Kontakt aufnehmen",
       facts: [
         { label: "Aktueller Schwerpunkt", value: "Technische Leitung in der Softwareentwicklung" },
         { label: "Tätigkeitsfelder", value: "Backend · KI · Web · Mobile" },
@@ -512,7 +511,7 @@ const de = {
       title: "Bringen Sie die Komplexität mit. Wir finden die richtige Form.",
       copy:
         "Ein gutes erstes Gespräch braucht keine perfekte Spezifikation – nur ein ehrliches Problem, das gelöst werden sollte.",
-      start: "Gespräch beginnen",
+      start: "Kontakt aufnehmen",
       about: "Über Eiad",
     },
   },
