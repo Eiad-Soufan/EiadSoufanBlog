@@ -192,6 +192,14 @@ canvas {
   font-size: var(--hero-title-size);
 }
 
+.page-hero-title > span,
+.page-hero-title > em {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  white-space: nowrap;
+}
+
 .text-gradient {
   color: transparent;
   background: linear-gradient(

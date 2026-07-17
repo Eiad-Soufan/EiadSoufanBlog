@@ -110,9 +110,9 @@
   z-index: 2;
   display: grid;
   min-height: calc(100svh - 4.5rem);
-  grid-template-columns: minmax(0, 1.02fr) minmax(26rem, 0.98fr);
+  grid-template-columns: minmax(0, 1.02fr) minmax(25rem, 0.98fr);
   align-items: center;
-  gap: clamp(3rem, 6vw, 6.5rem);
+  gap: clamp(3rem, 6vw, 6.25rem);
   padding-block: clamp(4.5rem, 8vw, 7.25rem);
 }
 
@@ -123,13 +123,13 @@
 }
 
 .approach-hero-copy h1 {
-  max-width: 11ch;
-  margin: 1.45rem 0 0;
+  max-width: none;
+  margin: 1.15rem 0 0;
   color: rgb(var(--color-text));
-  font-size: var(--hero-title-size);
+  font-size: var(--inner-hero-title-size);
   font-weight: 650;
-  letter-spacing: -0.062em;
-  line-height: 0.99;
+  letter-spacing: -0.035em;
+  line-height: 1.16;
 }
 
 .approach-hero-copy h1 em {
@@ -148,10 +148,10 @@
 
 .approach-hero-lead {
   max-width: 42rem;
-  margin: 1.8rem 0 0;
+  margin: 1.35rem 0 0;
   color: rgb(var(--color-muted));
-  font-size: clamp(0.96rem, 1.35vw, 1.06rem);
-  line-height: 1.84;
+  font-size: clamp(0.92rem, 1.15vw, 1rem);
+  line-height: 1.78;
 }
 
 .approach-actions,
@@ -159,7 +159,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin-top: 2rem;
+  margin-top: 1.6rem;
 }
 
 .approach-action {
@@ -208,7 +208,7 @@
   max-width: 43rem;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
-  margin: 2.55rem 0 0;
+  margin: 2rem 0 0;
   border-top: 1px solid rgb(var(--color-line) / 0.11);
   padding-top: 1.3rem;
 }
@@ -559,7 +559,7 @@
 .approach-section-intro h2 {
   margin: 1.15rem 0 0;
   color: rgb(var(--color-text));
-  font-size: var(--section-title-size);
+  font-size: var(--inner-section-title-size);
   font-weight: 620;
   letter-spacing: -0.052em;
   line-height: 1.03;
@@ -574,7 +574,7 @@
 
 .approach-process {
   position: relative;
-  padding-block: clamp(6rem, 10vw, 9rem);
+  padding-block: clamp(4.75rem, 7.5vw, 6.75rem);
 }
 
 .approach-process::before {
@@ -757,7 +757,7 @@
   max-width: 19ch;
   margin: 0.72rem 0 0;
   color: rgb(var(--color-text));
-  font-size: clamp(1.2rem, 2.3vw, 1.55rem);
+  font-size: var(--inner-feature-title-size);
   font-weight: 650;
   letter-spacing: -0.035em;
   line-height: 1.17;
@@ -907,7 +907,7 @@
   max-width: 13ch;
   margin: 3.4rem 0 0;
   color: rgb(var(--color-text));
-  font-size: var(--feature-title-size);
+  font-size: var(--inner-feature-title-size);
   font-weight: 630;
   letter-spacing: -0.045em;
   line-height: 1.06;
@@ -915,7 +915,7 @@
 
 .principle-card:not(.principle-card--featured) h3 {
   margin-top: 2.5rem;
-  font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+  font-size: var(--inner-feature-title-size);
 }
 
 .principle-card p {
@@ -1025,7 +1025,7 @@
 .rhythm-heading h2 {
   margin: 1rem 0 0;
   color: rgb(var(--color-text));
-  font-size: var(--section-title-size);
+  font-size: var(--inner-section-title-size);
   font-weight: 620;
   letter-spacing: -0.052em;
   line-height: 1.04;
@@ -1076,7 +1076,7 @@
 .rhythm-steps h3 {
   margin: 0.32rem 0 0;
   color: rgb(var(--color-text));
-  font-size: 1.15rem;
+  font-size: var(--inner-feature-title-size);
   font-weight: 650;
 }
 
@@ -1174,7 +1174,7 @@
   max-width: 15ch;
   margin: 1.15rem 0 0;
   color: rgb(var(--color-text));
-  font-size: var(--cta-title-size);
+  font-size: var(--inner-cta-title-size);
   font-weight: 620;
   letter-spacing: -0.052em;
   line-height: 1.03;
@@ -1305,7 +1305,7 @@
 
 @media (max-width: 1120px) {
   .approach-hero-layout {
-    grid-template-columns: minmax(0, 1fr) minmax(23rem, 0.86fr);
+    grid-template-columns: minmax(0, 1fr) minmax(22rem, 0.86fr);
     gap: 2.5rem;
   }
 
@@ -1399,18 +1399,18 @@
 
 @media (max-width: 680px) {
   .approach-hero-layout {
-    gap: 3.25rem;
-    padding-block: 4.5rem 6rem;
+    gap: 3rem;
+    padding-block: 4.25rem 5.5rem;
   }
 
   .approach-hero-copy h1 {
-    font-size: var(--hero-title-size);
-    line-height: 1.01;
+    font-size: var(--inner-hero-title-size);
+    line-height: 1.16;
   }
 
   .approach-hero-lead {
-    font-size: 0.94rem;
-    line-height: 1.78;
+    font-size: 0.9rem;
+    line-height: 1.72;
   }
 
   .approach-actions,
@@ -1455,7 +1455,7 @@
   }
 
   .approach-section-intro h2 {
-    font-size: var(--section-title-size);
+    font-size: var(--inner-section-title-size);
   }
 
   .process-stage {
@@ -1513,7 +1513,7 @@
   }
 
   .approach-outro-card h2 {
-    font-size: var(--cta-title-size);
+    font-size: var(--inner-cta-title-size);
   }
 }
 
@@ -1523,7 +1523,7 @@
   }
 
   .approach-hero-copy h1 {
-    font-size: var(--hero-title-size);
+    font-size: var(--inner-hero-title-size);
   }
 
   .blueprint-node {

@@ -186,8 +186,9 @@ export default function Contact() {
               <span aria-hidden="true" /> {content.hero.eyebrow}
             </Motion.p>
 
-            <Motion.h1 className="hero-title-scale display-font" variants={reveal} transition={{ duration: 0.66, ease: premiumEase }}>
-              {content.hero.titleBefore} <em>{content.hero.titleAccent}</em>
+            <Motion.h1 className="hero-title-scale page-hero-title display-font" variants={reveal} transition={{ duration: 0.66, ease: premiumEase }}>
+              <span>{content.hero.titleBefore}</span>
+              <em>{content.hero.titleAccent}</em>
             </Motion.h1>
 
             <Motion.p className="contact-hero-lead" variants={reveal} transition={{ duration: 0.6, ease: premiumEase }}>
