@@ -315,11 +315,12 @@ export default function AboutUs() {
             </Motion.p>
 
             <Motion.h1
-              className="hero-title-scale display-font"
+              className="hero-title-scale page-hero-title display-font"
               variants={reveal}
               transition={{ duration: 0.65, ease: premiumEase }}
             >
-              {content.hero.titleBefore} <em>{content.hero.titleAccent}</em>
+              <span>{content.hero.titleBefore}</span>
+              <em>{content.hero.titleAccent}</em>
             </Motion.h1>
 
             <Motion.p

@@ -110,9 +110,9 @@
   z-index: 2;
   display: grid;
   min-height: calc(100svh - 4.5rem);
-  grid-template-columns: minmax(0, 1.02fr) minmax(26rem, 0.98fr);
+  grid-template-columns: minmax(0, 1.02fr) minmax(25rem, 0.98fr);
   align-items: center;
-  gap: clamp(3rem, 6vw, 6.5rem);
+  gap: clamp(3rem, 6vw, 6.25rem);
   padding-block: clamp(4.5rem, 8vw, 7.25rem);
 }
 
@@ -123,13 +123,13 @@
 }
 
 .contact-hero-copy h1 {
-  max-width: 13ch;
-  margin: 1.45rem 0 0;
+  max-width: none;
+  margin: 1.15rem 0 0;
   color: rgb(var(--color-text));
-  font-size: var(--hero-title-size);
+  font-size: var(--inner-hero-title-size);
   font-weight: 650;
-  letter-spacing: -0.052em;
-  line-height: 1.03;
+  letter-spacing: -0.035em;
+  line-height: 1.16;
 }
 
 .contact-hero-copy h1 em {
@@ -148,17 +148,17 @@
 
 .contact-hero-lead {
   max-width: 42rem;
-  margin: 1.8rem 0 0;
+  margin: 1.35rem 0 0;
   color: rgb(var(--color-muted));
-  font-size: clamp(0.96rem, 1.35vw, 1.06rem);
-  line-height: 1.84;
+  font-size: clamp(0.92rem, 1.15vw, 1rem);
+  line-height: 1.78;
 }
 
 .contact-hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin-top: 2rem;
+  margin-top: 1.6rem;
 }
 
 .contact-action {
@@ -213,7 +213,7 @@ button.contact-action {
   display: grid;
   max-width: 45rem;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin: 2.4rem 0 0;
+  margin: 2rem 0 0;
   border-top: 1px solid rgb(var(--color-line) / 0.1);
 }
 
@@ -240,7 +240,7 @@ button.contact-action {
 
 .contact-signal {
   position: relative;
-  width: min(100%, 34rem);
+  width: min(100%, 35rem);
   aspect-ratio: 1.06 / 1;
   justify-self: end;
   overflow: hidden;
@@ -516,7 +516,7 @@ button.contact-action {
 
 .contact-workspace {
   position: relative;
-  padding-block: clamp(6rem, 11vw, 10rem);
+  padding-block: clamp(4.75rem, 7.5vw, 6.75rem);
 }
 
 .contact-section-heading {
@@ -524,14 +524,14 @@ button.contact-action {
   grid-template-columns: minmax(0, 1.05fr) minmax(18rem, 0.62fr);
   align-items: end;
   gap: clamp(2rem, 7vw, 7rem);
-  margin-bottom: clamp(3.5rem, 7vw, 6rem);
+  margin-bottom: clamp(3rem, 5vw, 4.75rem);
 }
 
 .contact-section-heading h2 {
   max-width: 14ch;
   margin: 1.25rem 0 0;
   color: rgb(var(--color-text));
-  font-size: var(--section-title-size);
+  font-size: var(--inner-section-title-size);
   font-weight: 650;
   letter-spacing: -0.055em;
   line-height: 1.02;
@@ -909,7 +909,7 @@ button.contact-action {
   max-width: 17ch;
   margin: 1rem 0 0;
   color: rgb(var(--color-text));
-  font-size: var(--cta-title-size);
+  font-size: var(--inner-cta-title-size);
   font-weight: 650;
   letter-spacing: -0.052em;
   line-height: 1.03;
@@ -1037,7 +1037,7 @@ button.contact-action {
 
 @media (max-width: 1120px) {
   .contact-hero-layout {
-    grid-template-columns: minmax(0, 1fr) minmax(23rem, 0.86fr);
+    grid-template-columns: minmax(0, 1fr) minmax(22rem, 0.86fr);
     gap: 2.5rem;
   }
 
@@ -1069,7 +1069,7 @@ button.contact-action {
   }
 
   .contact-signal {
-    width: min(100%, 34rem);
+    width: min(100%, 35rem);
     justify-self: center;
   }
 
@@ -1101,18 +1101,18 @@ button.contact-action {
 
 @media (max-width: 680px) {
   .contact-hero-layout {
-    gap: 3.25rem;
-    padding-block: 4.5rem 6rem;
+    gap: 3rem;
+    padding-block: 4.25rem 5.5rem;
   }
 
   .contact-hero-copy h1 {
-    font-size: var(--hero-title-size);
-    line-height: 1.04;
+    font-size: var(--inner-hero-title-size);
+    line-height: 1.16;
   }
 
   .contact-hero-lead {
-    font-size: 0.94rem;
-    line-height: 1.78;
+    font-size: 0.9rem;
+    line-height: 1.72;
   }
 
   .contact-hero-actions,
@@ -1170,11 +1170,11 @@ button.contact-action {
 
   .contact-section-heading h2,
   .contact-outro-card h2 {
-    font-size: var(--section-title-size);
+    font-size: var(--inner-section-title-size);
   }
 
   .contact-outro-card h2 {
-    font-size: var(--cta-title-size);
+    font-size: var(--inner-cta-title-size);
   }
 }
 

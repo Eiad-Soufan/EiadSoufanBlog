@@ -43,26 +43,29 @@ function MenuIcon({ open }) {
   );
 }
 
-function DesktopNavLink({ to, children, end = false }) {
+function DesktopNavLink({ to, children, end = false, reduceMotion = false }) {
   return (
     <NavLink
       to={to}
       end={end}
       className={({ isActive }) =>
-        `group relative inline-flex min-h-11 items-center px-3 text-sm font-semibold transition-colors duration-200 ${
-          isActive ? "text-ink" : "text-muted hover:text-ink"
-        }`
+        `header-nav-link ${isActive ? "header-nav-link--active" : ""}`
       }
     >
       {({ isActive }) => (
         <>
-          {children}
-          <span className="absolute inset-x-3 bottom-1.5 h-px overflow-hidden rounded-full bg-line/15">
+          <span className="header-nav-link__label">{children}</span>
+          <span className="header-nav-link__track" aria-hidden="true">
+            <span className="header-nav-link__hover" />
             {isActive ? (
               <Motion.span
                 layoutId="desktop-nav-active"
-                className="block h-full w-full bg-gradient-to-r from-cyan to-violet"
-                transition={{ type: "spring", stiffness: 380, damping: 34 }}
+                className="header-nav-link__active"
+                transition={
+                  reduceMotion
+                    ? { duration: 0 }
+                    : { type: "spring", stiffness: 360, damping: 34 }
+                }
               />
             ) : null}
           </span>
@@ -86,6 +89,7 @@ export default function Header() {
     { to: path("home", "#selected-work"), label: copy.common.nav.work, end: true },
     { to: path("about"), label: copy.common.nav.about, end: true },
     { to: path("approach"), label: copy.common.nav.approach, end: true },
+    { to: path("contact"), label: copy.common.nav.contact, end: true },
   ];
 
   useEffect(() => {
@@ -98,6 +102,16 @@ export default function Header() {
   useEffect(() => {
     setMenuOpen(false);
   }, [location.pathname, location.hash]);
+
+  useEffect(() => {
+    const desktopQuery = window.matchMedia("(min-width: 1024px)");
+    const closeOnDesktop = (event) => {
+      if (event.matches) setMenuOpen(false);
+    };
+
+    desktopQuery.addEventListener("change", closeOnDesktop);
+    return () => desktopQuery.removeEventListener("change", closeOnDesktop);
+  }, []);
 
   useEffect(() => {
     if (!menuOpen) return undefined;
@@ -154,24 +168,21 @@ export default function Header() {
           </span>
         </Link>
 
-        <div className="hidden items-center gap-1 lg:flex">
-          <nav className="flex items-center" aria-label={copy.common.nav.primaryAria}>
+        <div className="hidden items-center gap-2 lg:flex">
+          <nav className="flex items-center gap-1" aria-label={copy.common.nav.primaryAria}>
             {navItems.map((item) => (
-              <DesktopNavLink key={item.to} to={item.to} end={item.end}>
+              <DesktopNavLink
+                key={item.to}
+                to={item.to}
+                end={item.end}
+                reduceMotion={reduceMotion}
+              >
                 {item.label}
               </DesktopNavLink>
             ))}
           </nav>
 
           <LanguageSwitcher className="ms-2" />
-
-          <Link
-            to={path("contact")}
-            className="ms-3 inline-flex min-h-11 items-center gap-2 rounded-[14px] border border-cyan/20 bg-ink px-4 text-sm font-bold text-canvas shadow-[0_10px_30px_-18px_rgb(var(--color-cyan)_/_0.75)] transition duration-200 ease-premium hover:-translate-y-0.5 hover:bg-white focus-visible:outline-offset-2"
-          >
-            {copy.common.nav.letsTalk}
-            <ArrowIcon />
-          </Link>
         </div>
 
         <button
@@ -196,16 +207,13 @@ export default function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
             transition={{ duration: reduceMotion ? 0 : 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-x-0 top-full z-20 max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-b border-line/[0.24] bg-canvas/[0.86] px-[var(--site-gutter)] pb-5 pt-3 shadow-[0_28px_70px_-30px_rgb(0_0_0_/_0.95)] backdrop-blur-[24px] backdrop-saturate-[1.4] lg:hidden"
+            className="absolute inset-x-0 top-full z-20 max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-b border-line/[0.24] bg-canvas/[0.86] px-[var(--site-gutter)] pb-5 pt-3 shadow-[0_28px_70px_-30px_rgb(0_0_0_/_0.95)] backdrop-blur-[24px] backdrop-saturate-[1.4] md:max-h-[calc(100dvh-4.5rem)] lg:hidden"
           >
             <nav
               className="mx-auto flex max-w-[var(--site-width)] flex-col rounded-2xl border border-line/15 bg-surface/65 p-2"
               aria-label={copy.common.nav.mobileAria}
             >
-              {[
-                ...navItems,
-                { to: path("contact"), label: copy.common.nav.contact, end: true },
-              ].map(
+              {navItems.map(
                 (item, index) => (
                   <NavLink
                     ref={index === 0 ? firstLinkRef : undefined}
@@ -214,10 +222,8 @@ export default function Header() {
                     end={item.end}
                     onClick={() => setMenuOpen(false)}
                     className={({ isActive }) =>
-                      `flex min-h-12 items-center justify-between rounded-xl px-4 text-sm font-semibold transition-colors ${
-                        isActive
-                          ? "bg-surface-raised text-ink"
-                          : "text-muted hover:bg-surface-raised/60 hover:text-ink"
+                      `header-mobile-nav-link ${
+                        isActive ? "header-mobile-nav-link--active" : ""
                       }`
                     }
                   >

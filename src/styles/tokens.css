@@ -21,6 +21,10 @@
   --site-width: 78rem;
   --site-gutter: clamp(1.125rem, 4vw, 3rem);
   --hero-title-size: clamp(2rem, 3.25vw, 3.15rem);
+  --inner-hero-title-size: clamp(1rem, 1.625vw, 1.575rem);
+  --inner-section-title-size: clamp(0.95rem, 1.3vw, 1.25rem);
+  --inner-feature-title-size: clamp(0.9rem, 1.1vw, 1.1rem);
+  --inner-cta-title-size: clamp(0.95rem, 1.2vw, 1.2rem);
   /*
    * Display hierarchy
    * Every value below uses a smaller minimum, fluid rate, and maximum than
@@ -38,4 +42,13 @@
 
 .type-section-title {
   font-size: var(--section-title-size);
+}
+
+@media (max-width: 350px) {
+  :root {
+    --inner-hero-title-size: 0.9rem;
+    --inner-section-title-size: 0.85rem;
+    --inner-feature-title-size: 0.82rem;
+    --inner-cta-title-size: 0.85rem;
+  }
 }

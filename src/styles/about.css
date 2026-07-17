@@ -123,10 +123,10 @@
   z-index: 2;
   display: grid;
   min-height: calc(100svh - 4.5rem);
-  grid-template-columns: minmax(0, 1.06fr) minmax(25rem, 0.94fr);
+  grid-template-columns: minmax(0, 1.02fr) minmax(25rem, 0.98fr);
   align-items: center;
-  gap: clamp(3rem, 6vw, 6rem);
-  padding-block: clamp(4.5rem, 9vw, 7.5rem);
+  gap: clamp(3rem, 6vw, 6.25rem);
+  padding-block: clamp(4.5rem, 8vw, 7.25rem);
 }
 
 .about-hero-copy {
@@ -136,13 +136,13 @@
 }
 
 .about-hero-copy h1 {
-  max-width: 12.5ch;
-  margin: 1.5rem 0 0;
+  max-width: none;
+  margin: 1.15rem 0 0;
   color: rgb(var(--color-text));
-  font-size: var(--hero-title-size);
+  font-size: var(--inner-hero-title-size);
   font-weight: 650;
-  letter-spacing: -0.062em;
-  line-height: 0.99;
+  letter-spacing: -0.035em;
+  line-height: 1.16;
 }
 
 .about-hero-copy h1 em {
@@ -161,10 +161,10 @@
 
 .about-hero-lead {
   max-width: 42rem;
-  margin: 1.8rem 0 0;
+  margin: 1.35rem 0 0;
   color: rgb(var(--color-muted));
-  font-size: clamp(0.98rem, 1.35vw, 1.08rem);
-  line-height: 1.85;
+  font-size: clamp(0.92rem, 1.15vw, 1rem);
+  line-height: 1.78;
 }
 
 .about-hero-lead strong {
@@ -177,7 +177,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin-top: 2rem;
+  margin-top: 1.6rem;
 }
 
 .about-action {
@@ -227,7 +227,7 @@
   max-width: 46rem;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
-  margin: 2.55rem 0 0;
+  margin: 2rem 0 0;
   border-top: 1px solid rgb(var(--color-line) / 0.11);
   padding-top: 1.3rem;
 }
@@ -534,7 +534,7 @@
 .about-section-intro h2 {
   margin: 1.15rem 0 0;
   color: rgb(var(--color-text));
-  font-size: var(--section-title-size);
+  font-size: var(--inner-section-title-size);
   font-weight: 620;
   letter-spacing: -0.052em;
   line-height: 1.03;
@@ -549,7 +549,7 @@
 
 .about-capabilities {
   position: relative;
-  padding-block: clamp(5.5rem, 9vw, 8rem);
+  padding-block: clamp(4.75rem, 7.5vw, 6.75rem);
 }
 
 .about-capabilities::before {
@@ -696,7 +696,7 @@
 .capability-card h3 {
   margin: 2.25rem 0 0;
   color: rgb(var(--color-text));
-  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+  font-size: var(--inner-feature-title-size);
   font-weight: 650;
   letter-spacing: -0.035em;
 }
@@ -907,7 +907,7 @@
 .career-entry-heading h3 {
   margin: 0.55rem 0 0;
   color: rgb(var(--color-text));
-  font-size: clamp(1.25rem, 2.7vw, 1.75rem);
+  font-size: var(--inner-feature-title-size);
   font-weight: 650;
   letter-spacing: -0.036em;
 }
@@ -1079,7 +1079,7 @@
 .education-card h3 {
   margin: 0;
   color: rgb(var(--color-text));
-  font-size: clamp(1.1rem, 2.4vw, 1.52rem);
+  font-size: var(--inner-feature-title-size);
   font-weight: 650;
   letter-spacing: -0.032em;
 }
@@ -1211,7 +1211,7 @@
 .publications-heading h2 {
   margin: 1rem 0 0;
   color: rgb(var(--color-text));
-  font-size: var(--section-title-size);
+  font-size: var(--inner-section-title-size);
   font-weight: 620;
   letter-spacing: -0.052em;
 }
@@ -1335,7 +1335,7 @@
   max-width: 14ch;
   margin: 1.15rem 0 0;
   color: rgb(var(--color-text));
-  font-size: var(--cta-title-size);
+  font-size: var(--inner-cta-title-size);
   font-weight: 620;
   letter-spacing: -0.052em;
   line-height: 1.03;
@@ -1493,7 +1493,7 @@
 
 @media (max-width: 1080px) {
   .about-hero-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(22rem, 0.82fr);
+    grid-template-columns: minmax(0, 1fr) minmax(22rem, 0.86fr);
     gap: 2.5rem;
   }
 
@@ -1521,10 +1521,6 @@
     grid-template-columns: 1fr;
     gap: 4rem;
     padding-block: 5.5rem 7rem;
-  }
-
-  .about-hero-copy h1 {
-    max-width: 13ch;
   }
 
   .career-constellation {
@@ -1575,18 +1571,18 @@
 
 @media (max-width: 680px) {
   .about-hero-grid {
-    gap: 3.25rem;
-    padding-block: 4.5rem 6rem;
+    gap: 3rem;
+    padding-block: 4.25rem 5.5rem;
   }
 
   .about-hero-copy h1 {
-    font-size: var(--hero-title-size);
-    line-height: 1.01;
+    font-size: var(--inner-hero-title-size);
+    line-height: 1.16;
   }
 
   .about-hero-lead {
-    font-size: 0.94rem;
-    line-height: 1.78;
+    font-size: 0.9rem;
+    line-height: 1.72;
   }
 
   .about-hero-actions,
@@ -1638,7 +1634,7 @@
   }
 
   .about-section-intro h2 {
-    font-size: var(--section-title-size);
+    font-size: var(--inner-section-title-size);
   }
 
   .capability-grid {
@@ -1723,7 +1719,7 @@
   }
 
   .about-outro-card h2 {
-    font-size: var(--cta-title-size);
+    font-size: var(--inner-cta-title-size);
   }
 }
 
@@ -1733,7 +1729,7 @@
   }
 
   .about-hero-copy h1 {
-    font-size: var(--hero-title-size);
+    font-size: var(--inner-hero-title-size);
   }
 
   .career-node {
