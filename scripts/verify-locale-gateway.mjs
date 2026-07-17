@@ -5,7 +5,7 @@ function assert(condition, message) {
 }
 
 async function execute({
-  url = "https://deploy-preview-1--eiadsoufanblog.netlify.app/",
+  url = "https://deploy-preview-1--eiadsoufan.netlify.app/",
   method = "GET",
   country,
   cookie,
@@ -42,6 +42,24 @@ async function expectRedirect(options, locale, label) {
 }
 
 export async function verifyLocaleGateway() {
+  for (const legacyHost of [
+    "eiadsoufan.blog",
+    "www.eiadsoufan.blog",
+    "eiadsoufanblog.netlify.app",
+  ]) {
+    const { response, passedThrough } = await execute({
+      country: "DE",
+      url: `https://${legacyHost}/?source=legacy`,
+    });
+    assert(!passedThrough, `${legacyHost}: request unexpectedly passed through`);
+    assert(response.status === 301, `${legacyHost}: expected a permanent redirect`);
+    assert(
+      response.headers.get("location") ===
+        "https://eiadsoufan.netlify.app/?source=legacy",
+      `${legacyHost}: redirected to the wrong production origin`,
+    );
+  }
+
   await expectRedirect({ country: "DE" }, "de", "Germany");
   await expectRedirect({ country: "FR" }, "fr", "France");
   await expectRedirect({ country: "MY" }, "ms", "Malaysia");
@@ -71,7 +89,7 @@ export async function verifyLocaleGateway() {
 
   const production = await execute({
     country: "DE",
-    url: "https://eiadsoufan.blog/",
+    url: "https://eiadsoufan.netlify.app/",
   });
   assert(
     !production.response.headers.has("x-robots-tag"),
@@ -80,14 +98,14 @@ export async function verifyLocaleGateway() {
 
   const localized = await execute({
     country: "DE",
-    url: "https://eiadsoufan.blog/en/about",
+    url: "https://eiadsoufan.netlify.app/en/about",
   });
   assert(localized.passedThrough, "Explicit locale routes must never be geo-redirected");
 
   const post = await execute({ country: "DE", method: "POST" });
   assert(post.passedThrough, "Non-navigation requests must pass through");
 
-  return 12;
+  return 15;
 }
 
 verifyLocaleGateway()

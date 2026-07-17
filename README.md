@@ -47,4 +47,4 @@ Netlify sets `CONTEXT` automatically. The build generates fully rendered HTML fo
 
 ## Production checklist
 
-Before publishing, attach `eiadsoufan.blog` to this Netlify site as the primary domain and keep `www` redirected to the apex domain. After launch, verify the domain property in Google Search Console and submit `https://eiadsoufan.blog/sitemap.xml`.
+The canonical production origin is `https://eiadsoufan.netlify.app`. Keep the former custom domains and the previous Netlify hostname redirected to this origin. After launch, verify the URL-prefix property in Google Search Console and submit `https://eiadsoufan.netlify.app/sitemap.xml`.

@@ -3,6 +3,7 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { LOCALE_META, getPageFromPath } from "../src/i18n/config.js";
 import {
+  SITE_URL,
   getAlternateLinks,
   getSeoCopy,
   getSitemapEntries,
@@ -13,6 +14,10 @@ const PAGE_MODULES = {
   approach: "src/pages/WhyUs.jsx",
   contact: "src/pages/Contact.jsx",
 };
+
+const GOOGLE_VERIFICATION_FILE = "googleb411150bb4b4dd8d.html";
+const GOOGLE_VERIFICATION_CONTENT =
+  "google-site-verification: googleb411150bb4b4dd8d.html";
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -82,6 +87,15 @@ export async function verifySeoPages(outputDirectory = "dist") {
     "Root language gateway has the wrong indexing policy",
   );
 
+  const googleVerification = await readFile(
+    path.join(absoluteOutputDirectory, GOOGLE_VERIFICATION_FILE),
+    "utf8",
+  );
+  assert(
+    googleVerification.trim() === GOOGLE_VERIFICATION_CONTENT,
+    "Google Search Console verification file is missing or has changed",
+  );
+
   assert(entries.length === 20, `Expected 20 locale routes, received ${entries.length}`);
 
   for (const entry of entries) {
@@ -114,8 +128,23 @@ export async function verifySeoPages(outputDirectory = "dist") {
       `${filePath}: application HTML was not rendered with the hydration guard`,
     );
     assert(html.includes("<h1"), `${filePath}: rendered page has no primary heading`);
+    assert(
+      !html.includes('id="S:') && !html.includes("$RC("),
+      `${filePath}: route content is hidden behind a streamed Suspense payload`,
+    );
     assert(!html.includes("/src/assets/"), `${filePath}: unresolved source asset URL`);
     assert(html.includes("/og-cover.png"), `${filePath}: missing social sharing image`);
+
+    const renderedApplication = html.slice(html.indexOf('<div id="root"'));
+    for (const alternate of getAlternateLinks(entry.page).filter(
+      ({ hreflang }) => hreflang !== "x-default",
+    )) {
+      const alternatePath = new URL(alternate.href).pathname;
+      assert(
+        renderedApplication.includes(`href="${alternatePath}"`),
+        `${filePath}: missing crawlable ${alternate.hreflang} language link`,
+      );
+    }
 
     for (const alternate of getAlternateLinks(entry.page)) {
       assert(
@@ -160,6 +189,46 @@ export async function verifySeoPages(outputDirectory = "dist") {
       `Sitemap is missing ${entry.url}`,
     );
   }
+
+  const redirects = await readFile(
+    path.join(absoluteOutputDirectory, "_redirects"),
+    "utf8",
+  );
+  const redirectLines = redirects
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+  const firstPathRuleIndex = redirectLines.findIndex((line) => line.startsWith("/"));
+  for (const alternateHost of [
+    "eiadsoufan.blog",
+    "www.eiadsoufan.blog",
+    "eiadsoufanblog.netlify.app",
+  ]) {
+    const source = `https://${alternateHost}/*`;
+    const lineIndex = redirectLines.findIndex((candidate) =>
+      candidate.startsWith(source),
+    );
+    const line = redirectLines[lineIndex];
+    assert(
+      line,
+      `Missing permanent redirect from ${alternateHost}`,
+    );
+    const [actualSource, actualTarget, status] = line.split(/\s+/);
+    assert(actualSource === source, `Incorrect redirect source for ${alternateHost}`);
+    assert(
+      actualTarget === `${SITE_URL}/:splat`,
+      `${alternateHost} must redirect to the canonical production origin`,
+    );
+    assert(status === "301!", `${alternateHost} redirect must be a forced 301`);
+    assert(
+      firstPathRuleIndex === -1 || lineIndex < firstPathRuleIndex,
+      `${alternateHost} host redirect must appear before path-only rules`,
+    );
+  }
+  assert(
+    !redirectLines.some((line) => line.startsWith(`${SITE_URL}/*`)),
+    "Canonical production origin must not redirect to an alternate hostname",
+  );
 
   for (const [locale, meta] of Object.entries(LOCALE_META)) {
     const notFound = await readFile(

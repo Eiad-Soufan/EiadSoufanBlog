@@ -1,5 +1,6 @@
-https://www.eiadsoufan.blog/*              https://eiadsoufan.blog/:splat  301!
-https://eiadsoufanblog.netlify.app/*       https://eiadsoufan.blog/:splat  301!
+https://eiadsoufan.blog/*                  https://eiadsoufan.netlify.app/:splat  301!
+https://www.eiadsoufan.blog/*              https://eiadsoufan.netlify.app/:splat  301!
+https://eiadsoufanblog.netlify.app/*       https://eiadsoufan.netlify.app/:splat  301!
 
 /about      /en/about/      301!
 /about-us   /en/about/      301!

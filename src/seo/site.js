@@ -7,7 +7,7 @@ import {
   localizedPath,
 } from "../i18n/config.js";
 
-export const SITE_URL = "https://eiadsoufan.blog";
+export const SITE_URL = "https://eiadsoufan.netlify.app";
 
 export const SOCIAL_IMAGE = {
   url: `${SITE_URL}/og-cover.png`,
