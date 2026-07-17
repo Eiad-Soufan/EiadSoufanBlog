@@ -2,7 +2,7 @@ export const profile = {
   name: "Eiad Soufan",
   role: "Lead Software Engineer",
   location: "Kuala Lumpur, Malaysia",
-  headline: "I engineer intelligent systems for real-world complexity.",
+  headline: "I turn complex ideas into intelligent systems built to last.",
   summary:
     "Senior software engineer specializing in Python, Django, and React, and a technical lead building AI-powered enterprise platforms and SaaS products for web and mobile — from architecture and APIs through launch and continuous improvement.",
   email: "eiad.soufan.2@gmail.com",
