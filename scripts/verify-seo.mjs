@@ -15,6 +15,10 @@ const PAGE_MODULES = {
   contact: "src/pages/Contact.jsx",
 };
 
+const GOOGLE_VERIFICATION_FILE = "googleb411150bb4b4dd8d.html";
+const GOOGLE_VERIFICATION_CONTENT =
+  "google-site-verification: googleb411150bb4b4dd8d.html";
+
 function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
@@ -81,6 +85,15 @@ export async function verifySeoPages(outputDirectory = "dist") {
   assert(
     gateway.includes(`<meta name="robots" content="${expectedRobots}" />`),
     "Root language gateway has the wrong indexing policy",
+  );
+
+  const googleVerification = await readFile(
+    path.join(absoluteOutputDirectory, GOOGLE_VERIFICATION_FILE),
+    "utf8",
+  );
+  assert(
+    googleVerification.trim() === GOOGLE_VERIFICATION_CONTENT,
+    "Google Search Console verification file is missing or has changed",
   );
 
   assert(entries.length === 20, `Expected 20 locale routes, received ${entries.length}`);
