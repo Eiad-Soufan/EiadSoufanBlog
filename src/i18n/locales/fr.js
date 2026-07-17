@@ -40,7 +40,7 @@ const fr = {
     metricsAria: "Indicateurs d’impact sélectionnés",
     metrics: [
       "Utilisateurs actifs sur mes applications",
-      "Unités juridiques traitées à grande échelle",
+      "Unités de données gérées à grande échelle",
       "Collaborateurs sur 5 sites",
       "Publications scientifiques",
     ],

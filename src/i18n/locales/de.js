@@ -40,7 +40,7 @@ const de = {
     metricsAria: "Ausgewählte Wirkungskennzahlen",
     metrics: [
       "Aktive Nutzer meiner Anwendungen",
-      "Rechtseinheiten in großem Maßstab verarbeitet",
+      "Dateneinheiten in großem Maßstab verwaltet",
       "Mitarbeitende an 5 Standorten",
       "Wissenschaftliche Publikationen",
     ],

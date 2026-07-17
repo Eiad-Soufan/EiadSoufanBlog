@@ -40,7 +40,7 @@ const ms = {
     metricsAria: "Metrik impak terpilih",
     metrics: [
       "Pengguna aktif merentas aplikasi saya",
-      "Unit undang-undang diproses pada skala besar",
+      "Unit data diurus pada skala besar",
       "Kakitangan di 5 cawangan",
       "Penerbitan saintifik",
     ],
