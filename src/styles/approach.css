@@ -1490,6 +1490,12 @@
     padding-right: 1.35rem;
   }
 
+  .principle-card h3,
+  .approach-outro-card h2 {
+    width: 100%;
+    max-width: none;
+  }
+
   .principle-card--featured {
     padding-bottom: 14rem;
   }
