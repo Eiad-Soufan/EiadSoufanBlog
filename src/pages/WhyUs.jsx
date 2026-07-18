@@ -274,7 +274,7 @@ export default function WhyUs() {
         <div className="approach-hero-glow approach-hero-glow--one" aria-hidden="true" />
         <div className="approach-hero-glow approach-hero-glow--two" aria-hidden="true" />
 
-        <div className="site-container approach-hero-layout">
+        <div className="site-container page-hero-frame approach-hero-layout">
           <Motion.div
             className="approach-hero-copy"
             initial={reduceMotion ? false : "hidden"}
