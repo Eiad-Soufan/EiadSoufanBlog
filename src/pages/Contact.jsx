@@ -175,7 +175,7 @@ export default function Contact() {
         <div className="contact-hero-glow contact-hero-glow--one" aria-hidden="true" />
         <div className="contact-hero-glow contact-hero-glow--two" aria-hidden="true" />
 
-        <div className="site-container contact-hero-layout">
+        <div className="site-container page-hero-frame contact-hero-layout">
           <Motion.div
             className="contact-hero-copy"
             initial={reduceMotion ? false : "hidden"}
