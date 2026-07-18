@@ -123,9 +123,9 @@
   z-index: 2;
   display: grid;
   min-height: calc(100svh - 4.5rem);
-  grid-template-columns: minmax(0, 1.02fr) minmax(25rem, 0.98fr);
+  grid-template-columns: minmax(0, 1.08fr) minmax(22rem, 0.92fr);
   align-items: center;
-  gap: clamp(3rem, 6vw, 6.25rem);
+  gap: clamp(2.5rem, 5vw, 4.5rem);
   padding-block: clamp(4.5rem, 8vw, 7.25rem);
 }
 
@@ -1491,10 +1491,10 @@
   }
 }
 
-@media (max-width: 1080px) {
+@media (max-width: 1120px) {
   .about-hero-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(22rem, 0.86fr);
-    gap: 2.5rem;
+    grid-template-columns: minmax(0, 1.08fr) minmax(20rem, 0.92fr);
+    gap: 2.25rem;
   }
 
   .about-capability-layout {
