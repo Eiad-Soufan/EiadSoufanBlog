@@ -222,6 +222,19 @@ canvas {
   }
 }
 
+@media (max-width: 42.5rem) {
+  .impact-metric {
+    display: grid;
+    grid-template-rows: auto 3.15rem;
+    align-content: center;
+  }
+
+  .impact-metric dt {
+    display: flex;
+    align-items: flex-start;
+  }
+}
+
 @media (max-width: 26.25rem) {
   .impact-metric {
     padding-right: 0.75rem;
