@@ -236,6 +236,36 @@ canvas {
   }
 }
 
+/*
+ * One geometric contract for every primary hero. Keeping the frame and its
+ * tracks here prevents page-specific breakpoints from shifting either edge.
+ */
+.page-hero-frame {
+  grid-template-areas: "copy visual";
+}
+
+[dir="rtl"] .page-hero-frame {
+  grid-template-areas: "visual copy";
+}
+
+.page-hero-frame > :first-child {
+  grid-area: copy;
+}
+
+.page-hero-frame > :last-child {
+  grid-area: visual;
+  min-inline-size: 0;
+}
+
+@media (max-width: 900px) {
+  .page-hero-frame,
+  [dir="rtl"] .page-hero-frame {
+    grid-template-areas:
+      "copy"
+      "visual";
+  }
+}
+
 .header-glass {
   position: absolute;
   inset: 0;
