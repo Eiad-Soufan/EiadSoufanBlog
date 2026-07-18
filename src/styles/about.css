@@ -1719,6 +1719,8 @@
   }
 
   .about-outro-card h2 {
+    width: 100%;
+    max-width: none;
     font-size: var(--inner-cta-title-size);
   }
 }

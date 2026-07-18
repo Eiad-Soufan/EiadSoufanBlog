@@ -1170,6 +1170,8 @@ button.contact-action {
 
   .contact-section-heading h2,
   .contact-outro-card h2 {
+    width: 100%;
+    max-width: none;
     font-size: var(--inner-section-title-size);
   }
 
