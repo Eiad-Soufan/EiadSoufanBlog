@@ -132,12 +132,15 @@ canvas {
 /* Home hero geometry ----------------------------------------------------- */
 
 .home-hero,
-.home-hero-container,
 .home-hero-grid,
 .home-hero-copy,
 .home-hero-visual {
   min-width: 0;
   max-width: 100%;
+}
+
+.home-hero-container {
+  min-width: 0;
 }
 
 .home-hero {
