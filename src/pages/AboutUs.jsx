@@ -299,7 +299,7 @@ export default function AboutUs() {
         <div className="about-hero-aurora about-hero-aurora--one" aria-hidden="true" />
         <div className="about-hero-aurora about-hero-aurora--two" aria-hidden="true" />
 
-        <div className="site-container about-hero-grid">
+        <div className="site-container page-hero-frame about-hero-grid">
           <Motion.div
             className="about-hero-copy"
             initial={reduceMotion ? false : "hidden"}
