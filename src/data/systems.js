@@ -3,9 +3,9 @@ import berkatMadinahMark from "../assets/berkat-mark.webp";
 import yallahBaggageMark from "../assets/yallah-mark.webp";
 import arabicaMark from "../assets/arabica-mark.webp";
 import mohammadAboZeedMark from "../assets/mohammad-abo-zeed-mark.webp";
+import ugarixMark from "../assets/ugarix-mark.webp";
 import arabicaPreview from "../assets/previews/arabica-preview.webp";
 import berkatDatesPreview from "../assets/previews/berkat-dates-preview.webp";
-import berkatPortalPreview from "../assets/previews/berkat-portal-preview.webp";
 import lawnexPreview from "../assets/previews/lawnex-preview.webp";
 import mohammadAboZeedPreview from "../assets/previews/mohammad-abo-zeed-preview.webp";
 import yallahBaggagePreview from "../assets/previews/yallah-baggage-preview.webp";
@@ -49,36 +49,31 @@ export const systems = [
     accent: { primary: "#f7b955", glow: "247 185 85" },
   },
   {
-    id: "berkat-madinah",
+    id: "ugarix",
     index: "02",
     tier: "featured",
-    category: "Enterprise operations",
-    title: "Berkat Madinah Portal",
-    tagline: "One operational layer for a multi-branch business.",
+    category: "Software systems company",
+    title: "UGARIX",
+    tagline: "A digital presence engineered beyond software.",
     summary:
-      "An internal platform for HR requests, complaints, tasks, notifications, and coordinated operations across five branches.",
+      "A bilingual company platform presenting enterprise systems, digital products, AI automation, and web and mobile delivery from Damascus to global markets.",
     role:
-      "Led software delivery, workflow implementation, production support, and continuous improvement.",
-    metrics: [
-      { value: "100+", label: "Employees" },
-      { value: "5", label: "Branches" },
-    ],
-    stack: ["Django", "React", "PostgreSQL"],
+      "Designed and delivered the responsive bilingual experience, translating the company’s technical depth into a clear production-ready website.",
+    metrics: [],
+    stack: ["React", "Vite", "i18n"],
     links: [
       {
-        label: "View portal",
-        href: "https://berkatmadinahportal.netlify.app/",
+        label: "Visit Ugarix",
+        href: "https://ugarix.net/",
       },
     ],
-    logo: berkatMadinahMark,
+    logo: ugarixMark,
     preview: {
-      src: berkatPortalPreview,
-      alt: "Berkat Madinah internal operations portal interface",
-      width: 1280,
-      height: 702,
-      position: "center top",
+      kind: "brand",
+      logo: ugarixMark,
+      alt: "Ugarix Systems company website",
     },
-    accent: { primary: "#54d68b", glow: "84 214 139" },
+    accent: { primary: "#08d6a0", glow: "8 214 160" },
   },
   {
     id: "yallah-baggage",

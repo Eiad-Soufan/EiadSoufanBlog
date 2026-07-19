@@ -65,6 +65,12 @@ const fr = {
       delivery: "Mise en œuvre",
       impact: "Impact",
     },
+    trust: {
+      kicker: "La confiance par les résultats",
+      title: "Des équipes qui ont fait confiance à mon travail.",
+      description:
+        "Des collaborations et des produits dans la legal tech, les systèmes d’entreprise, le commerce, l’hôtellerie et les services.",
+    },
     systems: {
       kicker: "Systèmes sélectionnés",
       titleBefore: "Conçus pour la complexité.",
@@ -103,17 +109,17 @@ const fr = {
       linkLabels: ["Visiter la plateforme", "Google Play", "App Store"],
       alt: "Interface arabe de la plateforme d’intelligence juridique LAWNEX",
     },
-    "berkat-madinah": {
-      category: "Opérations d’entreprise",
-      title: "Berkat Madinah Portal",
-      tagline: "Une couche opérationnelle unique pour une entreprise multisite.",
+    ugarix: {
+      category: "Entreprise de systèmes logiciels",
+      title: "UGARIX",
+      tagline: "Une présence numérique pensée au-delà du logiciel.",
       summary:
-        "Une plateforme interne pour les demandes RH, les réclamations, les tâches, les notifications et la coordination des opérations entre cinq sites.",
+        "Une plateforme d’entreprise bilingue présentant les systèmes métier, les produits numériques, l’automatisation par l’IA et les plateformes web et mobiles, de Damas aux marchés internationaux.",
       role:
-        "Pilotage de la livraison logicielle, des workflows, du support en production et de l’amélioration continue.",
-      metricLabels: ["Collaborateurs", "Agences"],
-      linkLabels: ["Voir le portail"],
-      alt: "Interface du portail interne de Berkat Madinah",
+        "Conception et réalisation de l’expérience responsive bilingue, traduisant la profondeur technique de l’entreprise en un site clair et prêt pour la production.",
+      metricLabels: [],
+      linkLabels: ["Visiter Ugarix"],
+      alt: "Site web de l’entreprise Ugarix Systems",
     },
     "yallah-baggage": {
       category: "Logistique de voyage",

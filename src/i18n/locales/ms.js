@@ -65,6 +65,12 @@ const ms = {
       delivery: "Pelaksanaan",
       impact: "Impak",
     },
+    trust: {
+      kicker: "Kepercayaan melalui hasil",
+      title: "Pasukan yang mempercayai hasil kerja saya.",
+      description:
+        "Kerjasama dan produk merentas teknologi undang-undang, sistem perusahaan, perdagangan, hospitaliti dan perkhidmatan.",
+    },
     systems: {
       kicker: "Sistem terpilih",
       titleBefore: "Direka untuk kerumitan.",
@@ -103,17 +109,17 @@ const ms = {
       linkLabels: ["Lawati platform", "Google Play", "App Store"],
       alt: "Antara muka platform kecerdasan undang-undang Arab LAWNEX",
     },
-    "berkat-madinah": {
-      category: "Operasi perusahaan",
-      title: "Berkat Madinah Portal",
-      tagline: "Satu lapisan operasi untuk perniagaan berbilang cawangan.",
+    ugarix: {
+      category: "Syarikat sistem perisian",
+      title: "UGARIX",
+      tagline: "Kehadiran digital yang direkayasa melangkaui perisian.",
       summary:
-        "Platform dalaman untuk permohonan HR, aduan, tugasan, pemberitahuan dan penyelarasan operasi merentas lima cawangan.",
+        "Platform syarikat dwibahasa yang menampilkan sistem perusahaan, produk digital, automasi AI serta penyampaian web dan mudah alih dari Damsyik ke pasaran global.",
       role:
-        "Menerajui pelaksanaan perisian, pembangunan aliran kerja, sokongan produksi dan penambahbaikan berterusan.",
-      metricLabels: ["Kakitangan", "Cawangan"],
-      linkLabels: ["Lihat portal"],
-      alt: "Antara muka portal operasi dalaman Berkat Madinah",
+        "Mereka bentuk dan menyampaikan pengalaman responsif dwibahasa, lalu menterjemahkan kedalaman teknikal syarikat menjadi laman produksi yang jelas.",
+      metricLabels: [],
+      linkLabels: ["Lawati Ugarix"],
+      alt: "Laman web syarikat sistem Ugarix Systems",
     },
     "yallah-baggage": {
       category: "Logistik perjalanan",
