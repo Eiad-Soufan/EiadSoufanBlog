@@ -67,8 +67,6 @@ const de = {
     },
     trust: {
       kicker: "Vertrauen durch Ergebnisse",
-      description:
-        "Zusammenarbeit und Produkte in Legal Tech, Unternehmenssystemen, Handel, Gastronomie und Dienstleistungen.",
     },
     systems: {
       kicker: "Ausgewählte Systeme",

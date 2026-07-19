@@ -1,6 +1,7 @@
 import { motion as Motion } from "framer-motion";
 import arabicaMark from "../assets/arabica-mark.webp";
 import berkatMark from "../assets/berkat-mark.webp";
+import homsUniversityMark from "../assets/homs-university-mark.webp";
 import lawnexMark from "../assets/lawnex-mark.webp";
 import mohammadAboZeedMark from "../assets/mohammad-abo-zeed-mark.webp";
 import mtnSyriaMark from "../assets/mtn-syria-mark.webp";
@@ -13,6 +14,7 @@ import "../styles/trust-marquee.css";
 const brands = [
   { name: "Ugarix Systems", logo: ugarixSymbol },
   { name: "MTN Syria", logo: mtnSyriaMark },
+  { name: "Homs University", logo: homsUniversityMark },
   { name: "LAWNEX", logo: lawnexMark },
   { name: "Berkat Madinah", logo: berkatMark },
   { name: "Yallah Baggage", logo: yallahMark },
@@ -48,12 +50,12 @@ export default function TrustMarquee() {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
           <span>{copy.home.trust.kicker}</span>
-          <p>{copy.home.trust.description}</p>
         </Motion.header>
 
         <div className={`trust-marquee${reduceMotion ? " trust-marquee--still" : ""}`}>
           <div className="trust-marquee-track">
             <BrandSet />
+            {!reduceMotion && <BrandSet hidden />}
             {!reduceMotion && <BrandSet hidden />}
           </div>
         </div>

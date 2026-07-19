@@ -67,8 +67,6 @@ const ms = {
     },
     trust: {
       kicker: "Kepercayaan melalui hasil",
-      description:
-        "Kerjasama dan produk merentas teknologi undang-undang, sistem perusahaan, perdagangan, hospitaliti dan perkhidmatan.",
     },
     systems: {
       kicker: "Sistem terpilih",
