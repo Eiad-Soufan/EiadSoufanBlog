@@ -22,19 +22,6 @@ const brands = [
   { name: "Mohammad Abo Zeed", logo: mohammadAboZeedMark },
 ];
 
-function BrandSet({ hidden = false }) {
-  return (
-    <div className="trust-marquee-set" aria-hidden={hidden || undefined}>
-      {brands.map((brand) => (
-        <div className="trust-brand" key={brand.name} dir="ltr">
-          <img src={brand.logo} alt={hidden ? "" : brand.name} loading="lazy" decoding="async" />
-          <span>{brand.name}</span>
-        </div>
-      ))}
-    </div>
-  );
-}
-
 export default function TrustMarquee() {
   const reduceMotion = useHydrationSafeReducedMotion();
   const { copy } = useLocale();
@@ -52,13 +39,32 @@ export default function TrustMarquee() {
           <span>{copy.home.trust.kicker}</span>
         </Motion.header>
 
-        <div className={`trust-marquee${reduceMotion ? " trust-marquee--still" : ""}`}>
-          <div className="trust-marquee-track">
-            <BrandSet />
-            {!reduceMotion && <BrandSet hidden />}
-            {!reduceMotion && <BrandSet hidden />}
-          </div>
-        </div>
+        <Motion.div
+          className="trust-grid"
+          initial={reduceMotion ? false : "hidden"}
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.045 } },
+          }}
+        >
+          {brands.map((brand) => (
+            <Motion.div
+              className="trust-brand"
+              key={brand.name}
+              dir="ltr"
+              variants={{
+                hidden: { opacity: 0, y: 14 },
+                visible: { opacity: 1, y: 0 },
+              }}
+              transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <img src={brand.logo} alt="" loading="lazy" decoding="async" />
+              <span>{brand.name}</span>
+            </Motion.div>
+          ))}
+        </Motion.div>
       </div>
     </section>
   );
