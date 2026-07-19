@@ -4,6 +4,7 @@ import yallahBaggageMark from "../assets/yallah-mark.svg";
 import arabicaMark from "../assets/arabica-mark.webp";
 import mohammadAboZeedMark from "../assets/mohammad-abo-zeed-mark.webp";
 import ugarixMark from "../assets/ugarix-mark.webp";
+import ugarixSymbol from "../assets/ugarix-symbol.webp";
 import arabicaPreview from "../assets/previews/arabica-preview.webp";
 import berkatDatesPreview from "../assets/previews/berkat-dates-preview.webp";
 import lawnexPreview from "../assets/previews/lawnex-preview.webp";
@@ -67,7 +68,7 @@ export const systems = [
         href: "https://ugarix.net/",
       },
     ],
-    logo: ugarixMark,
+    logo: ugarixSymbol,
     preview: {
       kind: "brand",
       logo: ugarixMark,
