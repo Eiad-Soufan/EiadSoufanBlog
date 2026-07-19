@@ -3,7 +3,7 @@ import arabicaMark from "../assets/arabica-mark.webp";
 import berkatMark from "../assets/berkat-mark.webp";
 import homsUniversityMark from "../assets/homs-university-mark.webp";
 import lawnexMark from "../assets/lawnex-mark.webp";
-import mohammadAboZeedMark from "../assets/mohammad-abo-zeed-mark.svg";
+import mohammadAboZeedMark from "../assets/mohammad-abo-zeed-mark.webp";
 import mtnSyriaMark from "../assets/mtn-syria-mark.webp";
 import ugarixSymbol from "../assets/ugarix-symbol.webp";
 import yallahMark from "../assets/yallah-mark.svg";
