@@ -1,6 +1,6 @@
 import lawnexMark from "../assets/lawnex-mark.webp";
 import berkatMadinahMark from "../assets/berkat-mark.webp";
-import yallahBaggageMark from "../assets/yallah-mark.webp";
+import yallahBaggageMark from "../assets/yallah-mark.svg";
 import arabicaMark from "../assets/arabica-mark.webp";
 import mohammadAboZeedMark from "../assets/mohammad-abo-zeed-mark.webp";
 import ugarixMark from "../assets/ugarix-mark.webp";

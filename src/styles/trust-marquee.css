@@ -69,6 +69,8 @@
   height: 2.65rem;
   flex: 0 0 auto;
   object-fit: contain;
+  filter: saturate(1.035) contrast(1.025);
+  transform: translateZ(0);
 }
 
 .trust-brand span {
