@@ -291,6 +291,7 @@
   object-fit: contain;
   object-position: center;
   transform: translate(var(--systems-mark-shift-x), var(--systems-mark-shift-y));
+  filter: saturate(1.035) contrast(1.025);
 }
 
 .systems-mark--type {
@@ -323,7 +324,7 @@
 }
 
 .systems-card--yallah-baggage .systems-mark {
-  --systems-mark-padding: 0.27rem;
+  --systems-mark-padding: 0.14rem;
 }
 
 .systems-card--ugarix .systems-mark {

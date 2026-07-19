@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Yallah Baggage">
+  <rect width="512" height="512" rx="42" fill="#3155f4"/>
+  <path d="M76 80h108l125 230-75 136H128l76-136L76 80Z" fill="#fff"/>
+  <path d="M335 80h110l-43 97H286l49-97Z" fill="#fff"/>
+  <path d="m423 86 24 23" fill="none" stroke="#ff6928" stroke-width="8" stroke-linecap="round"/>
+  <path d="m443 104 26 14 13 52-34 12-23-49 18-29Z" fill="#ff6928"/>
+  <circle cx="448" cy="126" r="5" fill="#3155f4"/>
+</svg>

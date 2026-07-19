@@ -6,7 +6,7 @@ import lawnexMark from "../assets/lawnex-mark.webp";
 import mohammadAboZeedMark from "../assets/mohammad-abo-zeed-mark.webp";
 import mtnSyriaMark from "../assets/mtn-syria-mark.webp";
 import ugarixSymbol from "../assets/ugarix-symbol.webp";
-import yallahMark from "../assets/yallah-mark.webp";
+import yallahMark from "../assets/yallah-mark.svg";
 import useHydrationSafeReducedMotion from "../hooks/useHydrationSafeReducedMotion";
 import { useLocale } from "../i18n/LocaleContext";
 import "../styles/trust-marquee.css";
