@@ -67,7 +67,6 @@ const de = {
     },
     trust: {
       kicker: "Vertrauen durch Ergebnisse",
-      title: "Teams, die meiner Arbeit vertraut haben.",
       description:
         "Zusammenarbeit und Produkte in Legal Tech, Unternehmenssystemen, Handel, Gastronomie und Dienstleistungen.",
     },

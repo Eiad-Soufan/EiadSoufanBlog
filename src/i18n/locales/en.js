@@ -66,7 +66,6 @@ const en = {
     },
     trust: {
       kicker: "Built on trust",
-      title: "Teams that trusted my work.",
       description:
         "Relationships and products spanning legal technology, enterprise systems, commerce, hospitality, and services.",
     },
