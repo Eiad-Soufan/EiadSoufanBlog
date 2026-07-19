@@ -67,7 +67,6 @@ const ms = {
     },
     trust: {
       kicker: "Kepercayaan melalui hasil",
-      title: "Pasukan yang mempercayai hasil kerja saya.",
       description:
         "Kerjasama dan produk merentas teknologi undang-undang, sistem perusahaan, perdagangan, hospitaliti dan perkhidmatan.",
     },
