@@ -64,6 +64,12 @@ const en = {
       delivery: "Delivery",
       impact: "Impact",
     },
+    trust: {
+      kicker: "Built on trust",
+      title: "Teams that trusted my work.",
+      description:
+        "Relationships and products spanning legal technology, enterprise systems, commerce, hospitality, and services.",
+    },
     systems: {
       kicker: "Selected systems",
       titleBefore: "Built for complexity.",
@@ -102,17 +108,17 @@ const en = {
       linkLabels: ["Visit platform", "Google Play", "App Store"],
       alt: "LAWNEX Arabic legal intelligence platform interface",
     },
-    "berkat-madinah": {
-      category: "Enterprise operations",
-      title: "Berkat Madinah Portal",
-      tagline: "One operational layer for a multi-branch business.",
+    ugarix: {
+      category: "Software systems company",
+      title: "UGARIX",
+      tagline: "A digital presence engineered beyond software.",
       summary:
-        "An internal platform for HR requests, complaints, tasks, notifications, and coordinated operations across five branches.",
+        "A bilingual company platform presenting enterprise systems, digital products, AI automation, and web and mobile delivery from Damascus to global markets.",
       role:
-        "Led software delivery, workflow implementation, production support, and continuous improvement.",
-      metricLabels: ["Employees", "Branches"],
-      linkLabels: ["View portal"],
-      alt: "Berkat Madinah internal operations portal interface",
+        "Designed and delivered the responsive bilingual experience, translating the company’s technical depth into a clear production-ready website.",
+      metricLabels: [],
+      linkLabels: ["Visit Ugarix"],
+      alt: "Ugarix Systems company website",
     },
     "yallah-baggage": {
       category: "Travel logistics",

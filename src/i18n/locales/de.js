@@ -65,6 +65,12 @@ const de = {
       delivery: "Umsetzung",
       impact: "Wirkung",
     },
+    trust: {
+      kicker: "Vertrauen durch Ergebnisse",
+      title: "Teams, die meiner Arbeit vertraut haben.",
+      description:
+        "Zusammenarbeit und Produkte in Legal Tech, Unternehmenssystemen, Handel, Gastronomie und Dienstleistungen.",
+    },
     systems: {
       kicker: "Ausgewählte Systeme",
       titleBefore: "Für Komplexität gebaut.",
@@ -103,18 +109,17 @@ const de = {
       linkLabels: ["Plattform besuchen", "Google Play", "App Store"],
       alt: "Arabische Benutzeroberfläche der Legal-Intelligence-Plattform LAWNEX",
     },
-    "berkat-madinah": {
-      category: "Unternehmensprozesse",
-      title: "Berkat Madinah Portal",
-      tagline:
-        "Eine gemeinsame Betriebsebene für ein Unternehmen mit mehreren Standorten.",
+    ugarix: {
+      category: "Unternehmen für Softwaresysteme",
+      title: "UGARIX",
+      tagline: "Ein digitaler Auftritt, der über Software hinaus gedacht ist.",
       summary:
-        "Eine interne Plattform für HR-Anfragen, Beschwerden, Aufgaben, Benachrichtigungen und koordinierte Abläufe an fünf Standorten.",
+        "Eine zweisprachige Unternehmensplattform für Enterprise-Systeme, digitale Produkte, KI-Automatisierung sowie Web- und Mobile-Lösungen – von Damaskus in internationale Märkte.",
       role:
-        "Verantwortung für Softwarebereitstellung, Workflow-Umsetzung, Produktivsupport und kontinuierliche Verbesserung.",
-      metricLabels: ["Mitarbeitende", "Standorte"],
-      linkLabels: ["Portal ansehen"],
-      alt: "Benutzeroberfläche des internen Berkat-Madinah-Betriebsportals",
+        "Konzeption und Umsetzung der responsiven zweisprachigen Nutzererfahrung, die die technische Tiefe des Unternehmens in eine klare produktionsreife Website übersetzt.",
+      metricLabels: [],
+      linkLabels: ["Ugarix besuchen"],
+      alt: "Unternehmenswebsite von Ugarix Systems",
     },
     "yallah-baggage": {
       category: "Reiselogistik",

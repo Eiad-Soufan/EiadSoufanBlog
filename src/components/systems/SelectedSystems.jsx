@@ -157,6 +157,23 @@ function Metrics({ metrics, formatter }) {
 }
 
 function ProjectPreview({ project }) {
+  if (project.preview.kind === "brand") {
+    return (
+      <div className="systems-project-preview systems-project-preview--brand" role="img" aria-label={project.preview.alt}>
+        <span className="systems-preview-aura" aria-hidden="true" />
+        <div className="systems-preview-frame systems-preview-frame--brand" aria-hidden="true">
+          <span className="systems-brand-grid" />
+          <span className="systems-brand-orbit systems-brand-orbit--one" />
+          <span className="systems-brand-orbit systems-brand-orbit--two" />
+          <span className="systems-brand-location">DAMASCUS · GLOBAL DELIVERY</span>
+          <img src={project.preview.logo} alt="" loading="lazy" decoding="async" draggable={false} />
+          <span className="systems-brand-capabilities">ENTERPRISE · DIGITAL PRODUCTS · AI</span>
+          <span className="systems-preview-finish" />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="systems-project-preview">
       <span className="systems-preview-aura" aria-hidden="true" />
