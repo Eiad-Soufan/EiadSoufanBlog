@@ -66,8 +66,6 @@ const en = {
     },
     trust: {
       kicker: "Built on trust",
-      description:
-        "Relationships and products spanning legal technology, enterprise systems, commerce, hospitality, and services.",
     },
     systems: {
       kicker: "Selected systems",

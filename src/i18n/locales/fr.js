@@ -67,8 +67,6 @@ const fr = {
     },
     trust: {
       kicker: "La confiance par les résultats",
-      description:
-        "Des collaborations et des produits dans la legal tech, les systèmes d’entreprise, le commerce, l’hôtellerie et les services.",
     },
     systems: {
       kicker: "Systèmes sélectionnés",
