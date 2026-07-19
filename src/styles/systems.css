@@ -314,17 +314,19 @@
 }
 
 .systems-card--mohammad-abo-zeed .systems-mark {
-  --systems-mark-padding: 0.34rem;
-  --systems-mark-shift-y: -0.025rem;
-  background: rgb(241 247 247 / 0.94);
+  --systems-mark-padding: 0;
+  --systems-mark-shift-y: 0;
+  border-color: transparent;
+  border-radius: 0.78rem;
+  background: transparent;
 }
 
-.systems-card--lawnex .systems-mark {
-  --systems-mark-padding: 0.29rem;
-}
-
+.systems-card--lawnex .systems-mark,
 .systems-card--yallah-baggage .systems-mark {
-  --systems-mark-padding: 0.14rem;
+  --systems-mark-padding: 0;
+  border-color: transparent;
+  border-radius: 0.78rem;
+  background: transparent;
 }
 
 .systems-card--ugarix .systems-mark {
