@@ -2,7 +2,7 @@ import lawnexMark from "../assets/lawnex-mark.webp";
 import berkatMadinahMark from "../assets/berkat-mark.webp";
 import yallahBaggageMark from "../assets/yallah-mark.svg";
 import arabicaMark from "../assets/arabica-mark.webp";
-import mohammadAboZeedMark from "../assets/mohammad-abo-zeed-mark.webp";
+import mohammadAboZeedMark from "../assets/mohammad-abo-zeed-mark.svg";
 import ugarixMark from "../assets/ugarix-mark.webp";
 import arabicaPreview from "../assets/previews/arabica-preview.webp";
 import berkatDatesPreview from "../assets/previews/berkat-dates-preview.webp";
