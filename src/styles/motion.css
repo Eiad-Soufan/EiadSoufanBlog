@@ -52,6 +52,28 @@
   }
 }
 
+@keyframes hero-artwork-breathe {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -0.34rem, 0) scale(1.008);
+  }
+}
+
+@keyframes hero-artwork-halo-drift {
+  0%,
+  100% {
+    opacity: 0.17;
+    transform: translate3d(-4%, -2%, 0) scale(0.94);
+  }
+  50% {
+    opacity: 0.29;
+    transform: translate3d(6%, 4%, 0) scale(1.08);
+  }
+}
+
 .hero-aurora {
   position: absolute;
   width: min(64vw, 58rem);
@@ -135,6 +157,29 @@
   animation: status-pulse 2.4s ease-in-out infinite;
 }
 
+.hero-artwork-image {
+  animation: hero-artwork-breathe 8.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+.hero-artwork-halo {
+  animation: hero-artwork-halo-drift 10s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.hero-artwork-halo--violet {
+  animation-delay: -4.5s;
+  animation-duration: 13s;
+}
+
+.hero-artwork[data-motion="paused"] :where(
+    .hero-artwork-image,
+    .hero-artwork-halo
+  ) {
+  animation-play-state: paused;
+  will-change: auto;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -153,7 +198,9 @@
   .signature-orbit--reverse,
   .status-pulse,
   .hero-aurora,
-  .hero-neural-grid {
+  .hero-neural-grid,
+  .hero-artwork-image,
+  .hero-artwork-halo {
     animation: none !important;
   }
 }
