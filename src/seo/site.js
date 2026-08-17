@@ -23,7 +23,7 @@ export const SITE_IDENTITY = {
   city: "Kuala Lumpur",
   country: "MY",
   github: "https://github.com/Eiad-Soufan",
-  linkedin: "https://linkedin.com/in/eiad-soufan-39924a178",
+  linkedin: "https://www.linkedin.com/in/eiad-soufan-a11914358/",
 };
 
 export const INDEXABLE_PAGES = ["home", "about", "approach", "contact"];
