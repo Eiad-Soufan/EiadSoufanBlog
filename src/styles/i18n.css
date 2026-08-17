@@ -435,6 +435,35 @@ html[lang="ar"] body :where(.systems-summary, .systems-role p) {
   line-height: 1.72;
 }
 
+/* Mirror the inner-hero composition itself, not only its typography. */
+html[lang="ar"] body .about-hero::before {
+  mask-image: linear-gradient(245deg, black, transparent 62%);
+  -webkit-mask-image: linear-gradient(245deg, black, transparent 62%);
+}
+
+html[lang="ar"] body :where(.approach-hero-grid, .contact-hero-grid) {
+  mask-image: linear-gradient(250deg, black, transparent 69%);
+  -webkit-mask-image: linear-gradient(250deg, black, transparent 69%);
+}
+
+html[lang="ar"] body :where(
+    .about-hero-aurora--one,
+    .approach-hero-glow--one,
+    .contact-hero-glow--one
+  ) {
+  right: -12%;
+  left: auto;
+}
+
+html[lang="ar"] body :where(
+    .about-hero-aurora--two,
+    .approach-hero-glow--two,
+    .contact-hero-glow--two
+  ) {
+  right: auto;
+  left: -10%;
+}
+
 /* Intentional LTR islands keep technical names and contact details legible. */
 html[lang="ar"] body :where(
     .i18n-ltr,

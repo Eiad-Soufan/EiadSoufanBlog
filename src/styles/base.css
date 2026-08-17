@@ -525,34 +525,30 @@ html[lang="ar"] body :where(
   }
 }
 
-/*
- * One geometric contract for every primary hero. Keeping the frame and its
- * tracks here prevents page-specific breakpoints from shifting either edge.
- */
+/* One text-first contract for every inner-page hero. */
 .page-hero-frame {
-  grid-template-areas: "copy visual";
+  grid-template-areas: "copy";
 }
 
 [dir="rtl"] .page-hero-frame {
-  grid-template-areas: "visual copy";
+  grid-template-areas: "copy";
 }
 
 .page-hero-frame > :first-child {
   grid-area: copy;
+  width: min(100%, 60rem);
 }
 
-.page-hero-frame > :last-child {
-  grid-area: visual;
-  min-inline-size: 0;
+[dir="ltr"] .page-hero-frame > :first-child {
+  margin-right: auto;
+  margin-left: 0;
+  text-align: left;
 }
 
-@media (max-width: 900px) {
-  .page-hero-frame,
-  [dir="rtl"] .page-hero-frame {
-    grid-template-areas:
-      "copy"
-      "visual";
-  }
+[dir="rtl"] .page-hero-frame > :first-child {
+  margin-right: 0;
+  margin-left: auto;
+  text-align: right;
 }
 
 .header-glass {
