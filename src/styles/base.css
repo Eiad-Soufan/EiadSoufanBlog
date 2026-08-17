@@ -844,9 +844,10 @@ html[lang="ar"] body :where(
 .page-hero-title > span,
 .page-hero-title > em {
   display: block;
-  width: max-content;
+  width: fit-content;
   max-width: 100%;
-  white-space: nowrap;
+  text-wrap: balance;
+  white-space: normal;
 }
 
 .text-gradient {

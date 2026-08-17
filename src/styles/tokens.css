@@ -21,7 +21,13 @@
   --site-width: 78rem;
   --site-gutter: clamp(1.125rem, 4vw, 3rem);
   --hero-title-size: clamp(2rem, 3.25vw, 3.15rem);
-  --inner-hero-title-size: clamp(1rem, 1.625vw, 1.575rem);
+  /* Inner-page heroes inherit the homepage's responsive type scale. */
+  --inner-hero-title-size: var(--hero-title-size);
+  --inner-hero-eyebrow-size: 0.72rem;
+  --inner-hero-lead-size: clamp(0.98rem, 0.9rem + 0.4vw, 1.06rem);
+  --inner-hero-action-size: 0.875rem;
+  --inner-hero-meta-label-size: 0.66rem;
+  --inner-hero-meta-value-size: 0.75rem;
   --inner-section-title-size: clamp(0.95rem, 1.3vw, 1.25rem);
   --inner-feature-title-size: clamp(0.9rem, 1.1vw, 1.1rem);
   --inner-cta-title-size: clamp(0.95rem, 1.2vw, 1.2rem);
@@ -46,7 +52,6 @@
 
 @media (max-width: 350px) {
   :root {
-    --inner-hero-title-size: 0.9rem;
     --inner-section-title-size: 0.85rem;
     --inner-feature-title-size: 0.82rem;
     --inner-cta-title-size: 0.85rem;

@@ -24,7 +24,7 @@
   gap: 0.7rem;
   margin: 0;
   color: rgb(var(--color-text) / 0.62);
-  font-size: 0.67rem;
+  font-size: var(--inner-hero-eyebrow-size);
   font-weight: 800;
   letter-spacing: 0.16em;
   line-height: 1.5;
@@ -124,12 +124,12 @@
 
 .contact-hero-copy h1 {
   max-width: 52rem;
-  margin: 1.15rem 0 0;
+  margin: 1rem 0 0;
   color: rgb(var(--color-text));
   font-size: var(--inner-hero-title-size);
-  font-weight: 650;
-  letter-spacing: -0.035em;
-  line-height: 1.16;
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1.06;
 }
 
 .contact-hero-copy h1 em {
@@ -148,29 +148,29 @@
 
 .contact-hero-lead {
   max-width: 48rem;
-  margin: 1.35rem 0 0;
+  margin: 1.5rem 0 0;
   color: rgb(var(--color-muted));
-  font-size: clamp(0.92rem, 1.15vw, 1rem);
-  line-height: 1.78;
+  font-size: var(--inner-hero-lead-size);
+  line-height: 1.8;
 }
 
 .contact-hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin-top: 1.6rem;
+  margin-top: 2rem;
 }
 
 .contact-action {
   display: inline-flex;
-  min-height: 3.2rem;
+  min-height: 3rem;
   align-items: center;
   justify-content: center;
   gap: 0.7rem;
   border: 1px solid transparent;
-  border-radius: 0.92rem;
-  padding: 0.82rem 1.15rem;
-  font-size: 0.76rem;
+  border-radius: 15px;
+  padding: 0.75rem 1.25rem;
+  font-size: var(--inner-hero-action-size);
   font-weight: 800;
   line-height: 1;
   text-align: center;
@@ -224,7 +224,7 @@ button.contact-action {
 
 .contact-hero-facts dt {
   color: rgb(var(--color-text) / 0.38);
-  font-size: 0.57rem;
+  font-size: var(--inner-hero-meta-label-size);
   font-weight: 800;
   letter-spacing: 0.13em;
   text-transform: uppercase;
@@ -233,7 +233,7 @@ button.contact-action {
 .contact-hero-facts dd {
   margin: 0.38rem 0 0;
   color: rgb(var(--color-text) / 0.8);
-  font-size: 0.68rem;
+  font-size: var(--inner-hero-meta-value-size);
   font-weight: 700;
   line-height: 1.5;
 }
@@ -1107,12 +1107,12 @@ button.contact-action {
 
   .contact-hero-copy h1 {
     font-size: var(--inner-hero-title-size);
-    line-height: 1.16;
+    line-height: 1.06;
   }
 
   .contact-hero-lead {
-    font-size: 0.9rem;
-    line-height: 1.72;
+    font-size: var(--inner-hero-lead-size);
+    line-height: 1.8;
   }
 
   .contact-hero-actions,
