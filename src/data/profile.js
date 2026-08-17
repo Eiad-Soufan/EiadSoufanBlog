@@ -10,7 +10,7 @@ export const profile = {
   phoneHref: "+60183035842",
   whatsapp: "https://wa.me/60183035842",
   github: "https://github.com/Eiad-Soufan",
-  linkedin: "https://linkedin.com/in/eiad-soufan-39924a178",
+  linkedin: "https://www.linkedin.com/in/eiad-soufan-a11914358/",
 };
 
 export const impactMetrics = [
