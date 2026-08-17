@@ -5,7 +5,9 @@ import {
 } from "framer-motion";
 import { useMemo, useRef } from "react";
 import { Link } from "react-router-dom";
-import BrandMark from "../components/BrandMark";
+import aboutHero1080 from "../assets/about-hero-1080.webp";
+import aboutHero768 from "../assets/about-hero-768.webp";
+import PageHeroArtwork from "../components/PageHeroArtwork";
 import {
   capabilityPillars as baseCapabilityPillars,
   career as baseCareer,
@@ -92,54 +94,6 @@ function SectionIntro({ eyebrow, title, copy, align = "left" }) {
       </p>
       <h2 className="display-font">{title}</h2>
       {copy ? <p className="about-section-copy">{copy}</p> : null}
-    </Motion.div>
-  );
-}
-
-function CareerConstellation({ reduceMotion, content }) {
-  return (
-    <Motion.div
-      className="career-constellation"
-      data-motion={reduceMotion ? "paused" : "running"}
-      initial={reduceMotion ? false : { opacity: 0, scale: 0.94, rotate: -2 }}
-      animate={{ opacity: 1, scale: 1, rotate: 0 }}
-      transition={{ duration: 0.9, delay: 0.15, ease: premiumEase }}
-      aria-label={content.aria}
-    >
-      <div className="career-constellation-grid" aria-hidden="true" />
-      <div className="career-orbit career-orbit--outer" aria-hidden="true" />
-      <div className="career-orbit career-orbit--inner" aria-hidden="true" />
-      <div className="career-constellation-glow" aria-hidden="true" />
-
-      <div className="career-core">
-        <BrandMark className="h-12 w-[4.5rem] sm:h-14 sm:w-[5.25rem]" />
-        <span className="career-core-role">{content.role}</span>
-        <strong className="career-core-name display-font">Eiad Soufan</strong>
-      </div>
-
-      <span className="career-node career-node--backend">
-        <i aria-hidden="true" /> {content.nodes[0]}
-      </span>
-      <span className="career-node career-node--ai">
-        <i aria-hidden="true" /> {content.nodes[1]}
-      </span>
-      <span className="career-node career-node--product">
-        <i aria-hidden="true" /> {content.nodes[2]}
-      </span>
-      <span className="career-node career-node--delivery">
-        <i aria-hidden="true" /> {content.nodes[3]}
-      </span>
-
-      <div className="career-signal" aria-hidden="true">
-        <span />
-        <span />
-        <span />
-        <span />
-      </div>
-
-      <div className="career-constellation-caption">
-        {content.captions.map((caption) => <span key={caption}>{caption}</span>)}
-      </div>
     </Motion.div>
   );
 }
@@ -360,7 +314,14 @@ export default function AboutUs() {
             </Motion.dl>
           </Motion.div>
 
-          <CareerConstellation reduceMotion={reduceMotion} content={content.constellation} />
+          <PageHeroArtwork
+            image={aboutHero1080}
+            image768={aboutHero768}
+            imageWidth={1080}
+            status={content.constellation.role}
+            labels={content.constellation.captions}
+            variant="about"
+          />
         </div>
       </section>
 

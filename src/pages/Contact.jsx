@@ -1,6 +1,8 @@
 import { motion as Motion } from "framer-motion";
 import { useState } from "react";
-import BrandMark from "../components/BrandMark";
+import contactHero1254 from "../assets/contact-hero-1254.webp";
+import contactHero768 from "../assets/contact-hero-768.webp";
+import PageHeroArtwork from "../components/PageHeroArtwork";
 import { profile } from "../data/profile";
 import useHydrationSafeReducedMotion from "../hooks/useHydrationSafeReducedMotion";
 import { useLocale } from "../i18n/LocaleContext";
@@ -59,64 +61,6 @@ function ChannelIcon({ type }) {
     <svg viewBox="0 0 24 24" aria-hidden="true">
       {paths[type]}
     </svg>
-  );
-}
-
-function ConversationSignal({ reduceMotion, content }) {
-  return (
-    <Motion.div
-      className="contact-signal"
-      initial={reduceMotion ? false : { opacity: 0, scale: 0.97, y: 18 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: reduceMotion ? 0 : 0.12, ease: premiumEase }}
-      aria-hidden="true"
-    >
-      <div className="contact-signal-grid" />
-      <div className="contact-signal-orbit contact-signal-orbit--outer" />
-      <div className="contact-signal-orbit contact-signal-orbit--inner" />
-
-      <svg className="contact-signal-paths" viewBox="0 0 520 470">
-        <path className="contact-signal-path contact-signal-path--one" d="M104 116C166 142 182 192 234 224" />
-        <path className="contact-signal-path contact-signal-path--two" d="M416 128C356 150 340 194 286 224" />
-        <path className="contact-signal-path contact-signal-path--three" d="M113 354C165 323 190 284 236 252" />
-        <path className="contact-signal-path contact-signal-path--four" d="M284 252C334 279 358 319 413 351" />
-      </svg>
-
-      <div className="contact-signal-toolbar">
-        <span><i /> {content.map}</span>
-        <small>{content.count}</small>
-      </div>
-
-      <div className="contact-signal-node contact-signal-node--context">
-        <small>01</small>
-        <strong>{content.nodes[0]}</strong>
-      </div>
-      <div className="contact-signal-node contact-signal-node--constraint">
-        <small>02</small>
-        <strong>{content.nodes[1]}</strong>
-      </div>
-      <div className="contact-signal-node contact-signal-node--outcome">
-        <small>03</small>
-        <strong>{content.nodes[2]}</strong>
-      </div>
-      <div className="contact-signal-node contact-signal-node--evidence">
-        <small>04</small>
-        <strong>{content.nodes[3]}</strong>
-      </div>
-
-      <div className="contact-signal-core">
-        <span className="contact-signal-core-ring" />
-        <BrandMark className="contact-signal-mark" />
-        <strong>{content.next}</strong>
-        <small>{content.explicit}</small>
-      </div>
-
-      <div className="contact-signal-readout">
-        <span>{content.ambiguity}</span>
-        <i><b /></i>
-        <strong>{content.reduced}</strong>
-      </div>
-    </Motion.div>
   );
 }
 
@@ -211,7 +155,13 @@ export default function Contact() {
             </Motion.dl>
           </Motion.div>
 
-          <ConversationSignal reduceMotion={reduceMotion} content={content.signal} />
+          <PageHeroArtwork
+            image={contactHero1254}
+            image768={contactHero768}
+            status={content.signal.next}
+            labels={content.signal.nodes.slice(0, 3)}
+            variant="contact"
+          />
         </div>
       </section>
 

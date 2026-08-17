@@ -5,7 +5,9 @@ import {
 } from "framer-motion";
 import { useMemo, useRef } from "react";
 import { Link } from "react-router-dom";
-import BrandMark from "../components/BrandMark";
+import approachHero1254 from "../assets/approach-hero-1254.webp";
+import approachHero768 from "../assets/approach-hero-768.webp";
+import PageHeroArtwork from "../components/PageHeroArtwork";
 import {
   approachPrinciples as baseApproachPrinciples,
   approachStages as baseApproachStages,
@@ -87,66 +89,6 @@ function SectionIntro({ eyebrow, title, copy, center = false }) {
       </p>
       <h2 className="display-font">{title}</h2>
       {copy ? <p className="approach-section-copy">{copy}</p> : null}
-    </Motion.div>
-  );
-}
-
-function SystemBlueprint({ reduceMotion, content }) {
-  return (
-    <Motion.div
-      className="system-blueprint"
-      data-motion={reduceMotion ? "paused" : "running"}
-      aria-label={content.aria}
-      initial={reduceMotion ? false : { opacity: 0, scale: 0.95, rotate: 1.5 }}
-      animate={{ opacity: 1, scale: 1, rotate: 0 }}
-      transition={{ duration: 0.9, delay: 0.14, ease: premiumEase }}
-    >
-      <div className="blueprint-grid" aria-hidden="true" />
-
-      <div className="blueprint-toolbar">
-        <span><i aria-hidden="true" /> {content.map}</span>
-        <small>{content.live}</small>
-      </div>
-
-      <svg className="blueprint-connections" viewBox="0 0 520 430" aria-hidden="true">
-        <defs>
-          <linearGradient id="approach-flow" x1="20" y1="20" x2="500" y2="410" gradientUnits="userSpaceOnUse">
-            <stop stopColor="rgb(91 224 255)" />
-            <stop offset="0.52" stopColor="rgb(105 137 255)" />
-            <stop offset="1" stopColor="rgb(165 132 255)" />
-          </linearGradient>
-        </defs>
-        <path className="blueprint-path blueprint-path--base" d="M92 104C169 105 173 198 260 213s90-105 171-94" />
-        <path className="blueprint-path blueprint-path--base" d="M260 213c-69 30-57 112-145 120M260 213c79 26 76 111 159 123" />
-        <path className="blueprint-path blueprint-path--energy" d="M92 104C169 105 173 198 260 213s90-105 171-94" />
-        <path className="blueprint-path blueprint-path--energy blueprint-path--energy-two" d="M260 213c-69 30-57 112-145 120M260 213c79 26 76 111 159 123" />
-      </svg>
-
-      <div className="blueprint-core">
-        <BrandMark className="h-10 w-16" />
-        <span className="blueprint-core-label">{content.coherent}</span>
-        <strong className="blueprint-core-name display-font">{content.system}</strong>
-      </div>
-
-      <span className="blueprint-node blueprint-node--problem"><i />{content.nodes[0]}</span>
-      <span className="blueprint-node blueprint-node--architecture"><i />{content.nodes[1]}</span>
-      <span className="blueprint-node blueprint-node--product"><i />{content.nodes[2]}</span>
-      <span className="blueprint-node blueprint-node--production"><i />{content.nodes[3]}</span>
-
-      <div className="blueprint-readout blueprint-readout--risk">
-        <span>{content.risk}</span>
-        <strong>{content.early}</strong>
-        <i><b /></i>
-      </div>
-      <div className="blueprint-readout blueprint-readout--feedback">
-        <span>{content.feedback}</span>
-        <strong>{content.continuous}</strong>
-        <i><b /></i>
-      </div>
-
-      <div className="blueprint-status">
-        {content.statuses.map((status) => <span key={status}><i /> {status}</span>)}
-      </div>
     </Motion.div>
   );
 }
@@ -310,7 +252,17 @@ export default function WhyUs() {
             </Motion.dl>
           </Motion.div>
 
-          <SystemBlueprint reduceMotion={reduceMotion} content={content.blueprint} />
+          <PageHeroArtwork
+            image={approachHero1254}
+            image768={approachHero768}
+            status={content.blueprint.coherent}
+            labels={[
+              content.blueprint.nodes[0],
+              content.blueprint.nodes[1],
+              content.blueprint.nodes[3],
+            ]}
+            variant="approach"
+          />
         </div>
       </section>
 
