@@ -310,7 +310,6 @@ export default function AboutUs() {
               ))}
             </Motion.dl>
           </Motion.div>
-
         </div>
       </section>
 
