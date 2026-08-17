@@ -20,11 +20,11 @@
 }
 
 .page-hero-artwork--approach .hero-artwork-picture {
-  inset: -12% -14% -10%;
+  inset: -5% 0 3%;
 }
 
 .page-hero-artwork--contact .hero-artwork-picture {
-  inset: -7% -9% -6%;
+  inset: -1% 0 2%;
 }
 
 .page-hero-artwork--about .hero-artwork-image {
@@ -53,6 +53,10 @@
   }
 
   .page-hero-artwork--approach .hero-artwork-picture {
-    inset-inline: -16%;
+    inset: -3% -2% 4%;
+  }
+
+  .page-hero-artwork--contact .hero-artwork-picture {
+    inset: 0 1% 3%;
   }
 }

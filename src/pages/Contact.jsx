@@ -1,7 +1,7 @@
 import { motion as Motion } from "framer-motion";
 import { useState } from "react";
-import contactHero1254 from "../assets/contact-hero-1254.webp";
-import contactHero768 from "../assets/contact-hero-768.webp";
+import contactHero1080 from "../assets/contact-hero-v2-1080.webp";
+import contactHero768 from "../assets/contact-hero-v2-768.webp";
 import PageHeroArtwork from "../components/PageHeroArtwork";
 import { profile } from "../data/profile";
 import useHydrationSafeReducedMotion from "../hooks/useHydrationSafeReducedMotion";
@@ -156,8 +156,9 @@ export default function Contact() {
           </Motion.div>
 
           <PageHeroArtwork
-            image={contactHero1254}
+            image={contactHero1080}
             image768={contactHero768}
+            imageWidth={1080}
             status={content.signal.next}
             labels={content.signal.nodes.slice(0, 3)}
             variant="contact"
