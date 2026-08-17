@@ -29,7 +29,6 @@ export default function SignatureField() {
         <div className="hero-artwork-halo hero-artwork-halo--violet" />
 
         <div className="hero-artwork-header">
-          <span className="hero-artwork-kicker">{copy.home.signature.systems}</span>
           <span className="hero-artwork-status">
             <span className="status-pulse" />
             {copy.home.signature.production}
@@ -53,7 +52,6 @@ export default function SignatureField() {
               className="hero-artwork-image"
             />
           </picture>
-          <span className="hero-artwork-core">{copy.home.signature.core}</span>
         </div>
 
         <div className="hero-artwork-footer">

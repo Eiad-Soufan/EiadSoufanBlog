@@ -294,13 +294,11 @@ canvas {
   z-index: 6;
   display: flex;
   min-width: 0;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0.75rem;
+  align-items: center;
+  justify-content: flex-end;
   padding: clamp(1rem, 2.3vw, 1.35rem) clamp(1rem, 2.8vw, 1.45rem) 0;
 }
 
-.hero-artwork-kicker,
 .hero-artwork-status {
   font-size: clamp(0.53rem, 0.8vw, 0.63rem);
   font-weight: 800;
@@ -308,16 +306,10 @@ canvas {
   text-transform: uppercase;
 }
 
-.hero-artwork-kicker {
-  max-width: 48%;
-  color: rgb(var(--color-muted) / 0.83);
-  letter-spacing: 0.13em;
-}
-
 .hero-artwork-status {
   display: inline-flex;
-  max-width: 50%;
-  align-items: flex-start;
+  max-width: 100%;
+  align-items: center;
   justify-content: flex-end;
   gap: 0.48rem;
   color: rgb(var(--color-success) / 0.86);
@@ -329,7 +321,6 @@ canvas {
   width: 0.38rem;
   height: 0.38rem;
   flex: 0 0 auto;
-  margin-top: 0.27em;
   border-radius: 999px;
   background: rgb(var(--color-success));
   box-shadow: 0 0 18px rgb(var(--color-success) / 0.55);
@@ -390,32 +381,6 @@ canvas {
   transform: translate(-50%, -50%) rotate(18deg) scaleY(0.72);
 }
 
-.hero-artwork-core {
-  position: absolute;
-  z-index: 7;
-  bottom: 0.15rem;
-  left: 50%;
-  display: block;
-  max-width: calc(100% - 2rem);
-  overflow: hidden;
-  border: 1px solid rgb(var(--color-line) / 0.13);
-  border-radius: 999px;
-  background: rgb(var(--color-canvas) / 0.66);
-  padding: 0.42rem 0.7rem;
-  color: rgb(var(--color-text) / 0.69);
-  font-size: clamp(0.47rem, 0.72vw, 0.55rem);
-  font-weight: 800;
-  letter-spacing: 0.11em;
-  line-height: 1.25;
-  text-align: center;
-  text-overflow: ellipsis;
-  text-transform: uppercase;
-  white-space: nowrap;
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  transform: translateX(-50%);
-}
-
 .hero-artwork-footer {
   position: relative;
   z-index: 6;
@@ -451,9 +416,7 @@ canvas {
 }
 
 html[lang="ar"] body :where(
-    .hero-artwork-kicker,
     .hero-artwork-status,
-    .hero-artwork-core,
     .hero-artwork-footer
   ) {
   letter-spacing: normal;
@@ -544,11 +507,6 @@ html[lang="ar"] body :where(
     gap: 0.34rem;
     margin-inline: 0.9rem;
     font-size: 0.55rem;
-  }
-
-  .hero-artwork-core {
-    max-width: calc(100% - 1.2rem);
-    font-size: 0.52rem;
   }
 
   .impact-metric {
