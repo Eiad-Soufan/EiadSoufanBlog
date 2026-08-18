@@ -5,9 +5,6 @@ import {
 } from "framer-motion";
 import { useMemo, useRef } from "react";
 import { Link } from "react-router-dom";
-import approachHero1254 from "../assets/approach-hero-1254.webp";
-import approachHero768 from "../assets/approach-hero-768.webp";
-import PageHeroArtwork from "../components/PageHeroArtwork";
 import {
   approachPrinciples as baseApproachPrinciples,
   approachStages as baseApproachStages,
@@ -251,18 +248,6 @@ export default function WhyUs() {
               ))}
             </Motion.dl>
           </Motion.div>
-
-          <PageHeroArtwork
-            image={approachHero1254}
-            image768={approachHero768}
-            status={content.blueprint.coherent}
-            labels={[
-              content.blueprint.nodes[0],
-              content.blueprint.nodes[1],
-              content.blueprint.nodes[3],
-            ]}
-            variant="approach"
-          />
         </div>
       </section>
 

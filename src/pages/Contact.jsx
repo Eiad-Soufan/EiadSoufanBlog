@@ -1,8 +1,5 @@
 import { motion as Motion } from "framer-motion";
 import { useState } from "react";
-import contactHero1254 from "../assets/contact-hero-1254.webp";
-import contactHero768 from "../assets/contact-hero-768.webp";
-import PageHeroArtwork from "../components/PageHeroArtwork";
 import { profile } from "../data/profile";
 import useHydrationSafeReducedMotion from "../hooks/useHydrationSafeReducedMotion";
 import { useLocale } from "../i18n/LocaleContext";
@@ -154,14 +151,6 @@ export default function Contact() {
               ))}
             </Motion.dl>
           </Motion.div>
-
-          <PageHeroArtwork
-            image={contactHero1254}
-            image768={contactHero768}
-            status={content.signal.next}
-            labels={content.signal.nodes.slice(0, 3)}
-            variant="contact"
-          />
         </div>
       </section>
 

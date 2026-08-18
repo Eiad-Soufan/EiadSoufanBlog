@@ -5,9 +5,6 @@ import {
 } from "framer-motion";
 import { useMemo, useRef } from "react";
 import { Link } from "react-router-dom";
-import aboutHero1080 from "../assets/about-hero-1080.webp";
-import aboutHero768 from "../assets/about-hero-768.webp";
-import PageHeroArtwork from "../components/PageHeroArtwork";
 import {
   capabilityPillars as baseCapabilityPillars,
   career as baseCareer,
@@ -313,15 +310,6 @@ export default function AboutUs() {
               ))}
             </Motion.dl>
           </Motion.div>
-
-          <PageHeroArtwork
-            image={aboutHero1080}
-            image768={aboutHero768}
-            imageWidth={1080}
-            status={content.constellation.role}
-            labels={content.constellation.captions}
-            variant="about"
-          />
         </div>
       </section>
 

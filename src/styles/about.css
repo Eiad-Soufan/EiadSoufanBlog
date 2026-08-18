@@ -24,7 +24,7 @@
   gap: 0.7rem;
   margin: 0;
   color: rgb(var(--color-text) / 0.62);
-  font-size: 0.67rem;
+  font-size: var(--inner-hero-eyebrow-size);
   font-weight: 800;
   letter-spacing: 0.16em;
   line-height: 1.5;
@@ -123,10 +123,10 @@
   z-index: 2;
   display: grid;
   min-height: calc(100svh - 4.5rem);
-  grid-template-columns: minmax(0, 1.08fr) minmax(22rem, 0.92fr);
+  grid-template-columns: minmax(0, 1fr);
   align-items: center;
-  gap: clamp(2.5rem, 5vw, 4.5rem);
-  padding-block: clamp(4.5rem, 8vw, 7.25rem);
+  gap: 0;
+  padding-block: clamp(5rem, 9vw, 7.75rem);
 }
 
 .about-hero-copy {
@@ -136,13 +136,13 @@
 }
 
 .about-hero-copy h1 {
-  max-width: none;
-  margin: 1.15rem 0 0;
+  max-width: 52rem;
+  margin: 1rem 0 0;
   color: rgb(var(--color-text));
   font-size: var(--inner-hero-title-size);
-  font-weight: 650;
-  letter-spacing: -0.035em;
-  line-height: 1.16;
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1.06;
 }
 
 .about-hero-copy h1 em {
@@ -160,11 +160,11 @@
 }
 
 .about-hero-lead {
-  max-width: 42rem;
-  margin: 1.35rem 0 0;
+  max-width: 48rem;
+  margin: 1.5rem 0 0;
   color: rgb(var(--color-muted));
-  font-size: clamp(0.92rem, 1.15vw, 1rem);
-  line-height: 1.78;
+  font-size: var(--inner-hero-lead-size);
+  line-height: 1.8;
 }
 
 .about-hero-lead strong {
@@ -177,18 +177,18 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin-top: 1.6rem;
+  margin-top: 2rem;
 }
 
 .about-action {
   display: inline-flex;
-  min-height: 3.2rem;
+  min-height: 3rem;
   align-items: center;
   justify-content: center;
   gap: 0.7rem;
-  border-radius: 0.92rem;
-  padding: 0.82rem 1.15rem;
-  font-size: 0.78rem;
+  border-radius: 15px;
+  padding: 0.75rem 1.25rem;
+  font-size: var(--inner-hero-action-size);
   font-weight: 800;
   transition:
     transform 220ms var(--ease-premium),
@@ -224,7 +224,7 @@
 
 .about-hero-facts {
   display: grid;
-  max-width: 46rem;
+  max-width: 56rem;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
   margin: 2rem 0 0;
@@ -239,7 +239,7 @@
 .about-hero-facts dt {
   margin-bottom: 0.42rem;
   color: rgb(var(--color-muted) / 0.66);
-  font-size: 0.59rem;
+  font-size: var(--inner-hero-meta-label-size);
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -248,7 +248,7 @@
 .about-hero-facts dd {
   margin: 0;
   color: rgb(var(--color-text) / 0.84);
-  font-size: 0.7rem;
+  font-size: var(--inner-hero-meta-value-size);
   font-weight: 700;
   line-height: 1.5;
 }
@@ -1493,8 +1493,8 @@
 
 @media (max-width: 1120px) {
   .about-hero-grid {
-    grid-template-columns: minmax(0, 1.08fr) minmax(20rem, 0.92fr);
-    gap: 2.25rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
   }
 
   .about-capability-layout {
@@ -1518,9 +1518,9 @@
 
   .about-hero-grid {
     min-height: auto;
-    grid-template-columns: 1fr;
-    gap: 4rem;
-    padding-block: 5.5rem 7rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    padding-block: 5.25rem 6.25rem;
   }
 
   .career-constellation {
@@ -1571,18 +1571,18 @@
 
 @media (max-width: 680px) {
   .about-hero-grid {
-    gap: 3rem;
+    gap: 0;
     padding-block: 4.25rem 5.5rem;
   }
 
   .about-hero-copy h1 {
     font-size: var(--inner-hero-title-size);
-    line-height: 1.16;
+    line-height: 1.06;
   }
 
   .about-hero-lead {
-    font-size: 0.9rem;
-    line-height: 1.72;
+    font-size: var(--inner-hero-lead-size);
+    line-height: 1.8;
   }
 
   .about-hero-actions,
