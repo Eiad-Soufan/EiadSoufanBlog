@@ -108,13 +108,21 @@ export const recognitions = [
     detail: "Highest GPA in the faculty during the fourth academic year.",
   },
   {
-    value: "3",
+    value: "4",
     label: "Scientific publications",
-    detail: "Research spanning education, public health, and analytical thinking.",
+    detail: "Research spanning software security, education, public health, and analytical thinking.",
   },
 ];
 
 export const publications = [
+  {
+    year: "2026",
+    journal: "IEEE Access",
+    title:
+      "Assessing the Incremental Predictive Value of OpenSSF Scorecard Checks for Future Reviewed Advisories: A Temporal Study of npm-Linked GitHub Repositories",
+    href: "https://doi.org/10.1109/ACCESS.2026.3747867",
+    featured: true,
+  },
   {
     year: "2023",
     journal: "Educación Médica",

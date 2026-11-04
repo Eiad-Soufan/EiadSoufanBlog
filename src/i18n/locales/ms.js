@@ -333,19 +333,28 @@ const ms = {
         detail: "PNGK tertinggi fakulti pada tahun akademik keempat.",
       },
       {
-        value: "3",
+        value: "4",
         label: "Penerbitan saintifik",
         detail:
-          "Penyelidikan merangkumi pendidikan, kesihatan awam dan pemikiran analitis.",
+          "Penyelidikan merangkumi keselamatan perisian, pendidikan, kesihatan awam dan pemikiran analitis.",
       },
     ],
     publicationsIntro: {
       eyebrow: "Penyelidikan terpilih",
       title: "Pemikiran yang diterbitkan.",
       copy:
-        "Tiga kajian semakan rakan sebaya yang menerapkan bukti dan analisis kepada persoalan manusia yang nyata.",
+        "Empat kajian yang disemak rakan sebaya dalam keselamatan perisian, pendidikan, kesihatan awam dan pemikiran analitis.",
+    },
+    featuredPublication: {
+      latest: "Penyelidikan terkini",
+      peerReviewed: "Disemak rakan sebaya",
+      authorship: "Penulis tunggal",
+      summary:
+        "Kajian temporal terhadap sembilan semakan OpenSSF Scorecard untuk meramal advisori keselamatan npm yang disemak dalam tempoh 180 hari. Tiada bukti jelas tentang nilai ramalan tambahan berbanding ciri projek dan sejarah advisori terdahulu.",
+      read: "Baca di IEEE Xplore",
     },
     publications: [
+      "Menilai Nilai Ramalan Tambahan Semakan OpenSSF Scorecard untuk Advisori Keselamatan Masa Hadapan yang Disemak: Kajian Temporal Repositori GitHub yang Dikaitkan dengan npm",
       "How college courses and materials affect students’ logical thinking in medical education",
       "The effect of COVID-19 on mental health and anxiety levels in Arab society",
       "The validity of public information about COVID-19 and its impact on disease spread",

@@ -323,18 +323,27 @@ const en = {
         detail: "Highest GPA in the faculty during the fourth academic year.",
       },
       {
-        value: "3",
+        value: "4",
         label: "Scientific publications",
-        detail: "Research spanning education, public health, and analytical thinking.",
+        detail: "Research spanning software security, education, public health, and analytical thinking.",
       },
     ],
     publicationsIntro: {
       eyebrow: "Selected research",
       title: "Published thinking.",
       copy:
-        "Three peer-reviewed studies applying evidence and analysis to real human questions.",
+        "Four peer-reviewed studies spanning software security, education, public health, and analytical thinking.",
+    },
+    featuredPublication: {
+      latest: "Latest research",
+      peerReviewed: "Peer reviewed",
+      authorship: "Sole author",
+      summary:
+        "A temporal study of nine OpenSSF Scorecard checks for 180-day prediction of reviewed npm security advisories. It found no clear evidence of added predictive value beyond project context and prior advisory history.",
+      read: "Read on IEEE Xplore",
     },
     publications: [
+      "Assessing the Incremental Predictive Value of OpenSSF Scorecard Checks for Future Reviewed Advisories: A Temporal Study of npm-Linked GitHub Repositories",
       "How college courses and materials affect students’ logical thinking in medical education",
       "The effect of COVID-19 on mental health and anxiety levels in Arab society",
       "The validity of public information about COVID-19 and its impact on disease spread",
