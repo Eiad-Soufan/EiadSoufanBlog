@@ -340,19 +340,28 @@ const fr = {
         detail: "Meilleure moyenne de la faculté en quatrième année.",
       },
       {
-        value: "3",
+        value: "4",
         label: "Publications scientifiques",
         detail:
-          "Des recherches couvrant l’éducation, la santé publique et la pensée analytique.",
+          "Des recherches couvrant la sécurité logicielle, l’éducation, la santé publique et la pensée analytique.",
       },
     ],
     publicationsIntro: {
       eyebrow: "Publications sélectionnées",
       title: "Une réflexion publiée.",
       copy:
-        "Trois études évaluées par les pairs, mettant les preuves et l’analyse au service de questions profondément humaines.",
+        "Quatre études évaluées par les pairs en sécurité logicielle, éducation, santé publique et pensée analytique.",
+    },
+    featuredPublication: {
+      latest: "Dernière publication",
+      peerReviewed: "Évaluée par les pairs",
+      authorship: "Auteur unique",
+      summary:
+        "Étude temporelle de neuf contrôles OpenSSF Scorecard pour prévoir les avis de sécurité npm examinés à un horizon de 180 jours. Aucun gain prédictif clair n’a été établi au-delà du contexte des projets et de leur historique d’avis.",
+      read: "Lire sur IEEE Xplore",
     },
     publications: [
+      "Évaluation de la valeur prédictive supplémentaire des contrôles OpenSSF Scorecard pour les futurs avis de sécurité examinés : étude temporelle de dépôts GitHub liés à npm",
       "How college courses and materials affect students’ logical thinking in medical education",
       "The effect of COVID-19 on mental health and anxiety levels in Arab society",
       "The validity of public information about COVID-19 and its impact on disease spread",

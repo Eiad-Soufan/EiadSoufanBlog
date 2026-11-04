@@ -431,7 +431,9 @@ export default function AboutUs() {
           </div>
 
           <Motion.div
+            id="publications"
             className="publications-panel"
+            aria-labelledby="publications-title"
             variants={reveal}
             initial="hidden"
             whileInView="visible"
@@ -442,29 +444,57 @@ export default function AboutUs() {
               <p className="about-eyebrow">
                 <span aria-hidden="true" /> {content.publicationsIntro.eyebrow}
               </p>
-              <h2 className="display-font">{content.publicationsIntro.title}</h2>
+              <h2 id="publications-title" className="display-font">{content.publicationsIntro.title}</h2>
               <p>{content.publicationsIntro.copy}</p>
             </div>
 
             <ol className="publications-list">
               {publications.map((publication, index) => (
-                <li key={publication.href}>
+                <li
+                  key={publication.href}
+                  className={publication.featured ? "publication-item--featured" : undefined}
+                >
                   <a href={publication.href} target="_blank" rel="noreferrer">
-                    <span className="publication-number">0{index + 1}</span>
+                    <span className="publication-number" aria-hidden="true">0{index + 1}</span>
                     <span className="publication-copy">
-                      <small>
-                        {publication.year} · {publication.journal}
-                      </small>
+                      <span className="publication-topline">
+                        <small className="publication-meta">
+                          <bdi>{publication.year}</bdi>
+                          <span aria-hidden="true">·</span>
+                          <bdi lang="en">{publication.journal}</bdi>
+                        </small>
+                        {publication.featured ? (
+                          <span className="publication-badge">{content.featuredPublication.latest}</span>
+                        ) : null}
+                      </span>
+                      {publication.featured ? (
+                        <span className="publication-authorship">
+                          <span>{content.featuredPublication.peerReviewed}</span>
+                          <span aria-hidden="true">·</span>
+                          <span>{content.featuredPublication.authorship}</span>
+                        </span>
+                      ) : null}
                       <strong
                         lang={publication.titleLanguage}
                         dir={publication.titleLanguage ? "ltr" : "auto"}
                       >
                         {publication.title}
                       </strong>
+                      {publication.featured ? (
+                        <>
+                          <span className="publication-summary">{content.featuredPublication.summary}</span>
+                          <span className="publication-read">
+                            {content.featuredPublication.read}
+                            <ArrowIcon external />
+                          </span>
+                        </>
+                      ) : null}
                     </span>
-                    <span className="publication-arrow">
-                      <ArrowIcon external />
-                    </span>
+                    {!publication.featured ? (
+                      <span className="publication-arrow" aria-hidden="true">
+                        <ArrowIcon external />
+                      </span>
+                    ) : null}
                   </a>
                 </li>
               ))}

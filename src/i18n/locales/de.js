@@ -333,19 +333,28 @@ const de = {
         detail: "Bester Notendurchschnitt der Fakultät im vierten Studienjahr.",
       },
       {
-        value: "3",
+        value: "4",
         label: "Wissenschaftliche Publikationen",
         detail:
-          "Forschung in den Bereichen Bildung, öffentliche Gesundheit und analytisches Denken.",
+          "Forschung in den Bereichen Softwaresicherheit, Bildung, öffentliche Gesundheit und analytisches Denken.",
       },
     ],
     publicationsIntro: {
       eyebrow: "Ausgewählte Forschung",
       title: "Veröffentlichte Forschung.",
       copy:
-        "Drei peer-reviewte Studien, die Evidenz und Analyse auf reale menschliche Fragestellungen anwenden.",
+        "Vier begutachtete Studien zu Softwaresicherheit, Bildung, öffentlicher Gesundheit und analytischem Denken.",
+    },
+    featuredPublication: {
+      latest: "Neueste Forschung",
+      peerReviewed: "Begutachtet",
+      authorship: "Alleinautor",
+      summary:
+        "Eine zeitliche Studie zu neun OpenSSF-Scorecard-Prüfungen für die Vorhersage geprüfter npm-Sicherheitshinweise innerhalb von 180 Tagen. Über Projektmerkmale und bisherige Sicherheitshinweise hinaus zeigte sich kein klarer zusätzlicher Vorhersagewert.",
+      read: "Auf IEEE Xplore lesen",
     },
     publications: [
+      "Bewertung des zusätzlichen Vorhersagewerts von OpenSSF-Scorecard-Prüfungen für künftige geprüfte Sicherheitshinweise: eine zeitliche Studie zu npm-verknüpften GitHub-Repositories",
       "How college courses and materials affect students’ logical thinking in medical education",
       "The effect of COVID-19 on mental health and anxiety levels in Arab society",
       "The validity of public information about COVID-19 and its impact on disease spread",

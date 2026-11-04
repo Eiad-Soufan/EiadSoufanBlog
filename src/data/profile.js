@@ -21,5 +21,5 @@ export const impactMetrics = [
   },
   { value: 2000000, suffix: "+", label: "Data units managed at scale" },
   { value: 100, suffix: "+", label: "Employees across 5 branches" },
-  { value: 3, suffix: "", label: "Scientific publications" },
+  { value: 4, suffix: "", label: "Scientific publications" },
 ];
