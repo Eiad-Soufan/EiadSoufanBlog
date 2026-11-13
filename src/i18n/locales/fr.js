@@ -259,10 +259,22 @@ const fr = {
     },
     career: [
       {
-        period: "2026 — Aujourd’hui",
+        period: "Sept. 2026 — Aujourd’hui",
+        company: "Alignerr",
+        role: "Ingénieur logiciel – Évaluation du code généré par l’IA",
+        location: "Mission contractuelle · À distance",
+        summary:
+          "Évaluation et classement de solutions de code générées par des modèles d’IA.",
+        highlights: [
+          "Vérification de l’exactitude et de l’efficacité des solutions.",
+          "Évaluation de la lisibilité, de la maintenabilité et du respect des bonnes pratiques du génie logiciel.",
+        ],
+      },
+      {
+        period: "Janv. 2026 — Aujourd’hui",
         company: "Ugarix Software L.L.C",
         role: "Ingénieur logiciel principal",
-        location: "À distance · Damas, Syrie",
+        location: "Temps partiel · À distance · Damas, Syrie",
         summary:
           "Pilotage de la planification et de la livraison de bout en bout pour des produits backend, frontend et mobiles.",
         highlights: [

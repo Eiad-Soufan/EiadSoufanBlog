@@ -252,10 +252,22 @@ const de = {
     },
     career: [
       {
-        period: "2026 — heute",
+        period: "Sept. 2026 — heute",
+        company: "Alignerr",
+        role: "Softwareingenieur – Bewertung von KI-generiertem Code",
+        location: "Auf Vertragsbasis · Remote",
+        summary:
+          "Bewertung von KI-generiertem Code und Einordnung der Lösungen nach ihrer Qualität.",
+        highlights: [
+          "Prüfung der Lösungen auf Korrektheit und Effizienz.",
+          "Bewertung von Lesbarkeit, Wartbarkeit und Einhaltung bewährter Praktiken der Softwareentwicklung.",
+        ],
+      },
+      {
+        period: "Jan. 2026 — heute",
         company: "Ugarix Software L.L.C",
         role: "Leitender Softwareingenieur",
-        location: "Remote · Damaskus, Syrien",
+        location: "Teilzeit · Remote · Damaskus, Syrien",
         summary:
           "Leitung der ganzheitlichen Planung und Umsetzung von Backend-, Frontend- und Mobile-Produkten.",
         highlights: [
