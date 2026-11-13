@@ -345,7 +345,7 @@ export default function AboutUs() {
         </div>
       </section>
 
-      <section className="about-career">
+      <section id="career" className="about-career">
         <div className="site-container">
           <SectionIntro
             eyebrow={content.careerIntro.eyebrow}

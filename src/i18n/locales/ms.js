@@ -253,10 +253,22 @@ const ms = {
     },
     career: [
       {
-        period: "2026 — Kini",
+        period: "Sep 2026 — Kini",
+        company: "Alignerr",
+        role: "Jurutera Perisian – Penilaian Kod yang Dijana AI",
+        location: "Kontrak · Jarak jauh",
+        summary:
+          "Menilai dan menyusun penyelesaian kod yang dijana oleh model AI mengikut kualiti.",
+        highlights: [
+          "Menilai ketepatan dan kecekapan setiap penyelesaian.",
+          "Menilai kebolehbacaan, kebolehselenggaraan dan pematuhan kepada amalan terbaik kejuruteraan perisian.",
+        ],
+      },
+      {
+        period: "Jan 2026 — Kini",
         company: "Ugarix Software L.L.C",
         role: "Jurutera Perisian Utama",
-        location: "Jarak jauh · Damsyik, Syria",
+        location: "Separuh masa · Jarak jauh · Damsyik, Syria",
         summary:
           "Menerajui perancangan dan pelaksanaan menyeluruh bagi produk backend, frontend dan mudah alih.",
         highlights: [
