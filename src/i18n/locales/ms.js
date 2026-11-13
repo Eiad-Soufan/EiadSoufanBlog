@@ -7,6 +7,7 @@ const ms = {
     skipToContent: "Langkau ke kandungan",
     loading: "Halaman sedang dimuatkan…",
     nav: {
+      home: "Laman utama",
       work: "Projek",
       about: "Tentang saya",
       approach: "Pendekatan",

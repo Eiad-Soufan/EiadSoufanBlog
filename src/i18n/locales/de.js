@@ -7,6 +7,7 @@ const de = {
     skipToContent: "Zum Inhalt springen",
     loading: "Seite wird geladen…",
     nav: {
+      home: "Startseite",
       work: "Projekte",
       about: "Über mich",
       approach: "Vorgehen",

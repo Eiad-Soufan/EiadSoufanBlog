@@ -7,6 +7,7 @@ const en = {
     skipToContent: "Skip to content",
     loading: "Loading page…",
     nav: {
+      home: "Home",
       work: "Work",
       about: "About",
       approach: "Approach",

@@ -17,6 +17,7 @@ const ar = defineLocale(en, {
     skipToContent: "انتقل إلى المحتوى",
     loading: "جارٍ تحميل الصفحة…",
     nav: {
+      home: "الرئيسية",
       work: "الأعمال",
       about: "عني",
       approach: "منهجي",

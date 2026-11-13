@@ -7,6 +7,7 @@ const fr = {
     skipToContent: "Aller au contenu",
     loading: "Chargement de la page…",
     nav: {
+      home: "Accueil",
       work: "Réalisations",
       about: "À propos",
       approach: "Méthode",

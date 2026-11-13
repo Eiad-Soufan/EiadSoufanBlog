@@ -70,8 +70,9 @@ export default function Header() {
   const triggerRef = useRef(null);
   const firstLinkRef = useRef(null);
   const { copy, path } = useLocale();
+  const homePath = path("home");
   const navItems = [
-    { to: path("home", "#selected-work"), label: copy.common.nav.work, end: true },
+    { to: homePath, label: copy.common.nav.home, end: true },
     { to: path("about"), label: copy.common.nav.about, end: true },
     { to: path("approach"), label: copy.common.nav.approach, end: true },
     { to: path("contact"), label: copy.common.nav.contact, end: true },
@@ -138,7 +139,7 @@ export default function Header() {
 
       <div className="header-container site-container relative z-10 flex h-full items-center justify-between">
         <Link
-          to={path("home")}
+          to={homePath}
           className="group inline-flex min-h-11 shrink-0 items-center gap-3 rounded-xl pe-2"
           aria-label={copy.common.nav.homeAria}
         >
