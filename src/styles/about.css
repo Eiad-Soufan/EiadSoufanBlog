@@ -613,10 +613,12 @@
 
 .capability-card {
   --capability-accent: var(--color-cyan);
+  position: relative;
   display: flex;
   min-width: 0;
   flex-direction: column;
   gap: 1rem;
+  overflow: hidden;
   border: 1px solid rgb(var(--color-line) / 0.13);
   border-radius: 1.35rem;
   background:
@@ -624,6 +626,23 @@
     rgb(var(--color-surface) / 0.67);
   padding: clamp(1.15rem, 2.1vw, 1.7rem);
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+  transition:
+    transform 450ms var(--ease-premium),
+    border-color 350ms var(--ease-premium),
+    box-shadow 450ms var(--ease-premium);
+}
+
+.capability-card::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  opacity: 0;
+  background: linear-gradient(115deg, transparent 26%, rgb(255 255 255 / 0.045) 49%, transparent 72%);
+  transform: translateX(-62%);
+  transition:
+    transform 750ms var(--ease-premium),
+    opacity 350ms var(--ease-premium);
+  pointer-events: none;
 }
 
 .capability-card--violet {
@@ -1442,6 +1461,19 @@
   .about-action--secondary:hover {
     border-color: rgb(var(--color-line) / 0.3);
     background: rgb(var(--color-surface-raised) / 0.78);
+  }
+
+  .capability-card:hover {
+    transform: translateY(-6px);
+    border-color: rgb(var(--capability-accent) / 0.25);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.055),
+      0 40px 90px -55px rgb(var(--capability-accent) / 0.28);
+  }
+
+  .capability-card:hover::before {
+    opacity: 1;
+    transform: translateX(62%);
   }
 
   .career-entry-card:hover {
