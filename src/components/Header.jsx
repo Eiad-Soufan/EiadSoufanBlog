@@ -6,21 +6,6 @@ import { useLocale } from "../i18n/LocaleContext";
 import BrandMark from "./BrandMark";
 import LanguageSwitcher from "./LanguageSwitcher";
 
-function ArrowIcon() {
-  return (
-    <svg viewBox="0 0 20 20" aria-hidden="true" className="h-4 w-4">
-      <path
-        d="M5.5 14.5 14.5 5.5M7 5.5h7.5V13"
-        fill="none"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.6"
-      />
-    </svg>
-  );
-}
-
 function MenuIcon({ open }) {
   return (
     <span className="relative block h-5 w-5" aria-hidden="true">
@@ -54,7 +39,7 @@ function DesktopNavLink({ to, children, end = false, reduceMotion = false }) {
     >
       {({ isActive }) => (
         <>
-          <span className="header-nav-link__label">{children}</span>
+          {children}
           <span className="header-nav-link__track" aria-hidden="true">
             <span className="header-nav-link__hover" />
             {isActive ? (
@@ -169,7 +154,7 @@ export default function Header() {
         </Link>
 
         <div className="header-desktop-tools hidden shrink-0 items-center gap-2 lg:flex">
-          <nav className="flex items-center gap-1" aria-label={copy.common.nav.primaryAria}>
+          <nav className="flex items-center gap-2" aria-label={copy.common.nav.primaryAria}>
             {navItems.map((item) => (
               <DesktopNavLink
                 key={item.to}
@@ -188,7 +173,7 @@ export default function Header() {
         <button
           ref={triggerRef}
           type="button"
-          className="grid h-11 w-11 place-items-center rounded-[14px] border border-line/20 bg-surface/75 text-ink transition-colors hover:border-line/35 hover:bg-surface-raised lg:hidden"
+          className="grid h-11 w-11 place-items-center rounded-md text-muted transition-colors hover:text-ink aria-expanded:text-ink lg:hidden"
           aria-label={menuOpen ? copy.common.nav.closeMenu : copy.common.nav.openMenu}
           aria-expanded={menuOpen}
           aria-controls={menuId}
@@ -210,7 +195,7 @@ export default function Header() {
             className="absolute inset-x-0 top-full z-20 max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-b border-line/[0.24] bg-canvas/[0.86] px-[var(--site-gutter)] pb-5 pt-3 shadow-[0_28px_70px_-30px_rgb(0_0_0_/_0.95)] backdrop-blur-[24px] backdrop-saturate-[1.4] md:max-h-[calc(100dvh-4.5rem)] lg:hidden"
           >
             <nav
-              className="mx-auto flex max-w-[var(--site-width)] flex-col rounded-2xl border border-line/15 bg-surface/65 p-2"
+              className="mx-auto flex max-w-[var(--site-width)] flex-col"
               aria-label={copy.common.nav.mobileAria}
             >
               {navItems.map(
@@ -227,13 +212,12 @@ export default function Header() {
                       }`
                     }
                   >
-                    <span>{item.label}</span>
-                    <ArrowIcon />
+                    {item.label}
                   </NavLink>
                 ),
               )}
             </nav>
-            <div className="mx-auto mt-2 max-w-[var(--site-width)]">
+            <div className="mx-auto mt-2 max-w-[var(--site-width)] border-t border-line/15 pt-1">
               <LanguageSwitcher
                 variant="mobile"
                 onSelect={() => setMenuOpen(false)}
