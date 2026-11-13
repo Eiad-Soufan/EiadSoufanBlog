@@ -407,15 +407,37 @@ html[lang="ar"] body :where(
     .hero-title-scale,
     .about-hero-copy h1,
     .approach-hero-copy h1,
-    .contact-hero-copy h1,
+    .contact-hero-copy h1
+  ) {
+  line-height: 1.42;
+}
+
+html[lang="ar"] body :where(
     .about-section-intro h2,
     .approach-section-intro h2,
+    .process-stage-body h3,
+    .principle-card h3,
+    .rhythm-heading h2,
+    .approach-outro-card h2,
     .contact-section-heading h2,
+    .contact-outro-card h2,
     .systems-intro h2,
-    .systems-outro h2
+    .systems-outro h2,
+    .systems-card-title-row h3,
+    .systems-tagline
   ) {
-  letter-spacing: normal;
-  line-height: 1.26;
+  line-height: 1.5;
+}
+
+html[lang="ar"] body :where(
+    .process-stage-body h3,
+    .principle-card h3,
+    .approach-outro-card h2,
+    .contact-section-heading h2,
+    .contact-outro-card h2
+  ) {
+  max-width: none;
+  text-wrap: balance;
 }
 
 html[lang="ar"] body :where(
