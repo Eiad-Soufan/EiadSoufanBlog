@@ -95,30 +95,22 @@ function SectionIntro({ eyebrow, title, copy, align = "left" }) {
   );
 }
 
-function CapabilityCard({ pillar, index, reduceMotion, skillsAria }) {
+function CapabilityCard({ pillar, skillsAria }) {
   return (
-    <Motion.article
-      className={`capability-card capability-card--${pillar.accent}`}
-      variants={reveal}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.28 }}
-      transition={{ duration: 0.62, delay: reduceMotion ? 0 : index * 0.055, ease: premiumEase }}
-    >
-      <div className="capability-card-topline">
-        <span className="capability-icon">
-          <CapabilityIcon index={pillar.index} />
-        </span>
-        <span className="capability-index">{pillar.index}</span>
+    <article className={`capability-card capability-card--${pillar.accent}`}>
+      <span className="capability-icon">
+        <CapabilityIcon index={pillar.index} />
+      </span>
+      <div className="capability-card-copy">
+        <h3 className="display-font">{pillar.title}</h3>
+        <p>{pillar.summary}</p>
       </div>
-      <h3 className="display-font">{pillar.title}</h3>
-      <p>{pillar.summary}</p>
       <ul aria-label={`${pillar.title} — ${skillsAria}`}>
         {pillar.skills.map((skill) => (
           <li key={skill} dir="auto">{skill}</li>
         ))}
       </ul>
-    </Motion.article>
+    </article>
   );
 }
 
@@ -313,7 +305,7 @@ export default function AboutUs() {
         </div>
       </section>
 
-      <section className="about-capabilities">
+      <section id="capabilities" className="about-capabilities">
         <div className="site-container">
           <div className="about-capability-layout">
             <div className="about-capability-sticky">
@@ -341,12 +333,10 @@ export default function AboutUs() {
             </div>
 
             <div className="capability-grid">
-              {capabilityPillars.map((pillar, index) => (
+              {capabilityPillars.map((pillar) => (
                 <CapabilityCard
                   key={pillar.index}
                   pillar={pillar}
-                  index={index}
-                  reduceMotion={reduceMotion}
                   skillsAria={copy.common.stackAria}
                 />
               ))}
