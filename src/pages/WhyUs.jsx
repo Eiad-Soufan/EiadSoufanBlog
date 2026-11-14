@@ -71,11 +71,13 @@ function StageIcon({ code }) {
 }
 
 function SectionIntro({ eyebrow, title, copy, center = false }) {
+  const reduceMotion = useHydrationSafeReducedMotion();
+
   return (
     <Motion.div
       className={`approach-section-intro${center ? " approach-section-intro--center" : ""}`}
       variants={reveal}
-      initial="hidden"
+      initial={reduceMotion ? false : "hidden"}
       whileInView="visible"
       viewport={{ once: true, amount: 0.5 }}
       transition={{ duration: 0.65, ease: premiumEase }}
@@ -95,7 +97,7 @@ function ProcessStage({ stage, index, reduceMotion, outcomeLabel, deliverablesLa
     <Motion.article
       className={`process-stage process-stage--${stage.accent}`}
       variants={reveal}
-      initial="hidden"
+      initial={reduceMotion ? false : "hidden"}
       whileInView="visible"
       viewport={{ once: true, amount: 0.28 }}
       transition={{ duration: 0.65, delay: reduceMotion ? 0 : index * 0.035, ease: premiumEase }}
@@ -161,7 +163,7 @@ function PrincipleCard({ principle, index, reduceMotion }) {
     <Motion.article
       className={`principle-card principle-card--${principle.accent}${principle.featured ? " principle-card--featured" : ""}`}
       variants={reveal}
-      initial="hidden"
+      initial={reduceMotion ? false : "hidden"}
       whileInView="visible"
       viewport={{ once: true, amount: 0.32 }}
       transition={{ duration: 0.62, delay: reduceMotion ? 0 : index * 0.05, ease: premiumEase }}
@@ -213,7 +215,7 @@ export default function WhyUs() {
         <div className="approach-hero-glow approach-hero-glow--one" aria-hidden="true" />
         <div className="approach-hero-glow approach-hero-glow--two" aria-hidden="true" />
 
-        <div className="site-container page-hero-frame approach-hero-layout">
+        <div className="site-container page-hero-frame">
           <Motion.div
             className="approach-hero-copy"
             initial={reduceMotion ? false : "hidden"}
@@ -262,7 +264,7 @@ export default function WhyUs() {
             <Motion.div
               className="process-loop-note"
               variants={reveal}
-              initial="hidden"
+              initial={reduceMotion ? false : "hidden"}
               whileInView="visible"
               viewport={{ once: true, amount: 0.6 }}
               transition={{ duration: 0.62, ease: premiumEase }}
@@ -310,7 +312,7 @@ export default function WhyUs() {
           <Motion.div
             className="rhythm-panel"
             variants={reveal}
-            initial="hidden"
+            initial={reduceMotion ? false : "hidden"}
             whileInView="visible"
             viewport={{ once: true, amount: 0.22 }}
             transition={{ duration: 0.68, ease: premiumEase }}
@@ -349,7 +351,7 @@ export default function WhyUs() {
           <Motion.div
             className="approach-outro-card"
             variants={reveal}
-            initial="hidden"
+            initial={reduceMotion ? false : "hidden"}
             whileInView="visible"
             viewport={{ once: true, amount: 0.35 }}
             transition={{ duration: 0.7, ease: premiumEase }}

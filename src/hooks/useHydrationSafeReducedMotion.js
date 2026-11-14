@@ -19,12 +19,12 @@ function getSnapshot() {
 }
 
 function getServerSnapshot() {
-  return false;
+  return true;
 }
 
 /**
- * Keeps the server and first browser render identical, then follows the
- * user's live reduced-motion preference immediately after hydration.
+ * Render content in its resting state until hydration. After that, follow
+ * the user's live reduced-motion preference.
  */
 export default function useHydrationSafeReducedMotion() {
   return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);

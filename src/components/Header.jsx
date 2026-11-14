@@ -87,7 +87,7 @@ export default function Header() {
 
   useEffect(() => {
     setMenuOpen(false);
-  }, [location.pathname, location.hash]);
+  }, [location.key]);
 
   useEffect(() => {
     const desktopQuery = window.matchMedia("(min-width: 1024px)");

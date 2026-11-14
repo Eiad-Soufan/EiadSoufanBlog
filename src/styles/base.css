@@ -26,24 +26,6 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/*
- * Build-time rendered routes must expose their primary copy immediately.
- * Framer Motion still animates the surrounding interface, while this guard
- * prevents the H1 and lead paragraph from waiting on JavaScript for LCP.
- */
-#root[data-prerendered="true"] :where(
-    .hero-title-scale,
-    .hero-lead,
-    .home-signature-field,
-    .about-hero-lead,
-    .approach-hero-lead,
-    .contact-hero-lead
-  )[style*="opacity:0"] {
-  opacity: 1 !important;
-  filter: none !important;
-  transform: none !important;
-}
-
 body::before {
   position: fixed;
   inset: 0;
@@ -438,6 +420,34 @@ html[lang="ar"] body :where(
   white-space: nowrap;
 }
 
+.impact-metric-link {
+  color: rgb(var(--color-cyan));
+  text-decoration: underline;
+  text-underline-offset: 0.24em;
+}
+
+.impact-metric-link::after {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  content: "";
+}
+
+.impact-metric-link:focus-visible {
+  outline: none;
+}
+
+.impact-metric-link:focus-visible::after {
+  outline: 2px solid rgb(var(--color-cyan));
+  outline-offset: -4px;
+}
+
+@media (hover: hover) {
+  .impact-metric-link:hover::after {
+    background-color: rgb(var(--color-cyan) / 0.045);
+  }
+}
+
 .header-container > * {
   min-width: 0;
 }
@@ -527,7 +537,12 @@ html[lang="ar"] body :where(
 
 /* One text-first contract for every inner-page hero. */
 .page-hero-frame {
+  position: relative;
+  z-index: 2;
+  display: grid;
   grid-template-areas: "copy";
+  grid-template-columns: minmax(0, 1fr);
+  padding-block: clamp(2.15rem, 5.5vw, 4.5rem) clamp(2.65rem, 6vw, 5rem);
 }
 
 [dir="rtl"] .page-hero-frame {

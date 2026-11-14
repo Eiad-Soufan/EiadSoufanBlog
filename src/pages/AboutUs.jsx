@@ -36,6 +36,14 @@ function ArrowIcon({ external = false }) {
   );
 }
 
+function DownArrowIcon() {
+  return (
+    <svg viewBox="0 0 20 20" aria-hidden="true">
+      <path d="M10 4v11m-4.5-4.5L10 15l4.5-4.5" />
+    </svg>
+  );
+}
+
 function CapabilityIcon({ index }) {
   const icons = {
     "01": (
@@ -76,11 +84,13 @@ function CapabilityIcon({ index }) {
 }
 
 function SectionIntro({ eyebrow, title, copy, align = "left" }) {
+  const reduceMotion = useHydrationSafeReducedMotion();
+
   return (
     <Motion.div
       className={`about-section-intro about-section-intro--${align}`}
       variants={reveal}
-      initial="hidden"
+      initial={reduceMotion ? false : "hidden"}
       whileInView="visible"
       viewport={{ once: true, amount: 0.5 }}
       transition={{ duration: 0.65, ease: premiumEase }}
@@ -140,7 +150,7 @@ function CareerTimeline({ reduceMotion, items, currentLabel }) {
           className="career-entry"
           key={`${position.company}-${position.period}`}
           variants={reveal}
-          initial="hidden"
+          initial={reduceMotion ? false : "hidden"}
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.65, delay: reduceMotion ? 0 : index * 0.04, ease: premiumEase }}
@@ -184,7 +194,7 @@ function EducationCard({ item, index, reduceMotion, researchLabel }) {
     <Motion.article
       className="education-card"
       variants={reveal}
-      initial="hidden"
+      initial={reduceMotion ? false : "hidden"}
       whileInView="visible"
       viewport={{ once: true, amount: 0.35 }}
       transition={{ duration: 0.6, delay: reduceMotion ? 0 : index * 0.05, ease: premiumEase }}
@@ -242,7 +252,7 @@ export default function AboutUs() {
         <div className="about-hero-aurora about-hero-aurora--one" aria-hidden="true" />
         <div className="about-hero-aurora about-hero-aurora--two" aria-hidden="true" />
 
-        <div className="site-container page-hero-frame about-hero-grid">
+        <div className="site-container page-hero-frame">
           <Motion.div
             className="about-hero-copy"
             initial={reduceMotion ? false : "hidden"}
@@ -287,6 +297,9 @@ export default function AboutUs() {
               <Link to={path("contact")} className="about-action about-action--secondary">
                 {content.hero.start}
               </Link>
+              <Link to={path("about", "#publications")} className="about-action about-action--text">
+                {content.hero.publications} <DownArrowIcon />
+              </Link>
             </Motion.div>
 
             <Motion.dl
@@ -318,7 +331,7 @@ export default function AboutUs() {
               <Motion.div
                 className="about-principle"
                 variants={reveal}
-                initial="hidden"
+                initial={reduceMotion ? false : "hidden"}
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.6 }}
                 transition={{ duration: 0.65, ease: premiumEase }}
@@ -373,7 +386,7 @@ export default function AboutUs() {
             <Motion.div
               className="about-academia-signal"
               variants={reveal}
-              initial="hidden"
+              initial={reduceMotion ? false : "hidden"}
               whileInView="visible"
               viewport={{ once: true, amount: 0.6 }}
               transition={{ duration: 0.65, ease: premiumEase }}
@@ -404,7 +417,7 @@ export default function AboutUs() {
                 key={item.label}
                 className="recognition-card"
                 variants={reveal}
-                initial="hidden"
+                initial={reduceMotion ? false : "hidden"}
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.4 }}
                 transition={{
@@ -420,21 +433,18 @@ export default function AboutUs() {
             ))}
           </div>
 
-          <Motion.div
+          <section
             id="publications"
             className="publications-panel"
             aria-labelledby="publications-title"
-            variants={reveal}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.68, ease: premiumEase }}
           >
             <div className="publications-heading">
               <p className="about-eyebrow">
                 <span aria-hidden="true" /> {content.publicationsIntro.eyebrow}
               </p>
-              <h2 id="publications-title" className="display-font">{content.publicationsIntro.title}</h2>
+              <h2 id="publications-title" className="display-font" tabIndex={-1}>
+                {content.publicationsIntro.title}
+              </h2>
               <p>{content.publicationsIntro.copy}</p>
             </div>
 
@@ -489,7 +499,7 @@ export default function AboutUs() {
                 </li>
               ))}
             </ol>
-          </Motion.div>
+          </section>
         </div>
       </section>
 
@@ -498,7 +508,7 @@ export default function AboutUs() {
           <Motion.div
             className="about-outro-card"
             variants={reveal}
-            initial="hidden"
+            initial={reduceMotion ? false : "hidden"}
             whileInView="visible"
             viewport={{ once: true, amount: 0.35 }}
             transition={{ duration: 0.7, ease: premiumEase }}

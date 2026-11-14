@@ -191,6 +191,7 @@ const fr = {
         "ingénieur logiciel principal basé à Kuala Lumpur. Je réunis architecture backend, IA appliquée, interfaces produit et mise en production au sein d’une démarche d’ingénierie cohérente.",
       explore: "Découvrir mes réalisations",
       start: "Me contacter",
+      publications: "Publications",
       facts: [
         { label: "Domaine actuel", value: "Direction de l’ingénierie logicielle" },
         { label: "Domaines", value: "Backend · IA · Web · Mobile" },

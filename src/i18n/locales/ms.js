@@ -192,6 +192,7 @@ const ms = {
         "seorang Jurutera Perisian Utama yang berpangkalan di Kuala Lumpur. Saya menyatukan seni bina backend, AI gunaan, antara muka produk dan pelancaran produksi dalam satu proses kejuruteraan yang koheren.",
       explore: "Terokai hasil kerja saya",
       start: "Hubungi saya",
+      publications: "Penerbitan",
       facts: [
         { label: "Fokus semasa", value: "Kepimpinan kejuruteraan perisian" },
         { label: "Bidang kepakaran", value: "Backend · AI · Web · Mudah alih" },

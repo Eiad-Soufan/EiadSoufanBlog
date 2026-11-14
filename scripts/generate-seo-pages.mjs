@@ -100,10 +100,6 @@ function stripManagedSeo(html) {
 function localizeNoscript(html, message) {
   const block = [
     "<noscript>",
-    "      <style>",
-    '        #root [style*="opacity:0"] { opacity: 1 !important; filter: none !important; transform: none !important; }',
-    '        #root [style*="scaleY(0)"] { transform: none !important; }',
-    "      </style>",
     `      <p style="margin:0;padding:.7rem 1rem;background:#101827;color:#cbd5e1;text-align:center;font:600 .78rem/1.6 system-ui,sans-serif">${escapeHtml(message)}</p>`,
     "    </noscript>",
   ].join("\n");

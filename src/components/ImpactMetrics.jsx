@@ -4,6 +4,7 @@ import {
   useInView,
 } from "framer-motion";
 import { useEffect, useMemo, useRef } from "react";
+import { Link } from "react-router-dom";
 import { impactMetrics } from "../data/profile";
 import useHydrationSafeReducedMotion from "../hooks/useHydrationSafeReducedMotion";
 import { useLocale } from "../i18n/LocaleContext";
@@ -47,7 +48,7 @@ export default function ImpactMetrics() {
   const reduceMotion = useHydrationSafeReducedMotion();
   const metricsRef = useRef(null);
   const metricsInView = useInView(metricsRef, { once: true, amount: 0.3 });
-  const { copy, localeMeta } = useLocale();
+  const { copy, localeMeta, path } = useLocale();
   const numberFormatter = useMemo(
     () => new Intl.NumberFormat(localeMeta.intl, { maximumFractionDigits: 0 }),
     [localeMeta.intl],
@@ -76,7 +77,16 @@ export default function ImpactMetrics() {
           } ${index === 2 ? "lg:border-e" : ""}`}
         >
           <dt className="order-2 mt-2 max-w-[15rem] text-[0.72rem] font-semibold leading-relaxed tracking-[0.01em] text-muted sm:text-xs">
-            {copy.profile.metrics[index]}
+            {metric.link ? (
+              <Link
+                to={path(metric.link.page, metric.link.hash)}
+                className="impact-metric-link"
+              >
+                {copy.profile.metrics[index]}
+              </Link>
+            ) : (
+              copy.profile.metrics[index]
+            )}
           </dt>
           <dd
             className="display-font order-1 text-[clamp(1.55rem,3vw,2.35rem)] font-bold tracking-[-0.045em] text-ink"

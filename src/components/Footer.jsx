@@ -1,5 +1,6 @@
 import { FaGithub, FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import orcidIcon from "../assets/orcid-id.svg";
 import { profile } from "../data/profile";
 import { useLocale } from "../i18n/LocaleContext";
 import "../styles/footer.css";
@@ -17,6 +18,11 @@ export default function Footer() {
   const socialLinks = [
     { label: "GitHub", href: profile.github, icon: <FaGithub aria-hidden="true" /> },
     { label: "LinkedIn", href: profile.linkedin, icon: <FaLinkedinIn aria-hidden="true" /> },
+    {
+      label: "ORCID iD",
+      href: profile.orcid,
+      icon: <img src={orcidIcon} width="20" height="20" alt="" loading="lazy" />,
+    },
     {
       label: "WhatsApp",
       href: `${profile.whatsapp}?text=${encodeURIComponent(copy.footer.whatsapp)}`,
@@ -64,7 +70,7 @@ export default function Footer() {
             <p>{copy.footer.elsewhere}</p>
             <div>
               {socialLinks.map(({ label, href, icon }) => (
-                <a key={label} href={href} target="_blank" rel="noreferrer" aria-label={label}>
+                <a key={label} href={href} target="_blank" rel="noreferrer" aria-label={label} title={label}>
                   {icon}
                   <span>{label}</span>
                 </a>

@@ -191,6 +191,7 @@ const de = {
         "leitender Softwareingenieur in Kuala Lumpur. Ich verbinde Backend-Architektur, angewandte KI, Produktschnittstellen und Produktivbetrieb zu einem durchgängigen Engineering-Prozess.",
       explore: "Meine Projekte entdecken",
       start: "Kontakt aufnehmen",
+      publications: "Publikationen",
       facts: [
         { label: "Aktueller Schwerpunkt", value: "Technische Leitung in der Softwareentwicklung" },
         { label: "Tätigkeitsfelder", value: "Backend · KI · Web · Mobile" },

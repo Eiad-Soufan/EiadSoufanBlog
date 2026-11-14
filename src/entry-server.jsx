@@ -8,10 +8,10 @@ import NotFound from "./pages/NotFound";
 import WhyUs from "./pages/WhyUs";
 
 const SERVER_ROUTE_COMPONENTS = Object.freeze({
-  AboutUs,
-  Contact,
-  NotFound,
-  WhyUs,
+  about: AboutUs,
+  approach: WhyUs,
+  contact: Contact,
+  notFound: NotFound,
 });
 
 export function render(url) {

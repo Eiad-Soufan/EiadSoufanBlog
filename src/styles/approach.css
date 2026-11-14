@@ -53,7 +53,6 @@
 
 .approach-hero {
   position: relative;
-  min-height: calc(100svh - 4.5rem);
   overflow: hidden;
   border-bottom: 1px solid rgb(var(--color-line) / 0.1);
   background:
@@ -103,17 +102,6 @@
   bottom: -37%;
   background: rgb(var(--color-cyan) / 0.11);
   animation: approach-glow-two 22s ease-in-out infinite;
-}
-
-.approach-hero-layout {
-  position: relative;
-  z-index: 2;
-  display: grid;
-  min-height: calc(100svh - 4.5rem);
-  grid-template-columns: minmax(0, 1fr);
-  align-items: center;
-  gap: 0;
-  padding-block: clamp(5rem, 9vw, 7.75rem);
 }
 
 .approach-hero-copy {
@@ -1304,11 +1292,6 @@
 }
 
 @media (max-width: 1120px) {
-  .approach-hero-layout {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0;
-  }
-
   .approach-process-layout {
     gap: 3.5rem;
   }
@@ -1348,17 +1331,6 @@
 }
 
 @media (max-width: 900px) {
-  .approach-hero {
-    min-height: auto;
-  }
-
-  .approach-hero-layout {
-    min-height: auto;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0;
-    padding-block: 5.25rem 6.25rem;
-  }
-
   .system-blueprint {
     width: min(100%, 34rem);
     justify-self: center;
@@ -1398,11 +1370,6 @@
 }
 
 @media (max-width: 680px) {
-  .approach-hero-layout {
-    gap: 0;
-    padding-block: 4.25rem 5.5rem;
-  }
-
   .approach-hero-copy h1 {
     font-size: var(--inner-hero-title-size);
     line-height: 1.06;
@@ -1524,10 +1491,6 @@
 }
 
 @media (max-width: 390px) {
-  .approach-hero-layout {
-    padding-top: 3.8rem;
-  }
-
   .approach-hero-copy h1 {
     font-size: var(--inner-hero-title-size);
   }

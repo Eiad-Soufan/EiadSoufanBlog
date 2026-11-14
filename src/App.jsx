@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { Navigate, Route, Routes, useLocation, useNavigationType, useParams } from "react-router-dom";
 
 import Footer from "./components/Footer";
@@ -7,29 +7,23 @@ import Seo from "./components/Seo";
 import {
   LEGACY_PAGE_PATHS,
   getBrowserLocale,
+  getPageFromPath,
   isLocale,
   localizedPath,
 } from "./i18n/config";
 import { useLocale } from "./i18n/LocaleContext";
 import Home from "./pages/Home";
-
-const AboutUs = lazy(() => import("./pages/AboutUs"));
-const Contact = lazy(() => import("./pages/Contact"));
-const NotFound = lazy(() => import("./pages/NotFound"));
-const WhyUs = lazy(() => import("./pages/WhyUs"));
-
-const CLIENT_ROUTE_COMPONENTS = Object.freeze({
-  AboutUs,
-  Contact,
-  NotFound,
-  WhyUs,
-});
+import { clientRouteComponents } from "./pages/routeComponents";
 
 function RouteEffects() {
   const { hash, key, pathname } = useLocation();
   const navigationType = useNavigationType();
   const previousPathRef = useRef(pathname);
-  const workNavigationKey = hash === "#selected-work" && navigationType !== "POP" ? key : null;
+  const followsSectionLink = hash === "#selected-work" || hash === "#publications";
+  const goesHome = !hash && getPageFromPath(pathname) === "home";
+  const navigationKey = navigationType !== "POP" && (followsSectionLink || goesHome)
+    ? key
+    : null;
 
   useEffect(() => {
     let firstFrame;
@@ -42,16 +36,16 @@ function RouteEffects() {
       firstFrame = window.requestAnimationFrame(() => {
         secondFrame = window.requestAnimationFrame(() => {
           const target = document.getElementById(hash.slice(1));
-          const heading = workNavigationKey
-            ? document.getElementById("selected-work-title")
+          const heading = followsSectionLink && navigationKey
+            ? document.getElementById(`${hash.slice(1)}-title`)
             : null;
           target?.scrollIntoView({ block: "start", behavior: heading ? "instant" : "auto" });
           heading?.focus({ preventScroll: true });
         });
       });
     } else {
-      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-      if (pathChanged) {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      if (pathChanged || navigationKey) {
         focusFrame = window.requestAnimationFrame(() => {
           document.getElementById("main-content")?.focus({ preventScroll: true });
         });
@@ -63,7 +57,7 @@ function RouteEffects() {
       if (secondFrame) window.cancelAnimationFrame(secondFrame);
       if (focusFrame) window.cancelAnimationFrame(focusFrame);
     };
-  }, [pathname, hash, workNavigationKey]);
+  }, [pathname, hash, followsSectionLink, navigationKey]);
 
   return null;
 }
@@ -88,13 +82,13 @@ function LocaleRoute({ children, notFoundElement }) {
   return children;
 }
 
-export default function App({ routeComponents = CLIENT_ROUTE_COMPONENTS }) {
+export default function App({ routeComponents = clientRouteComponents }) {
   const { copy } = useLocale();
   const {
-    AboutUs: AboutPage,
-    Contact: ContactPage,
-    NotFound: NotFoundPage,
-    WhyUs: ApproachPage,
+    about: AboutPage,
+    approach: ApproachPage,
+    contact: ContactPage,
+    notFound: NotFoundPage,
   } = routeComponents;
 
   return (
@@ -103,7 +97,6 @@ export default function App({ routeComponents = CLIENT_ROUTE_COMPONENTS }) {
         {copy.common.skipToContent}
       </a>
 
-      <RouteEffects />
       <Seo />
       <Header />
 
@@ -114,6 +107,7 @@ export default function App({ routeComponents = CLIENT_ROUTE_COMPONENTS }) {
         className="min-w-0 flex-1 outline-none"
       >
         <Suspense fallback={<PageFallback />}>
+          <RouteEffects />
           <Routes>
             <Route path="/" element={<RootGateway />} />
             <Route

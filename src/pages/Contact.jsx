@@ -194,7 +194,7 @@ export default function Contact() {
         <div className="contact-hero-glow contact-hero-glow--one" aria-hidden="true" />
         <div className="contact-hero-glow contact-hero-glow--two" aria-hidden="true" />
 
-        <div className="site-container page-hero-frame contact-hero-layout">
+        <div className="site-container page-hero-frame">
           <Motion.div
             className="contact-hero-copy"
             initial={reduceMotion ? false : "hidden"}
@@ -277,7 +277,7 @@ export default function Contact() {
         <Motion.div
           className="site-container"
           variants={reveal}
-          initial="hidden"
+          initial={reduceMotion ? false : "hidden"}
           whileInView="visible"
           viewport={{ once: true, amount: 0.45 }}
           transition={{ duration: 0.68, ease: premiumEase }}

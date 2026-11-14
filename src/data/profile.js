@@ -11,6 +11,7 @@ export const profile = {
   whatsapp: "https://wa.me/60183035842",
   github: "https://github.com/Eiad-Soufan",
   linkedin: "https://www.linkedin.com/in/eiad-soufan-a11914358/",
+  orcid: "https://orcid.org/0009-0000-5069-9954",
 };
 
 export const impactMetrics = [
@@ -21,5 +22,10 @@ export const impactMetrics = [
   },
   { value: 2000000, suffix: "+", label: "Data units managed at scale" },
   { value: 100, suffix: "+", label: "Employees across 5 branches" },
-  { value: 4, suffix: "", label: "Scientific publications" },
+  {
+    value: 4,
+    suffix: "",
+    label: "Scientific publications",
+    link: { page: "about", hash: "#publications" },
+  },
 ];

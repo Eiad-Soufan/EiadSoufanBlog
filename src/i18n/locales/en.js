@@ -188,6 +188,7 @@ const en = {
         "a Lead Software Engineer based in Kuala Lumpur. I connect backend architecture, applied AI, product interfaces, and production delivery into one coherent engineering process.",
       explore: "Explore my work",
       start: "Contact me",
+      publications: "Publications",
       facts: [
         { label: "Current focus", value: "Lead Software Engineering" },
         { label: "Working across", value: "Backend · AI · Web · Mobile" },

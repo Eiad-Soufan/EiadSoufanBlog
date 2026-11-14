@@ -53,7 +53,6 @@
 
 .contact-hero {
   position: relative;
-  min-height: calc(100svh - 4.5rem);
   overflow: hidden;
   border-bottom: 1px solid rgb(var(--color-line) / 0.1);
   background:
@@ -103,17 +102,6 @@
   bottom: -38%;
   background: rgb(var(--color-cyan) / 0.11);
   animation: contact-glow-two 22s ease-in-out infinite;
-}
-
-.contact-hero-layout {
-  position: relative;
-  z-index: 2;
-  display: grid;
-  min-height: calc(100svh - 4.5rem);
-  grid-template-columns: minmax(0, 1fr);
-  align-items: center;
-  gap: 0;
-  padding-block: clamp(5rem, 9vw, 7.75rem);
 }
 
 .contact-hero-copy {
@@ -1026,11 +1014,6 @@ button.contact-action {
 }
 
 @media (max-width: 1120px) {
-  .contact-hero-layout {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0;
-  }
-
   .contact-workspace-grid {
     grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.48fr);
   }
@@ -1047,17 +1030,6 @@ button.contact-action {
 }
 
 @media (max-width: 900px) {
-  .contact-hero {
-    min-height: auto;
-  }
-
-  .contact-hero-layout {
-    min-height: auto;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0;
-    padding-block: 5.25rem 6.25rem;
-  }
-
   .contact-signal {
     width: min(100%, 35rem);
     justify-self: center;
@@ -1090,11 +1062,6 @@ button.contact-action {
 }
 
 @media (max-width: 680px) {
-  .contact-hero-layout {
-    gap: 0;
-    padding-block: 4.25rem 5.5rem;
-  }
-
   .contact-hero-copy h1 {
     font-size: var(--inner-hero-title-size);
     line-height: 1.06;
@@ -1171,10 +1138,6 @@ button.contact-action {
 }
 
 @media (max-width: 390px) {
-  .contact-hero-layout {
-    padding-top: 3.8rem;
-  }
-
   .contact-signal-toolbar {
     right: 1rem;
     left: 1rem;
