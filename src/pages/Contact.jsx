@@ -1,5 +1,5 @@
 import { motion as Motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { profile } from "../data/profile";
 import useHydrationSafeReducedMotion from "../hooks/useHydrationSafeReducedMotion";
 import { useLocale } from "../i18n/LocaleContext";
@@ -10,14 +10,6 @@ const premiumEase = [0.22, 1, 0.36, 1];
 const reveal = {
   hidden: { opacity: 0, y: 22, filter: "blur(7px)" },
   visible: { opacity: 1, y: 0, filter: "blur(0px)" },
-};
-
-const initialForm = {
-  name: "",
-  email: "",
-  organization: "",
-  projectType: "",
-  message: "",
 };
 
 function ArrowIcon({ external = false }) {
@@ -74,40 +66,126 @@ function DirectChannel({ type, label, value, href }) {
   );
 }
 
+function ProjectBriefForm({ content }) {
+  const { form, message: messageCopy, projectTypes } = content;
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formElement = event.currentTarget;
+    const fields = new FormData(formElement);
+    const name = fields.get("name").trim();
+    const message = fields.get("message").trim();
+
+    if (!name || !message) {
+      const field = formElement.elements.namedItem(name ? "message" : "name");
+      field.setCustomValidity(form.required);
+      field.reportValidity();
+      return;
+    }
+
+    const email = fields.get("email").trim();
+    const organization = fields.get("organization").trim();
+    const project = projectTypes.find((type) => type.id === fields.get("projectType"));
+    const messageLines = [messageCopy.greeting, "", `${messageCopy.name}: ${name}`];
+
+    if (email) messageLines.push(`${messageCopy.email}: ${email}`);
+    if (organization) messageLines.push(`${messageCopy.organization}: ${organization}`);
+    if (project) messageLines.push(`${messageCopy.focus}: ${project.label}`);
+    messageLines.push("", messageCopy.problem, message);
+
+    if (event.nativeEvent.submitter?.value === "email") {
+      const subject = project ? `${messageCopy.subject} — ${project.label}` : messageCopy.subject;
+      const emailBody = messageLines.join("\n").replace(/\r?\n/g, "\r\n");
+      window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+      return;
+    }
+
+    const whatsappHref = `${profile.whatsapp}?text=${encodeURIComponent(messageLines.join("\n"))}`;
+    window.open(whatsappHref, "_blank", "noopener,noreferrer");
+  };
+
+  const clearFieldError = (event) => event.currentTarget.setCustomValidity("");
+
+  return (
+    <form className="contact-form" method="post" onSubmit={handleSubmit}>
+      <div className="contact-form-grid">
+        <label className="contact-field">
+          <span>{form.name}</span>
+          <input
+            type="text"
+            name="name"
+            autoComplete="name"
+            placeholder={form.namePlaceholder}
+            onInput={clearFieldError}
+            required
+          />
+        </label>
+
+        <label className="contact-field">
+          <span>{form.email} <small>{form.optional}</small></span>
+          <input
+            type="email"
+            name="email"
+            autoComplete="email"
+            placeholder="name@example.com"
+          />
+        </label>
+
+        <label className="contact-field">
+          <span>{form.organization} <small>{form.optional}</small></span>
+          <input
+            type="text"
+            name="organization"
+            autoComplete="organization"
+            placeholder={form.organizationPlaceholder}
+          />
+        </label>
+
+        <label className="contact-field">
+          <span>{form.focus} <small>{form.optional}</small></span>
+          <select name="projectType" defaultValue="">
+            <option value="">{form.select}</option>
+            {projectTypes.map((type) => <option key={type.id} value={type.id}>{type.label}</option>)}
+          </select>
+        </label>
+
+        <label className="contact-field contact-field--wide">
+          <span>{form.problem}</span>
+          <textarea
+            name="message"
+            rows={7}
+            placeholder={form.problemPlaceholder}
+            onInput={clearFieldError}
+            required
+          />
+        </label>
+      </div>
+
+      <div className="contact-form-footer">
+        <div className="contact-form-actions">
+          <button type="submit" value="whatsapp" className="contact-action contact-action--primary">
+            {form.whatsapp} <ArrowIcon external />
+          </button>
+          <button type="submit" value="email" className="contact-action contact-action--secondary">
+            {form.compose}
+          </button>
+        </div>
+        <p>{form.privacy}</p>
+      </div>
+    </form>
+  );
+}
+
 export default function Contact() {
   const reduceMotion = useHydrationSafeReducedMotion();
-  const [form, setForm] = useState(initialForm);
+  const [formReady, setFormReady] = useState(false);
   const { copy } = useLocale();
   const content = copy.contact;
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setForm((current) => ({ ...current, [name]: value }));
-  };
-
-  const selectedProject = content.projectTypes.find((type) => type.id === form.projectType);
-  const messageLines = [
-    content.message.greeting,
-    "",
-    `${content.message.name}: ${form.name || content.message.notProvided}`,
-    `${content.message.email}: ${form.email || content.message.notProvided}`,
-    `${content.message.organization}: ${form.organization || content.message.notProvided}`,
-    `${content.message.focus}: ${selectedProject?.label || content.message.notSelected}`,
-    "",
-    content.message.problem,
-    form.message || content.message.notProvided,
-  ];
-
-  const encodedMessage = encodeURIComponent(messageLines.join("\n"));
-  const whatsappHref = `${profile.whatsapp}?text=${encodedMessage}`;
-  const emailHref = `mailto:${profile.email}?subject=${encodeURIComponent(
-    selectedProject ? `${content.message.subject} — ${selectedProject.label}` : content.message.subject,
-  )}&body=${encodedMessage}`;
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    window.open(whatsappHref, "_blank", "noopener,noreferrer");
-  };
+  // The direct links work in the generated HTML. Mount the form once its
+  // submit handler can intercept submission and open the selected draft.
+  useEffect(() => {
+    setFormReady(true);
+  }, []);
 
   return (
     <div className="contact-page">
@@ -136,14 +214,14 @@ export default function Contact() {
               {content.hero.lead}
             </Motion.p>
 
-            <Motion.div className="contact-hero-actions" variants={reveal} transition={{ duration: 0.58, ease: premiumEase }}>
+            <div className="contact-hero-actions">
               <a href="#project-brief" className="contact-action contact-action--primary">
                 {content.hero.share} <ArrowIcon />
               </a>
               <a href={`mailto:${profile.email}`} className="contact-action contact-action--secondary">
                 {content.hero.email}
               </a>
-            </Motion.div>
+            </div>
 
             <Motion.dl className="contact-hero-facts" variants={reveal} transition={{ duration: 0.6, ease: premiumEase }}>
               {content.hero.facts.map((fact) => (
@@ -156,14 +234,7 @@ export default function Contact() {
 
       <section className="contact-workspace" id="project-brief">
         <div className="site-container">
-          <Motion.div
-            className="contact-section-heading"
-            variants={reveal}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.55 }}
-            transition={{ duration: 0.65, ease: premiumEase }}
-          >
+          <div className="contact-section-heading">
             <div>
               <p className="contact-eyebrow"><span aria-hidden="true" /> {content.brief.eyebrow}</p>
               <h2 className="display-font">{content.brief.title}</h2>
@@ -171,104 +242,12 @@ export default function Contact() {
             <p>
               {content.brief.copy}
             </p>
-          </Motion.div>
+          </div>
 
           <div className="contact-workspace-grid">
-            <Motion.form
-              className="contact-form"
-              onSubmit={handleSubmit}
-              variants={reveal}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.16 }}
-              transition={{ duration: 0.68, ease: premiumEase }}
-            >
-              <div className="contact-form-toolbar">
-                <span><i /> {content.form.secure}</span>
-                <small>{content.form.count}</small>
-              </div>
+            {formReady && <ProjectBriefForm content={content} />}
 
-              <div className="contact-form-grid">
-                <label className="contact-field">
-                  <span>{content.form.name}</span>
-                  <input
-                    type="text"
-                    name="name"
-                    value={form.name}
-                    onChange={handleChange}
-                    autoComplete="name"
-                    placeholder={content.form.namePlaceholder}
-                    required
-                  />
-                </label>
-
-                <label className="contact-field">
-                  <span>{content.form.email}</span>
-                  <input
-                    type="email"
-                    name="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    autoComplete="email"
-                    placeholder="name@example.com"
-                    required
-                  />
-                </label>
-
-                <label className="contact-field">
-                  <span>{content.form.organization} <small>{content.form.optional}</small></span>
-                  <input
-                    type="text"
-                    name="organization"
-                    value={form.organization}
-                    onChange={handleChange}
-                    autoComplete="organization"
-                    placeholder={content.form.organizationPlaceholder}
-                  />
-                </label>
-
-                <label className="contact-field">
-                  <span>{content.form.focus}</span>
-                  <select name="projectType" value={form.projectType} onChange={handleChange} required>
-                    <option value="" disabled>{content.form.select}</option>
-                    {content.projectTypes.map((type) => <option key={type.id} value={type.id}>{type.label}</option>)}
-                  </select>
-                </label>
-
-                <label className="contact-field contact-field--wide">
-                  <span>{content.form.problem}</span>
-                  <textarea
-                    name="message"
-                    value={form.message}
-                    onChange={handleChange}
-                    rows={7}
-                    placeholder={content.form.problemPlaceholder}
-                    required
-                  />
-                </label>
-              </div>
-
-              <div className="contact-form-footer">
-                <div className="contact-form-actions">
-                  <button type="submit" className="contact-action contact-action--primary">
-                    {content.form.whatsapp} <ArrowIcon external />
-                  </button>
-                  <a href={emailHref} className="contact-action contact-action--secondary">
-                    {content.form.compose}
-                  </a>
-                </div>
-                <p>{content.form.privacy}</p>
-              </div>
-            </Motion.form>
-
-            <Motion.aside
-              className="contact-sidebar"
-              variants={reveal}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.68, delay: reduceMotion ? 0 : 0.08, ease: premiumEase }}
-            >
+            <aside className="contact-sidebar">
               <div className="contact-side-card">
                 <p className="contact-side-label">{content.sidebar.direct}</p>
                 <div className="contact-channels">
@@ -289,7 +268,7 @@ export default function Contact() {
                   ))}
                 </ol>
               </div>
-            </Motion.aside>
+            </aside>
           </div>
         </div>
       </section>

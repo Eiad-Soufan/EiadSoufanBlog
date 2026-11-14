@@ -89,16 +89,7 @@ export const systems = [
       "Led deployment, hosting, production readiness, and technical delivery coordination across the product stack.",
     metrics: [],
     stack: ["Node.js", "Vue.js", "Flutter"],
-    links: [
-      {
-        label: "Visit platform",
-        href: "https://yalla-baggage.vercel.app/",
-      },
-      {
-        label: "Google Play",
-        href: "https://play.google.com/store/apps/details?id=com.yallapass.app",
-      },
-    ],
+    links: [],
     logo: yallahBaggageMark,
     preview: {
       src: yallahBaggagePreview,

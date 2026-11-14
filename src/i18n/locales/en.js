@@ -127,7 +127,7 @@ const en = {
       role:
         "Led deployment, hosting, production readiness, and technical delivery coordination across the product stack.",
       metricLabels: [],
-      linkLabels: ["Visit platform", "Google Play"],
+      linkLabels: [],
       alt: "Yallah Baggage logistics platform interface",
     },
     "mohammad-abo-zeed": {
@@ -546,8 +546,7 @@ const en = {
         "A polished specification is not required. A few honest details are enough to begin framing the opportunity, the risk, and the smallest useful next step.",
     },
     form: {
-      secure: "Secure handoff",
-      count: "Brief / 01",
+      required: "Please complete this field.",
       name: "Your name",
       namePlaceholder: "How should I address you?",
       email: "Email address",
@@ -561,8 +560,7 @@ const en = {
         "The current situation, the constraint that matters, and the outcome you need…",
       whatsapp: "Continue in WhatsApp",
       compose: "Compose email",
-      privacy:
-        "No account or portal. Your details are passed only to the channel you choose.",
+      privacy: "Review and send your draft in the channel you choose.",
     },
     sidebar: {
       direct: "Direct channels",
@@ -581,8 +579,6 @@ const en = {
       email: "Email",
       organization: "Organisation",
       focus: "Project focus",
-      notProvided: "Not provided",
-      notSelected: "Not selected",
       problem: "What I am trying to solve:",
       subject: "Project enquiry",
     },

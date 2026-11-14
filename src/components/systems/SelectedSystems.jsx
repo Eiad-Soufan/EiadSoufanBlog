@@ -120,6 +120,8 @@ function Stack({ stack, ariaLabel }) {
 }
 
 function ProjectLinks({ links, externalTab }) {
+  if (!links.length) return null;
+
   return (
     <div className="systems-links">
       {links.map((link, index) => (

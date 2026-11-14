@@ -129,7 +129,7 @@ const ms = {
       role:
         "Menerajui pelancaran, pengehosan, kesiapsiagaan produksi dan penyelarasan teknikal merentas keseluruhan produk.",
       metricLabels: [],
-      linkLabels: ["Lawati platform", "Google Play"],
+      linkLabels: [],
       alt: "Antara muka platform logistik Yallah Baggage",
     },
     "mohammad-abo-zeed": {
@@ -569,8 +569,7 @@ const ms = {
         "Spesifikasi yang sempurna tidak diperlukan. Beberapa butiran yang jujur sudah memadai untuk mula memahami peluang, risiko dan langkah berguna terkecil seterusnya.",
     },
     form: {
-      secure: "Saluran selamat",
-      count: "Ringkasan / 01",
+      required: "Sila isi medan ini.",
       name: "Nama anda",
       namePlaceholder: "Bagaimanakah saya patut memanggil anda?",
       email: "Alamat e-mel",
@@ -584,8 +583,7 @@ const ms = {
         "Situasi semasa, kekangan yang paling penting dan hasil yang anda perlukan…",
       whatsapp: "Teruskan melalui WhatsApp",
       compose: "Tulis e-mel",
-      privacy:
-        "Tiada akaun atau portal diperlukan. Butiran anda hanya dihantar ke saluran yang anda pilih.",
+      privacy: "Mesej anda dibuka sebagai draf dalam saluran pilihan anda. Semak draf dan hantarkannya di sana.",
     },
     sidebar: {
       direct: "Saluran terus",
@@ -604,8 +602,6 @@ const ms = {
       email: "E-mel",
       organization: "Organisasi",
       focus: "Fokus projek",
-      notProvided: "Tidak diberikan",
-      notSelected: "Belum dipilih",
       problem: "Perkara yang ingin saya selesaikan:",
       subject: "Pertanyaan projek",
     },

@@ -128,7 +128,7 @@ const fr = {
       role:
         "Pilotage du déploiement, de l’hébergement, de la préparation à la production et de la coordination technique de l’ensemble du produit.",
       metricLabels: [],
-      linkLabels: ["Visiter la plateforme", "Google Play"],
+      linkLabels: [],
       alt: "Interface de la plateforme logistique Yallah Baggage",
     },
     "mohammad-abo-zeed": {
@@ -589,8 +589,7 @@ const fr = {
         "Une spécification parfaite n’est pas nécessaire. Quelques éléments sincères suffisent pour commencer à cadrer l’opportunité, le risque et la plus petite prochaine étape utile.",
     },
     form: {
-      secure: "Transmission sécurisée",
-      count: "Cadrage / 01",
+      required: "Veuillez remplir ce champ.",
       name: "Votre nom",
       namePlaceholder: "Comment dois-je vous appeler ?",
       email: "Adresse e-mail",
@@ -604,8 +603,7 @@ const fr = {
         "La situation actuelle, la contrainte essentielle et le résultat attendu…",
       whatsapp: "Continuer sur WhatsApp",
       compose: "Rédiger un e-mail",
-      privacy:
-        "Aucun compte ni portail. Vos informations sont transmises uniquement au canal que vous choisissez.",
+      privacy: "Votre message s’ouvre sous forme de brouillon. Relisez-le et envoyez-le dans le canal choisi.",
     },
     sidebar: {
       direct: "Contacts directs",
@@ -624,8 +622,6 @@ const fr = {
       email: "E-mail",
       organization: "Organisation",
       focus: "Nature du projet",
-      notProvided: "Non renseigné",
-      notSelected: "Non sélectionné",
       problem: "Ce que je cherche à résoudre :",
       subject: "Demande de projet",
     },

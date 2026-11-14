@@ -570,38 +570,10 @@ button.contact-action {
   padding: clamp(1.25rem, 3vw, 2.35rem);
 }
 
-.contact-form-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid rgb(var(--color-line) / 0.1);
-  padding-bottom: 1rem;
-  color: rgb(var(--color-text) / 0.42);
-  font-size: 0.52rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.contact-form-toolbar span {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.48rem;
-}
-
-.contact-form-toolbar i {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: rgb(var(--color-success));
-  box-shadow: 0 0 12px rgb(var(--color-success) / 0.72);
-}
-
 .contact-form-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.05rem;
-  margin-top: 1.4rem;
 }
 
 .contact-field {
@@ -626,11 +598,9 @@ button.contact-action {
 }
 
 .contact-field > span small {
-  color: rgb(var(--color-text) / 0.32);
-  font-size: 0.49rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  color: rgb(var(--color-muted));
+  font-size: 0.68rem;
+  font-weight: 600;
 }
 
 .contact-field input,
@@ -714,8 +684,8 @@ button.contact-action {
 .contact-form-footer > p {
   max-width: 16rem;
   margin: 0;
-  color: rgb(var(--color-muted) / 0.66);
-  font-size: 0.58rem;
+  color: rgb(var(--color-muted));
+  font-size: 0.75rem;
   line-height: 1.65;
   text-align: right;
 }
@@ -723,6 +693,16 @@ button.contact-action {
 .contact-sidebar {
   display: grid;
   gap: 1.25rem;
+}
+
+.contact-sidebar:only-child {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 681px) {
+  .contact-sidebar:only-child {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .contact-side-card {
