@@ -600,6 +600,11 @@
     filter 450ms var(--ease-premium);
 }
 
+.systems-card--lawnex .systems-preview-image {
+  object-fit: contain;
+  transform: none;
+}
+
 .systems-preview-frame--brand {
   display: grid;
   place-items: center;
@@ -832,6 +837,10 @@
   .systems-card:hover .systems-preview-image {
     filter: saturate(1) contrast(1.025);
     transform: scale(1.015);
+  }
+
+  .systems-card--lawnex:hover .systems-preview-image {
+    transform: none;
   }
 
   .systems-link:hover,

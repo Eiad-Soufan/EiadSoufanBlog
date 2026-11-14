@@ -43,9 +43,9 @@ export const systems = [
     preview: {
       src: lawnexPreview,
       alt: "LAWNEX Arabic legal intelligence platform interface",
-      width: 1280,
-      height: 685,
-      position: "75% top",
+      width: 1440,
+      height: 706,
+      position: "center",
     },
     accent: { primary: "#f7b955", glow: "247 185 85" },
   },
