@@ -105,7 +105,7 @@ const ms = {
         "Membangunkan backend Django dan platform React, serta menyumbang kira-kira separuh daripada aplikasi Flutter.",
       metricLabels: ["Pengguna aktif", "Unit undang-undang"],
       linkLabels: ["Lawati platform", "Google Play", "App Store"],
-      alt: "Antara muka platform kecerdasan undang-undang Arab LAWNEX",
+      alt: "Lambang emas LAWNEX berlatar biru gelap",
     },
     ugarix: {
       category: "Syarikat sistem perisian",

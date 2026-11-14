@@ -113,7 +113,7 @@ const ar = defineLocale(en, {
         "طورت الواجهة الخلفية بـDjango ومنصة الويب بـReact، وأسهمت في قرابة نصف تطبيق Flutter.",
       metricLabels: ["مستخدم نشط", "وحدة قانونية"],
       linkLabels: ["زيارة المنصة", "Google Play", "App Store"],
-      alt: "واجهة منصة LAWNEX العربية للذكاء القانوني",
+      alt: "شعار لونكس الذهبي على خلفية زرقاء داكنة",
     },
     ugarix: {
       category: "شركة أنظمة برمجية",

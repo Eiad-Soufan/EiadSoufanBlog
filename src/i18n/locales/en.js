@@ -104,7 +104,7 @@ const en = {
         "Built the Django backend and React platform, and contributed approximately half of the Flutter application.",
       metricLabels: ["Active users", "Legal units"],
       linkLabels: ["Visit platform", "Google Play", "App Store"],
-      alt: "LAWNEX Arabic legal intelligence platform interface",
+      alt: "Gold LAWNEX emblem against a dark blue background",
     },
     ugarix: {
       category: "Software systems company",

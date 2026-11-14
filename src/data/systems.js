@@ -42,9 +42,9 @@ export const systems = [
     logo: lawnexMark,
     preview: {
       src: lawnexPreview,
-      alt: "LAWNEX Arabic legal intelligence platform interface",
-      width: 1440,
-      height: 706,
+      alt: "Gold LAWNEX emblem against a dark blue background",
+      width: 768,
+      height: 329,
       position: "center",
     },
     accent: { primary: "#f7b955", glow: "247 185 85" },

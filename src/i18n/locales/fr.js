@@ -105,7 +105,7 @@ const fr = {
         "Développement du backend Django et de la plateforme React, avec une contribution à environ la moitié de l’application Flutter.",
       metricLabels: ["Utilisateurs actifs", "Unités juridiques"],
       linkLabels: ["Visiter la plateforme", "Google Play", "App Store"],
-      alt: "Interface arabe de la plateforme d’intelligence juridique LAWNEX",
+      alt: "Emblème doré de LAWNEX sur fond bleu foncé",
     },
     ugarix: {
       category: "Entreprise de systèmes logiciels",
