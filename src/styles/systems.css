@@ -82,6 +82,13 @@
   margin-bottom: clamp(3rem, 6vw, 5.5rem);
 }
 
+/* Keep focused content visible during the viewport entrance animation. */
+.systems-intro:focus-within,
+.systems-card:focus-within {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
 .systems-intro-kicker,
 .systems-card-meta,
 .systems-outro-kicker,

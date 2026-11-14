@@ -314,7 +314,7 @@ export default function SelectedSystems() {
   );
 
   return (
-    <section id="selected-work" className="systems-section scroll-mt-20">
+    <section id="selected-work" className="systems-section scroll-mt-20" aria-labelledby="selected-work-title">
       <div className="systems-atmosphere" aria-hidden="true">
         <span className="systems-orb systems-orb--one" />
         <span className="systems-orb systems-orb--two" />
@@ -336,7 +336,7 @@ export default function SelectedSystems() {
             <span>{copy.home.systems.kicker}</span>
           </div>
           <div className="systems-intro-grid">
-            <h2>
+            <h2 id="selected-work-title" tabIndex={-1}>
               {copy.home.systems.titleBefore}
               <span> {copy.home.systems.titleAfter}</span>
             </h2>

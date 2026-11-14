@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef } from "react";
-import { Navigate, Route, Routes, useLocation, useParams } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation, useNavigationType, useParams } from "react-router-dom";
 
 import Footer from "./components/Footer";
 import Header from "./components/Header";
@@ -26,21 +26,27 @@ const CLIENT_ROUTE_COMPONENTS = Object.freeze({
 });
 
 function RouteEffects() {
-  const location = useLocation();
-  const previousPathRef = useRef(location.pathname);
+  const { hash, key, pathname } = useLocation();
+  const navigationType = useNavigationType();
+  const previousPathRef = useRef(pathname);
+  const workNavigationKey = hash === "#selected-work" && navigationType !== "POP" ? key : null;
 
   useEffect(() => {
     let firstFrame;
     let secondFrame;
     let focusFrame;
-    const pathChanged = previousPathRef.current !== location.pathname;
-    previousPathRef.current = location.pathname;
+    const pathChanged = previousPathRef.current !== pathname;
+    previousPathRef.current = pathname;
 
-    if (location.hash) {
+    if (hash) {
       firstFrame = window.requestAnimationFrame(() => {
         secondFrame = window.requestAnimationFrame(() => {
-          const target = document.getElementById(location.hash.slice(1));
-          target?.scrollIntoView({ block: "start" });
+          const target = document.getElementById(hash.slice(1));
+          const heading = workNavigationKey
+            ? document.getElementById("selected-work-title")
+            : null;
+          target?.scrollIntoView({ block: "start", behavior: heading ? "instant" : "auto" });
+          heading?.focus({ preventScroll: true });
         });
       });
     } else {
@@ -57,7 +63,7 @@ function RouteEffects() {
       if (secondFrame) window.cancelAnimationFrame(secondFrame);
       if (focusFrame) window.cancelAnimationFrame(focusFrame);
     };
-  }, [location.pathname, location.hash]);
+  }, [pathname, hash, workNavigationKey]);
 
   return null;
 }
