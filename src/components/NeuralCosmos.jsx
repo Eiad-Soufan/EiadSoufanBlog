@@ -1,8 +1,9 @@
 import useHydrationSafeReducedMotion from "../hooks/useHydrationSafeReducedMotion";
 import { useEffect, useRef } from "react";
 import { useLocale } from "../i18n/LocaleContext";
+import { getPageFromPath } from "../i18n/config";
 import {
-  claimConstellationReveal,
+  claimSignatureGlow,
   createConstellationPaths,
   drawConstellation,
   positionConstellation,
@@ -65,13 +66,11 @@ function createStars(width, height, count, random) {
   }));
 }
 
-function signatureIllumination(time, reveal, reduceMotion) {
-  if (reveal === null) return 0;
-  if (reveal.still) return 1;
+function signatureIllumination(time, startedAt, reduceMotion) {
+  if (startedAt === null || reduceMotion) return 0;
 
-  const elapsed = time - reveal.start;
+  const elapsed = time - startedAt;
   if (elapsed >= 2550) return 0;
-  if (reduceMotion) return 1;
 
   const glow = clamp(Math.min(elapsed / 540, (2550 - elapsed) / 780), 0, 1);
   return glow * glow * (3 - 2 * glow);
@@ -80,7 +79,7 @@ function signatureIllumination(time, reveal, reduceMotion) {
 export default function NeuralCosmos({ page }) {
   const hostRef = useRef(null);
   const canvasRef = useRef(null);
-  const revealRef = useRef(null);
+  const glowStartRef = useRef(null);
   const reduceMotion = useHydrationSafeReducedMotion();
   const { localeMeta: { dir } } = useLocale();
 
@@ -92,7 +91,8 @@ export default function NeuralCosmos({ page }) {
     if (!host || !canvas || !context) return undefined;
 
     const constellationPaths = typeof Path2D === "function" ? createConstellationPaths(page) : [];
-    const revealPending = visitConstellationPage(page);
+    const glowPending = visitConstellationPage(page);
+    if (reduceMotion) glowStartRef.current = null;
     let width = 0;
     let height = 0;
     let nodes = [];
@@ -112,7 +112,7 @@ export default function NeuralCosmos({ page }) {
     const anchor = document.getElementById(window.location.hash.slice(1));
     let awaitingAnchorScroll = Boolean(anchor && anchor.getBoundingClientRect().top >= bounds.bottom - 1);
     let constellationPosition;
-    let revealTimer = 0;
+    let glowTimer = 0;
 
     const pointer = {
       x: 0,
@@ -290,9 +290,9 @@ export default function NeuralCosmos({ page }) {
       });
 
       context.globalCompositeOperation = "source-over";
-      const illumination = signatureIllumination(time, revealRef.current, reduceMotion);
+      const illumination = signatureIllumination(time, glowStartRef.current, reduceMotion);
       drawConstellation(context, constellationPaths, constellationPosition, illumination);
-      const signature = illumination >= 0.95 ? "complete" : "fragment";
+      const signature = illumination >= 0.95 ? "glowing" : "steady";
       if (host.dataset.signature !== signature) host.dataset.signature = signature;
     };
 
@@ -305,8 +305,8 @@ export default function NeuralCosmos({ page }) {
       return center - halfHeight >= headerBottom && center + halfHeight <= window.innerHeight;
     };
 
-    const scheduleReveal = () => {
-      if (!revealPending || revealRef.current || revealTimer || !constellationPaths.length) return;
+    const scheduleGlow = () => {
+      if (reduceMotion || !glowPending || glowStartRef.current !== null || glowTimer || !constellationPaths.length) return;
 
       const visible = constellationInView();
       if (awaitingAnchorScroll) {
@@ -316,15 +316,15 @@ export default function NeuralCosmos({ page }) {
       }
       if (!inViewport || !pageVisible || !visible) return;
 
-      // Let route scroll restoration settle before consuming the reveal.
-      revealTimer = window.setTimeout(() => {
-        revealTimer = 0;
+      // Let route scroll restoration settle before starting the glow.
+      glowTimer = window.setTimeout(() => {
+        glowTimer = 0;
         bounds = host.getBoundingClientRect();
-        if (!inViewport || !pageVisible || !constellationInView() || !claimConstellationReveal()) return;
-
-        const start = performance.now();
-        revealRef.current = { start, still: reduceMotion };
-        if (reduceMotion) draw(start, false);
+        if (
+          !inViewport || !pageVisible || !constellationInView() ||
+          getPageFromPath(window.location.pathname) !== page
+        ) return;
+        if (claimSignatureGlow()) glowStartRef.current = performance.now();
       }, 320);
     };
 
@@ -361,7 +361,7 @@ export default function NeuralCosmos({ page }) {
 
     const syncAnimation = () => {
       host.dataset.motion = shouldAnimate() ? "running" : "paused";
-      scheduleReveal();
+      scheduleGlow();
 
       if (shouldAnimate() && !animationFrame) {
         lastFrame = performance.now();
@@ -401,7 +401,7 @@ export default function NeuralCosmos({ page }) {
       constellationPosition = positionConstellation(width, height, dir);
 
       draw(performance.now(), false);
-      scheduleReveal();
+      scheduleGlow();
     };
 
     const handlePointerMove = (event) => {
@@ -426,7 +426,7 @@ export default function NeuralCosmos({ page }) {
     const updateBounds = () => {
       if (!inViewport && !awaitingAnchorScroll) return;
       bounds = host.getBoundingClientRect();
-      scheduleReveal();
+      scheduleGlow();
     };
 
     const handleVisibility = () => {
@@ -455,7 +455,7 @@ export default function NeuralCosmos({ page }) {
 
     return () => {
       if (animationFrame) window.cancelAnimationFrame(animationFrame);
-      if (revealTimer) window.clearTimeout(revealTimer);
+      if (glowTimer) window.clearTimeout(glowTimer);
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
       window.removeEventListener("pointermove", handlePointerMove);
@@ -471,7 +471,7 @@ export default function NeuralCosmos({ page }) {
         className="neural-cosmos pointer-events-none absolute inset-0 -z-20 overflow-hidden"
         data-constellation={page}
         data-motion="paused"
-        data-signature="fragment"
+        data-signature="steady"
         aria-hidden="true"
       >
         <div className="hero-aurora hero-aurora--cyan" />
