@@ -21,7 +21,7 @@ export const impactMetrics = [
     label: "Active users across my applications",
   },
   { value: 2000000, suffix: "+", label: "Data units managed at scale" },
-  { value: 100, suffix: "+", label: "Employees across 5 branches" },
+  { value: 5, suffix: "+", label: "Years of software engineering experience" },
   {
     value: 4,
     suffix: "",

@@ -41,7 +41,7 @@ const en = {
     metrics: [
       "Active users across my applications",
       "Data units managed at scale",
-      "Employees across 5 branches",
+      "Years of software engineering experience",
       "Scientific publications",
     ],
   },

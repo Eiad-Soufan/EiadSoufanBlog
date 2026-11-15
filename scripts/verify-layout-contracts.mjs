@@ -39,8 +39,12 @@ for (const [index, hero] of heroes.entries()) {
 }
 
 assert(
-  !/<(?:img|picture|canvas)\b/.test(heroes[0]),
-  "The homepage hero must use the shared text layout without artwork",
+  !/<(?:img|picture|SignatureField)\b/.test(heroes[0]),
+  "The homepage hero must use the shared text layout without side artwork",
+);
+assert(
+  heroes[0].includes("<NeuralCosmos />") && heroes[0].includes("hero-readability-veil"),
+  "The homepage hero must keep its animated background and readability overlay",
 );
 assert(
   header.includes("header-container"),

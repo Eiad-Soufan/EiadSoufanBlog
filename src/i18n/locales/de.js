@@ -42,7 +42,7 @@ const de = {
     metrics: [
       "Aktive Nutzer meiner Anwendungen",
       "Dateneinheiten in großem Maßstab verwaltet",
-      "Mitarbeitende an 5 Standorten",
+      "Jahre Erfahrung in der Softwareentwicklung",
       "Wissenschaftliche Publikationen",
     ],
   },

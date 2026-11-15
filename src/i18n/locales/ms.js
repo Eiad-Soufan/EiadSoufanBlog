@@ -42,7 +42,7 @@ const ms = {
     metrics: [
       "Pengguna aktif merentas aplikasi saya",
       "Unit data diurus pada skala besar",
-      "Kakitangan di 5 cawangan",
+      "Tahun pengalaman dalam kejuruteraan perisian",
       "Penerbitan saintifik",
     ],
   },

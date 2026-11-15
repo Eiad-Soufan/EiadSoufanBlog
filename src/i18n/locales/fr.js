@@ -42,7 +42,7 @@ const fr = {
     metrics: [
       "Utilisateurs actifs sur mes applications",
       "Unités de données gérées à grande échelle",
-      "Collaborateurs sur 5 sites",
+      "Années d’expérience en génie logiciel",
       "Publications scientifiques",
     ],
   },

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { profile } from "../data/profile";
 import useHydrationSafeReducedMotion from "../hooks/useHydrationSafeReducedMotion";
 import { useLocale } from "../i18n/LocaleContext";
+import NeuralCosmos from "./NeuralCosmos";
 
 const entrance = {
   hidden: { opacity: 0, y: 18 },
@@ -33,6 +34,9 @@ export default function HeroNova() {
 
   return (
     <section className="page-hero home-hero">
+      <NeuralCosmos />
+      <div className="hero-readability-veil pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
+
       <div className="site-container page-hero-frame">
         <Motion.div
           className="page-hero-copy"
