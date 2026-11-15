@@ -113,6 +113,8 @@ canvas {
 }
 
 .page-hero {
+  --hero-frame-min-size: clamp(35.5rem, 12rem + 35vw, 47rem);
+
   position: relative;
   isolation: isolate;
   overflow: clip;
@@ -125,7 +127,33 @@ canvas {
   );
 }
 
+.page-hero:lang(ar) {
+  --hero-frame-min-size: clamp(33.5rem, 23.5rem + 17vw, 39rem);
+}
+
+@media (max-width: 680px) {
+  .page-hero {
+    --hero-frame-min-size: clamp(45rem, 60.25rem - 35vw, 47.25rem);
+  }
+
+  .page-hero:lang(ar) {
+    --hero-frame-min-size: clamp(42rem, 48.5rem - 15vw, 44rem);
+  }
+}
+
+@media (max-width: 575px) {
+  .page-hero {
+    --hero-frame-min-size: clamp(50.5rem, 69rem - 63vw, 57rem);
+  }
+
+  .page-hero:lang(ar) {
+    --hero-frame-min-size: clamp(44.25rem, 85rem - 150vw, 54rem);
+  }
+}
+
 .page-hero-frame {
+  /* Share the hero height across pages while allowing larger text to reflow. */
+  min-block-size: var(--hero-frame-min-size);
   padding-block: clamp(2.15rem, 5.5vw, 4.5rem) clamp(2.65rem, 6vw, 5rem);
 }
 
