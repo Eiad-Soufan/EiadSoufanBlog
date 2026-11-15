@@ -33,9 +33,8 @@ export default function HeroNova() {
   const { headline, summary } = copy.profile;
 
   return (
-    <section className="page-hero home-hero">
-      <NeuralCosmos />
-      <div className="hero-readability-veil pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
+    <section className="page-hero">
+      <NeuralCosmos page="home" />
 
       <div className="site-container page-hero-frame">
         <Motion.div

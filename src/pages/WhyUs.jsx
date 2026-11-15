@@ -5,6 +5,7 @@ import {
 } from "framer-motion";
 import { useMemo, useRef } from "react";
 import { Link } from "react-router-dom";
+import NeuralCosmos from "../components/NeuralCosmos";
 import {
   approachPrinciples as baseApproachPrinciples,
   approachStages as baseApproachStages,
@@ -211,6 +212,7 @@ export default function WhyUs() {
   return (
     <div className="approach-page">
       <section className="page-hero">
+        <NeuralCosmos page="approach" />
         <div className="site-container page-hero-frame">
           <Motion.div
             className="page-hero-copy"

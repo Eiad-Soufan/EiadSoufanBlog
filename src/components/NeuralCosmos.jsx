@@ -1,5 +1,13 @@
 import useHydrationSafeReducedMotion from "../hooks/useHydrationSafeReducedMotion";
 import { useEffect, useRef } from "react";
+import { useLocale } from "../i18n/LocaleContext";
+import {
+  claimConstellationReveal,
+  createConstellationPaths,
+  drawConstellation,
+  positionConstellation,
+  visitConstellationPage,
+} from "./heroConstellation";
 
 const LINK_COLORS = [
   [91, 224, 255],
@@ -8,9 +16,17 @@ const LINK_COLORS = [
 ];
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
-const randomBetween = (min, max) => min + Math.random() * (max - min);
+const randomBetween = (min, max, random = Math.random) => min + random() * (max - min);
 
-function createNodes(width, height, count) {
+function createFieldRandom() {
+  let seed = 0x4553;
+  return () => {
+    seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+    return seed / 0x100000000;
+  };
+}
+
+function createNodes(width, height, count, random) {
   const focusX = width * 0.72;
   const focusY = height * 0.43;
 
@@ -19,40 +35,54 @@ function createNodes(width, height, count) {
     const spreadX = width * 0.27;
     const spreadY = height * 0.34;
     const x = clustered
-      ? focusX + (Math.random() + Math.random() - 1) * spreadX
-      : Math.random() * width;
+      ? focusX + (random() + random() - 1) * spreadX
+      : random() * width;
     const y = clustered
-      ? focusY + (Math.random() + Math.random() - 1) * spreadY
-      : Math.random() * height;
+      ? focusY + (random() + random() - 1) * spreadY
+      : random() * height;
 
     return {
       x: clamp(x, 10, width - 10),
       y: clamp(y, 10, height - 10),
-      vx: randomBetween(-0.055, 0.055),
-      vy: randomBetween(-0.045, 0.045),
-      radius: randomBetween(0.75, 1.65),
-      depth: randomBetween(0.35, 1),
-      phase: randomBetween(0, Math.PI * 2),
+      vx: randomBetween(-0.055, 0.055, random),
+      vy: randomBetween(-0.045, 0.045, random),
+      radius: randomBetween(0.75, 1.65, random),
+      depth: randomBetween(0.35, 1, random),
+      phase: randomBetween(0, Math.PI * 2, random),
       colorIndex: index % LINK_COLORS.length,
     };
   });
 }
 
-function createStars(width, height, count) {
+function createStars(width, height, count, random) {
   return Array.from({ length: count }, () => ({
-    x: Math.random() * width,
-    y: Math.random() * height,
-    radius: randomBetween(0.28, 1.05),
-    depth: randomBetween(0.2, 1),
-    speed: randomBetween(0.006, 0.026),
-    phase: randomBetween(0, Math.PI * 2),
+    x: random() * width,
+    y: random() * height,
+    radius: randomBetween(0.28, 1.05, random),
+    depth: randomBetween(0.2, 1, random),
+    speed: randomBetween(0.006, 0.026, random),
+    phase: randomBetween(0, Math.PI * 2, random),
   }));
 }
 
-export default function NeuralCosmos() {
+function signatureIllumination(time, reveal, reduceMotion) {
+  if (reveal === null) return 0;
+  if (reveal.still) return 1;
+
+  const elapsed = time - reveal.start;
+  if (elapsed >= 2550) return 0;
+  if (reduceMotion) return 1;
+
+  const glow = clamp(Math.min(elapsed / 540, (2550 - elapsed) / 780), 0, 1);
+  return glow * glow * (3 - 2 * glow);
+}
+
+export default function NeuralCosmos({ page }) {
   const hostRef = useRef(null);
   const canvasRef = useRef(null);
+  const revealRef = useRef(null);
   const reduceMotion = useHydrationSafeReducedMotion();
+  const { localeMeta: { dir } } = useLocale();
 
   useEffect(() => {
     const host = hostRef.current;
@@ -61,6 +91,8 @@ export default function NeuralCosmos() {
 
     if (!host || !canvas || !context) return undefined;
 
+    const constellationPaths = typeof Path2D === "function" ? createConstellationPaths(page) : [];
+    const revealPending = visitConstellationPage(page);
     let width = 0;
     let height = 0;
     let nodes = [];
@@ -71,12 +103,16 @@ export default function NeuralCosmos() {
     let lastFrame = 0;
     let lastPulse = 0;
     let lastBurst = 0;
-    let inViewport = true;
+    let inViewport = false;
     let pageVisible = !document.hidden;
     let targetFps = 55;
     let pulseLimit = 12;
     let linkDistance = 150;
     let bounds = host.getBoundingClientRect();
+    const anchor = document.getElementById(window.location.hash.slice(1));
+    let awaitingAnchorScroll = Boolean(anchor && anchor.getBoundingClientRect().top >= bounds.bottom - 1);
+    let constellationPosition;
+    let revealTimer = 0;
 
     const pointer = {
       x: 0,
@@ -254,6 +290,42 @@ export default function NeuralCosmos() {
       });
 
       context.globalCompositeOperation = "source-over";
+      const illumination = signatureIllumination(time, revealRef.current, reduceMotion);
+      drawConstellation(context, constellationPaths, constellationPosition, illumination);
+      const signature = illumination >= 0.95 ? "complete" : "fragment";
+      if (host.dataset.signature !== signature) host.dataset.signature = signature;
+    };
+
+    const constellationInView = () => {
+      if (!constellationPosition) return false;
+
+      const { y, halfHeight } = constellationPosition;
+      const center = bounds.top + y;
+      const headerBottom = document.querySelector(".site-shell > header")?.getBoundingClientRect().bottom ?? 0;
+      return center - halfHeight >= headerBottom && center + halfHeight <= window.innerHeight;
+    };
+
+    const scheduleReveal = () => {
+      if (!revealPending || revealRef.current || revealTimer || !constellationPaths.length) return;
+
+      const visible = constellationInView();
+      if (awaitingAnchorScroll) {
+        // A deep link can briefly render at the top before it scrolls to its section.
+        if (!visible) awaitingAnchorScroll = false;
+        return;
+      }
+      if (!inViewport || !pageVisible || !visible) return;
+
+      // Let route scroll restoration settle before consuming the reveal.
+      revealTimer = window.setTimeout(() => {
+        revealTimer = 0;
+        bounds = host.getBoundingClientRect();
+        if (!inViewport || !pageVisible || !constellationInView() || !claimConstellationReveal()) return;
+
+        const start = performance.now();
+        revealRef.current = { start, still: reduceMotion };
+        if (reduceMotion) draw(start, false);
+      }, 320);
     };
 
     const shouldAnimate = () => !reduceMotion && inViewport && pageVisible;
@@ -289,6 +361,7 @@ export default function NeuralCosmos() {
 
     const syncAnimation = () => {
       host.dataset.motion = shouldAnimate() ? "running" : "paused";
+      scheduleReveal();
 
       if (shouldAnimate() && !animationFrame) {
         lastFrame = performance.now();
@@ -317,15 +390,18 @@ export default function NeuralCosmos() {
       canvas.style.height = `${height}px`;
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
 
-      nodes = createNodes(width, height, Math.round(baseNodeCount * powerFactor));
-      stars = createStars(width, height, Math.round(baseStarCount * powerFactor));
+      const fieldRandom = createFieldRandom();
+      nodes = createNodes(width, height, Math.round(baseNodeCount * powerFactor), fieldRandom);
+      stars = createStars(width, height, Math.round(baseStarCount * powerFactor), fieldRandom);
       pulses = [];
       bursts = [];
       linkDistance = mobile ? 112 : 154;
       pulseLimit = mobile ? 6 : 12;
       targetFps = saveData ? 30 : mobile ? 34 : 55;
+      constellationPosition = positionConstellation(width, height, dir);
 
       draw(performance.now(), false);
+      scheduleReveal();
     };
 
     const handlePointerMove = (event) => {
@@ -348,7 +424,9 @@ export default function NeuralCosmos() {
     };
 
     const updateBounds = () => {
-      if (inViewport) bounds = host.getBoundingClientRect();
+      if (!inViewport && !awaitingAnchorScroll) return;
+      bounds = host.getBoundingClientRect();
+      scheduleReveal();
     };
 
     const handleVisibility = () => {
@@ -377,25 +455,31 @@ export default function NeuralCosmos() {
 
     return () => {
       if (animationFrame) window.cancelAnimationFrame(animationFrame);
+      if (revealTimer) window.clearTimeout(revealTimer);
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
       window.removeEventListener("pointermove", handlePointerMove);
       window.removeEventListener("scroll", updateBounds);
       document.removeEventListener("visibilitychange", handleVisibility);
     };
-  }, [reduceMotion]);
+  }, [dir, page, reduceMotion]);
 
   return (
-    <div
-      ref={hostRef}
-      className="neural-cosmos pointer-events-none absolute inset-0 -z-20 overflow-hidden"
-      data-motion="paused"
-      aria-hidden="true"
-    >
-      <div className="hero-aurora hero-aurora--cyan" />
-      <div className="hero-aurora hero-aurora--violet" />
-      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
-      <div className="hero-neural-grid absolute inset-0" />
-    </div>
+    <>
+      <div
+        ref={hostRef}
+        className="neural-cosmos pointer-events-none absolute inset-0 -z-20 overflow-hidden"
+        data-constellation={page}
+        data-motion="paused"
+        data-signature="fragment"
+        aria-hidden="true"
+      >
+        <div className="hero-aurora hero-aurora--cyan" />
+        <div className="hero-aurora hero-aurora--violet" />
+        <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
+        <div className="hero-neural-grid absolute inset-0" />
+      </div>
+      <div className="hero-readability-veil pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
+    </>
   );
 }

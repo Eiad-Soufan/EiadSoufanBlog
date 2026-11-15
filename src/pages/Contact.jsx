@@ -1,5 +1,6 @@
 import { motion as Motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import NeuralCosmos from "../components/NeuralCosmos";
 import { profile } from "../data/profile";
 import useHydrationSafeReducedMotion from "../hooks/useHydrationSafeReducedMotion";
 import { useLocale } from "../i18n/LocaleContext";
@@ -190,6 +191,7 @@ export default function Contact() {
   return (
     <div className="contact-page">
       <section className="page-hero">
+        <NeuralCosmos page="contact" />
         <div className="site-container page-hero-frame">
           <Motion.div
             className="page-hero-copy"

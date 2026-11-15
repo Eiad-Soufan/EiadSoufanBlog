@@ -1,16 +1,3 @@
-.home-hero {
-  background: linear-gradient(
-    180deg,
-    rgb(var(--color-canvas)) 0%,
-    rgb(var(--color-canvas-soft)) 68%,
-    rgb(11 16 28) 100%
-  );
-}
-
-.home-hero::before {
-  content: none;
-}
-
 @keyframes hero-aurora-drift-cyan {
   0%,
   100% {

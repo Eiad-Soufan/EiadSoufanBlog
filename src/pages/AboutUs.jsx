@@ -5,6 +5,7 @@ import {
 } from "framer-motion";
 import { useMemo, useRef } from "react";
 import { Link } from "react-router-dom";
+import NeuralCosmos from "../components/NeuralCosmos";
 import {
   capabilityPillars as baseCapabilityPillars,
   career as baseCareer,
@@ -248,6 +249,7 @@ export default function AboutUs() {
   return (
     <div className="about-page">
       <section className="page-hero">
+        <NeuralCosmos page="about" />
         <div className="site-container page-hero-frame">
           <Motion.div
             className="page-hero-copy"

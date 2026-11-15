@@ -7,11 +7,13 @@ const heroFiles = [
   "src/pages/WhyUs.jsx",
   "src/pages/Contact.jsx",
 ];
-const [heroes, header, metrics, base] = await Promise.all([
+const heroPages = ["home", "about", "approach", "contact"];
+const [heroes, header, metrics, base, cosmos] = await Promise.all([
   Promise.all(heroFiles.map(readSource)),
   readSource("src/components/Header.jsx"),
   readSource("src/components/ImpactMetrics.jsx"),
   readSource("src/styles/base.css"),
+  readSource("src/components/NeuralCosmos.jsx"),
 ]);
 
 function assert(condition, message) {
@@ -36,6 +38,10 @@ for (const [index, hero] of heroes.entries()) {
     !/(?:100vw|w-screen|-mx-)/.test(hero.split("</section>", 1)[0]),
     `${heroFiles[index]} must keep its hero within the container gutters`,
   );
+  assert(
+    hero.includes(`<NeuralCosmos page="${heroPages[index]}" />`),
+    `${heroFiles[index]} must share the hero background and supply its constellation fragment`,
+  );
 }
 
 assert(
@@ -43,8 +49,8 @@ assert(
   "The homepage hero must use the shared text layout without side artwork",
 );
 assert(
-  heroes[0].includes("<NeuralCosmos />") && heroes[0].includes("hero-readability-veil"),
-  "The homepage hero must keep its animated background and readability overlay",
+  cosmos.includes("hero-readability-veil"),
+  "The shared background must keep its readability overlay",
 );
 assert(
   header.includes("header-container"),

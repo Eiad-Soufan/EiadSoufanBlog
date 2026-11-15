@@ -113,38 +113,16 @@ canvas {
 }
 
 .page-hero {
-  --page-hero-start: left;
-  --page-hero-end: right;
-  --page-hero-grid-angle: 110deg;
-
   position: relative;
   isolation: isolate;
   overflow: clip;
   border-bottom: 1px solid rgb(var(--color-line) / 0.1);
-  background:
-    radial-gradient(46rem 26rem at var(--page-hero-start) top, rgb(var(--color-brand) / 0.11), transparent 75%),
-    radial-gradient(42rem 27rem at var(--page-hero-end) 42%, rgb(var(--color-cyan) / 0.06), transparent 74%),
-    rgb(var(--color-canvas));
-}
-
-[dir="rtl"] .page-hero {
-  --page-hero-start: right;
-  --page-hero-end: left;
-  --page-hero-grid-angle: 250deg;
-}
-
-.page-hero::before {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background-image:
-    linear-gradient(rgb(var(--color-line) / 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(var(--color-line) / 0.025) 1px, transparent 1px);
-  background-size: 72px 72px;
-  -webkit-mask-image: linear-gradient(var(--page-hero-grid-angle), black, transparent 68%);
-  mask-image: linear-gradient(var(--page-hero-grid-angle), black, transparent 68%);
-  pointer-events: none;
-  content: "";
+  background: linear-gradient(
+    180deg,
+    rgb(var(--color-canvas)) 0%,
+    rgb(var(--color-canvas-soft)) 68%,
+    rgb(11 16 28) 100%
+  );
 }
 
 .page-hero-frame {
