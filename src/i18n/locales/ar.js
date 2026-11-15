@@ -61,20 +61,6 @@ const ar = defineLocale(en, {
       start: "تواصل معي",
       profiles: "حساباتي",
     },
-    signature: {
-      systems: "أنظمة في حركة",
-      production: "مصمّم للإنتاج",
-      core: "صمّم · ابنِ · وسّع",
-      nodes: [
-        { detail: "الخلفية" },
-        { detail: "الواجهة" },
-        { detail: "الذكاء" },
-        { detail: "الجوال" },
-      ],
-      architecture: "المعمارية",
-      delivery: "التسليم",
-      impact: "الأثر",
-    },
     trust: {
       kicker: "ثقة بُنيت بالنتائج",
     },

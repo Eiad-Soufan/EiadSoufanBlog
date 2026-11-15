@@ -52,20 +52,6 @@ const de = {
       start: "Kontakt aufnehmen",
       profiles: "Profile",
     },
-    signature: {
-      systems: "Systeme / In Bewegung",
-      production: "Für den Produktivbetrieb gedacht",
-      core: "Entwerfen · Bauen · Skalieren",
-      nodes: [
-        { label: "Django", detail: "Backend" },
-        { label: "React", detail: "Benutzeroberfläche" },
-        { label: "KI / RAG", detail: "Intelligenz" },
-        { label: "Flutter", detail: "Mobil" },
-      ],
-      architecture: "Architektur",
-      delivery: "Umsetzung",
-      impact: "Wirkung",
-    },
     trust: {
       kicker: "Vertrauen durch Ergebnisse",
     },

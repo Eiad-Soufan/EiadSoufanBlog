@@ -52,20 +52,6 @@ const fr = {
       start: "Me contacter",
       profiles: "Profils",
     },
-    signature: {
-      systems: "Systèmes / En mouvement",
-      production: "Pensé pour la production",
-      core: "Concevoir · Bâtir · Faire évoluer",
-      nodes: [
-        { label: "Django", detail: "Backend" },
-        { label: "React", detail: "Interface" },
-        { label: "IA / RAG", detail: "Intelligence" },
-        { label: "Flutter", detail: "Mobile" },
-      ],
-      architecture: "Architecture",
-      delivery: "Mise en œuvre",
-      impact: "Impact",
-    },
     trust: {
       kicker: "La confiance par les résultats",
     },

@@ -247,20 +247,16 @@ export default function AboutUs() {
 
   return (
     <div className="about-page">
-      <section className="about-hero">
-        <div className="about-hero-noise" aria-hidden="true" />
-        <div className="about-hero-aurora about-hero-aurora--one" aria-hidden="true" />
-        <div className="about-hero-aurora about-hero-aurora--two" aria-hidden="true" />
-
+      <section className="page-hero">
         <div className="site-container page-hero-frame">
           <Motion.div
-            className="about-hero-copy"
+            className="page-hero-copy"
             initial={reduceMotion ? false : "hidden"}
             animate="visible"
             transition={{ staggerChildren: reduceMotion ? 0 : 0.07 }}
           >
             <Motion.p
-              className="about-eyebrow"
+              className="page-hero-eyebrow"
               variants={reveal}
               transition={{ duration: 0.5, ease: premiumEase }}
             >
@@ -268,16 +264,16 @@ export default function AboutUs() {
             </Motion.p>
 
             <Motion.h1
-              className="hero-title-scale page-hero-title display-font"
+              className="page-hero-title display-font"
               variants={reveal}
               transition={{ duration: 0.65, ease: premiumEase }}
             >
-              <span>{content.hero.titleBefore}</span>
+              <span>{content.hero.titleBefore}</span>{" "}
               <em>{content.hero.titleAccent}</em>
             </Motion.h1>
 
             <Motion.p
-              className="about-hero-lead"
+              className="page-hero-lead"
               variants={reveal}
               transition={{ duration: 0.62, ease: premiumEase }}
             >
@@ -287,23 +283,23 @@ export default function AboutUs() {
             </Motion.p>
 
             <Motion.div
-              className="about-hero-actions"
+              className="page-hero-actions about-hero-actions"
               variants={reveal}
               transition={{ duration: 0.58, ease: premiumEase }}
             >
-              <Link to={path("home", "#selected-work")} className="about-action about-action--primary">
+              <Link to={path("home", "#selected-work")} className="page-hero-action page-hero-action--primary">
                 {content.hero.explore} <ArrowIcon />
               </Link>
-              <Link to={path("contact")} className="about-action about-action--secondary">
+              <Link to={path("contact")} className="page-hero-action page-hero-action--secondary">
                 {content.hero.start}
               </Link>
-              <Link to={path("about", "#publications")} className="about-action about-action--text">
+              <Link to={path("about", "#publications")} className="page-hero-action about-action--text">
                 {content.hero.publications} <DownArrowIcon />
               </Link>
             </Motion.div>
 
             <Motion.dl
-              className="about-hero-facts"
+              className="page-hero-meta about-hero-facts"
               variants={reveal}
               transition={{ duration: 0.6, ease: premiumEase }}
             >

@@ -210,41 +210,37 @@ export default function WhyUs() {
 
   return (
     <div className="approach-page">
-      <section className="approach-hero">
-        <div className="approach-hero-grid" aria-hidden="true" />
-        <div className="approach-hero-glow approach-hero-glow--one" aria-hidden="true" />
-        <div className="approach-hero-glow approach-hero-glow--two" aria-hidden="true" />
-
+      <section className="page-hero">
         <div className="site-container page-hero-frame">
           <Motion.div
-            className="approach-hero-copy"
+            className="page-hero-copy"
             initial={reduceMotion ? false : "hidden"}
             animate="visible"
             transition={{ staggerChildren: reduceMotion ? 0 : 0.07 }}
           >
-            <Motion.p className="approach-eyebrow" variants={reveal} transition={{ duration: 0.5, ease: premiumEase }}>
+            <Motion.p className="page-hero-eyebrow" variants={reveal} transition={{ duration: 0.5, ease: premiumEase }}>
               <span aria-hidden="true" /> {content.hero.eyebrow}
             </Motion.p>
 
-            <Motion.h1 className="hero-title-scale page-hero-title display-font" variants={reveal} transition={{ duration: 0.68, ease: premiumEase }}>
-              <span>{content.hero.titleBefore}</span>
+            <Motion.h1 className="page-hero-title display-font" variants={reveal} transition={{ duration: 0.68, ease: premiumEase }}>
+              <span>{content.hero.titleBefore}</span>{" "}
               <em>{content.hero.titleAccent}</em>
             </Motion.h1>
 
-            <Motion.p className="approach-hero-lead" variants={reveal} transition={{ duration: 0.62, ease: premiumEase }}>
+            <Motion.p className="page-hero-lead" variants={reveal} transition={{ duration: 0.62, ease: premiumEase }}>
               {content.hero.lead}
             </Motion.p>
 
-            <Motion.div className="approach-actions" variants={reveal} transition={{ duration: 0.6, ease: premiumEase }}>
-              <Link to={path("contact")} className="approach-action approach-action--primary">
+            <Motion.div className="page-hero-actions" variants={reveal} transition={{ duration: 0.6, ease: premiumEase }}>
+              <Link to={path("contact")} className="page-hero-action page-hero-action--primary">
                 {content.hero.discuss} <ArrowIcon />
               </Link>
-              <Link to={path("home", "#selected-work")} className="approach-action approach-action--secondary">
+              <Link to={path("home", "#selected-work")} className="page-hero-action page-hero-action--secondary">
                 {content.hero.outcomes}
               </Link>
             </Motion.div>
 
-            <Motion.dl className="approach-hero-signals" variants={reveal} transition={{ duration: 0.6, ease: premiumEase }}>
+            <Motion.dl className="page-hero-meta approach-hero-signals" variants={reveal} transition={{ duration: 0.6, ease: premiumEase }}>
               {content.hero.signals.map((signal, index) => (
                 <div key={signal}><dt>0{index + 1}</dt><dd>{signal}</dd></div>
               ))}

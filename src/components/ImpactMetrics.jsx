@@ -60,7 +60,7 @@ export default function ImpactMetrics() {
       initial={reduceMotion ? false : { opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.62, delay: 0.48, ease: [0.22, 1, 0.36, 1] }}
-      className="impact-metrics relative mt-12 grid grid-cols-2 overflow-hidden rounded-[22px] border border-line/15 bg-surface/45 shadow-[inset_0_1px_0_rgb(255_255_255_/_0.035)] backdrop-blur-sm lg:mt-16 lg:grid-cols-4"
+      className="impact-metrics relative grid grid-cols-2 overflow-hidden rounded-[22px] border border-line/15 bg-surface/45 shadow-[inset_0_1px_0_rgb(255_255_255_/_0.035)] backdrop-blur-sm lg:grid-cols-4"
       aria-label={copy.profile.metricsAria}
     >
       <span

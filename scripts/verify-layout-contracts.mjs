@@ -1,29 +1,46 @@
 import { readFile } from "node:fs/promises";
 
-const [hero, signature, header, metrics, base] = await Promise.all([
-  readFile(new URL("../src/components/HeroNova.jsx", import.meta.url), "utf8"),
-  readFile(new URL("../src/components/SignatureField.jsx", import.meta.url), "utf8"),
-  readFile(new URL("../src/components/Header.jsx", import.meta.url), "utf8"),
-  readFile(new URL("../src/components/ImpactMetrics.jsx", import.meta.url), "utf8"),
-  readFile(new URL("../src/styles/base.css", import.meta.url), "utf8"),
+const readSource = (file) => readFile(new URL(`../${file}`, import.meta.url), "utf8");
+const heroFiles = [
+  "src/components/HeroNova.jsx",
+  "src/pages/AboutUs.jsx",
+  "src/pages/WhyUs.jsx",
+  "src/pages/Contact.jsx",
+];
+const [heroes, header, metrics, base] = await Promise.all([
+  Promise.all(heroFiles.map(readSource)),
+  readSource("src/components/Header.jsx"),
+  readSource("src/components/ImpactMetrics.jsx"),
+  readSource("src/styles/base.css"),
 ]);
 
 function assert(condition, message) {
   if (!condition) throw new Error(`Layout contract failed: ${message}`);
 }
 
-for (const hook of [
-  "home-hero-container",
-  "home-hero-grid",
-  "home-hero-copy",
-  "home-hero-visual",
-]) {
-  assert(hero.includes(hook), `HeroNova is missing the ${hook} hook`);
+for (const [index, hero] of heroes.entries()) {
+  for (const hook of [
+    "page-hero",
+    "page-hero-frame",
+    "page-hero-copy",
+    "page-hero-eyebrow",
+    "page-hero-title",
+    "page-hero-lead",
+    "page-hero-actions",
+    "page-hero-meta",
+  ]) {
+    assert(hero.includes(hook), `${heroFiles[index]} is missing the ${hook} hook`);
+  }
+
+  assert(
+    !/(?:100vw|w-screen|-mx-)/.test(hero.split("</section>", 1)[0]),
+    `${heroFiles[index]} must keep its hero within the container gutters`,
+  );
 }
 
 assert(
-  signature.includes("home-signature-field"),
-  "SignatureField must expose its bounded layout hook",
+  !/<(?:img|picture|canvas)\b/.test(heroes[0]),
+  "The homepage hero must use the shared text layout without artwork",
 );
 assert(
   header.includes("header-container"),
@@ -31,45 +48,15 @@ assert(
 );
 assert(
   metrics.includes("impact-metric") && metrics.includes("min-w-0"),
-  "compact metric cells must be protected against numeric overflow",
+  "Compact metric cells must be protected against numeric overflow",
+);
+assert(
+  /\.site-container\s*\{[^}]*width:\s*100%;[^}]*max-width:\s*var\(--site-width\);[^}]*margin-left:\s*auto;[^}]*margin-right:\s*auto;/.test(base),
+  "Site container must use symmetric physical auto margins",
+);
+assert(
+  /\.page-hero-copy\s*\{[^}]*max-width:\s*60rem;[^}]*margin-inline-end:\s*auto;[^}]*text-align:\s*start;/.test(base),
+  "Hero text must share a readable width and align to the start of each language",
 );
 
-assert(
-  /\.site-container\s*\{[\s\S]*?width:\s*100%;[\s\S]*?max-width:\s*var\(--site-width\);[\s\S]*?margin-left:\s*auto;[\s\S]*?margin-right:\s*auto;/.test(
-    base,
-  ),
-  "site-container must use symmetric physical auto margins",
-);
-assert(
-  /\.home-hero-grid\s*\{[\s\S]*?direction:\s*ltr;[\s\S]*?grid-template-areas:[\s\S]*?"copy"[\s\S]*?"visual";[\s\S]*?grid-template-columns:\s*minmax\(0,\s*1fr\);/.test(
-    base,
-  ),
-  "mobile and tablet hero layout must remain a single explicit column",
-);
-assert(
-  /@media\s*\(min-width:\s*70rem\)[\s\S]*?grid-template-areas:\s*"copy visual";[\s\S]*?grid-template-columns:\s*minmax\(0,\s*7fr\)\s*minmax\(20rem,\s*5fr\);/.test(
-    base,
-  ),
-  "desktop LTR hero tracks must preserve the 7/5 copy-to-visual hierarchy",
-);
-assert(
-  /\[dir="rtl"\]\s*\.home-hero-grid\s*\{[\s\S]*?grid-template-areas:\s*"visual copy";[\s\S]*?grid-template-columns:\s*minmax\(20rem,\s*5fr\)\s*minmax\(0,\s*7fr\);/.test(
-    base,
-  ),
-  "desktop RTL hero tracks must explicitly mirror areas and weights",
-);
-
-for (const cell of ["home-hero-copy", "home-hero-visual"]) {
-  assert(
-    new RegExp(`\\.${cell}[^}]*\\{[\\s\\S]*?min-width:\\s*0;`).test(base) ||
-      base.includes(`.${cell},`),
-    `${cell} must be protected against intrinsic-width overflow`,
-  );
-}
-
-assert(
-  !/(?:100vw|w-screen|-mx-)/.test(hero),
-  "HeroNova must not introduce viewport-width or negative-margin overflow",
-);
-
-process.stdout.write("Layout contract verification passed: 15 checks.\n");
+process.stdout.write("Layout contract verification passed for all four page heroes.\n");

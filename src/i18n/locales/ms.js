@@ -52,20 +52,6 @@ const ms = {
       start: "Hubungi saya",
       profiles: "Profil",
     },
-    signature: {
-      systems: "Sistem / Bergerak",
-      production: "Berorientasikan operasi sebenar",
-      core: "Reka · Bina · Skalakan",
-      nodes: [
-        { label: "Django", detail: "Backend" },
-        { label: "React", detail: "Antara muka" },
-        { label: "AI / RAG", detail: "Kecerdasan" },
-        { label: "Flutter", detail: "Mudah alih" },
-      ],
-      architecture: "Seni bina",
-      delivery: "Pelaksanaan",
-      impact: "Impak",
-    },
     trust: {
       kicker: "Kepercayaan melalui hasil",
     },

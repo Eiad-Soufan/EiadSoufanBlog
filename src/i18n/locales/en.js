@@ -51,20 +51,6 @@ const en = {
       start: "Contact me",
       profiles: "Profiles",
     },
-    signature: {
-      systems: "Systems / In motion",
-      production: "Production minded",
-      core: "Architect · Build · Scale",
-      nodes: [
-        { label: "Django", detail: "Backend" },
-        { label: "React", detail: "Interface" },
-        { label: "AI / RAG", detail: "Intelligence" },
-        { label: "Flutter", detail: "Mobile" },
-      ],
-      architecture: "Architecture",
-      delivery: "Delivery",
-      impact: "Impact",
-    },
     trust: {
       kicker: "Built on trust",
     },

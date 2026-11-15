@@ -189,41 +189,37 @@ export default function Contact() {
 
   return (
     <div className="contact-page">
-      <section className="contact-hero">
-        <div className="contact-hero-grid" aria-hidden="true" />
-        <div className="contact-hero-glow contact-hero-glow--one" aria-hidden="true" />
-        <div className="contact-hero-glow contact-hero-glow--two" aria-hidden="true" />
-
+      <section className="page-hero">
         <div className="site-container page-hero-frame">
           <Motion.div
-            className="contact-hero-copy"
+            className="page-hero-copy"
             initial={reduceMotion ? false : "hidden"}
             animate="visible"
             transition={{ staggerChildren: reduceMotion ? 0 : 0.07 }}
           >
-            <Motion.p className="contact-eyebrow" variants={reveal} transition={{ duration: 0.5, ease: premiumEase }}>
+            <Motion.p className="page-hero-eyebrow" variants={reveal} transition={{ duration: 0.5, ease: premiumEase }}>
               <span aria-hidden="true" /> {content.hero.eyebrow}
             </Motion.p>
 
-            <Motion.h1 className="hero-title-scale page-hero-title display-font" variants={reveal} transition={{ duration: 0.66, ease: premiumEase }}>
-              <span>{content.hero.titleBefore}</span>
+            <Motion.h1 className="page-hero-title display-font" variants={reveal} transition={{ duration: 0.66, ease: premiumEase }}>
+              <span>{content.hero.titleBefore}</span>{" "}
               <em>{content.hero.titleAccent}</em>
             </Motion.h1>
 
-            <Motion.p className="contact-hero-lead" variants={reveal} transition={{ duration: 0.6, ease: premiumEase }}>
+            <Motion.p className="page-hero-lead" variants={reveal} transition={{ duration: 0.6, ease: premiumEase }}>
               {content.hero.lead}
             </Motion.p>
 
-            <div className="contact-hero-actions">
-              <a href="#project-brief" className="contact-action contact-action--primary">
+            <div className="page-hero-actions">
+              <a href="#project-brief" className="page-hero-action page-hero-action--primary">
                 {content.hero.share} <ArrowIcon />
               </a>
-              <a href={`mailto:${profile.email}`} className="contact-action contact-action--secondary">
+              <a href={`mailto:${profile.email}`} className="page-hero-action page-hero-action--secondary">
                 {content.hero.email}
               </a>
             </div>
 
-            <Motion.dl className="contact-hero-facts" variants={reveal} transition={{ duration: 0.6, ease: premiumEase }}>
+            <Motion.dl className="page-hero-meta contact-hero-facts" variants={reveal} transition={{ duration: 0.6, ease: premiumEase }}>
               {content.hero.facts.map((fact) => (
                 <div key={fact.label}><dt>{fact.label}</dt><dd>{fact.value}</dd></div>
               ))}

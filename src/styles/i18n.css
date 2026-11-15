@@ -360,7 +360,6 @@ html[lang="ar"] body :where(
 }
 
 html[lang="ar"] body :where(
-    .eyebrow-label,
     [class$="-eyebrow"],
     [class$="-kicker"],
     [class$="-label"],
@@ -371,12 +370,7 @@ html[lang="ar"] body :where(
   text-transform: none;
 }
 
-html[lang="ar"] body :where(
-    .hero-title-scale,
-    .about-hero-copy h1,
-    .approach-hero-copy h1,
-    .contact-hero-copy h1
-  ) {
+html[lang="ar"] body .page-hero-title {
   line-height: 1.42;
 }
 
@@ -409,9 +403,7 @@ html[lang="ar"] body :where(
 }
 
 html[lang="ar"] body :where(
-    .about-hero-lead,
-    .approach-hero-lead,
-    .contact-hero-lead,
+    .page-hero-lead,
     .about-section-copy,
     .approach-section-copy,
     .systems-summary,
@@ -423,35 +415,6 @@ html[lang="ar"] body :where(
 
 html[lang="ar"] body :where(.systems-summary, .systems-role p) {
   line-height: 1.72;
-}
-
-/* Mirror the inner-hero composition itself, not only its typography. */
-html[lang="ar"] body .about-hero::before {
-  mask-image: linear-gradient(245deg, black, transparent 62%);
-  -webkit-mask-image: linear-gradient(245deg, black, transparent 62%);
-}
-
-html[lang="ar"] body :where(.approach-hero-grid, .contact-hero-grid) {
-  mask-image: linear-gradient(250deg, black, transparent 69%);
-  -webkit-mask-image: linear-gradient(250deg, black, transparent 69%);
-}
-
-html[lang="ar"] body :where(
-    .about-hero-aurora--one,
-    .approach-hero-glow--one,
-    .contact-hero-glow--one
-  ) {
-  right: -12%;
-  left: auto;
-}
-
-html[lang="ar"] body :where(
-    .about-hero-aurora--two,
-    .approach-hero-glow--two,
-    .contact-hero-glow--two
-  ) {
-  right: auto;
-  left: -10%;
 }
 
 /* Intentional LTR islands keep technical names and contact details legible. */
@@ -587,6 +550,7 @@ html[lang="ar"] body .contact-form-footer > p {
 /* Only directional arrows are mirrored; external-link glyphs remain familiar. */
 html[lang="ar"] body :where(
     .systems-outro-primary,
+    .page-hero-action:not([target="_blank"]),
     .about-action:not([target="_blank"]),
     .approach-action:not([target="_blank"]),
     a.contact-action:not([target="_blank"]),
@@ -595,16 +559,11 @@ html[lang="ar"] body :where(
   transform: scaleX(-1);
 }
 
-html[lang="ar"] body .group[href^="/"] > span:last-child svg {
-  transform: scaleX(-1);
-}
-
 html[lang="ar"] body header a[href^="/"] > svg {
   transform: scaleX(-1);
 }
 
-html[lang="ar"] body .process-loop-note svg,
-html[lang="ar"] body .hero-readability-veil {
+html[lang="ar"] body .process-loop-note svg {
   transform: scaleX(-1);
 }
 
@@ -664,10 +623,8 @@ html[lang="ar"] body .hero-readability-veil {
   }
 
   html[lang="ar"] body :where(
-      .about-hero-actions,
-      .approach-actions,
+      .page-hero-actions,
       .approach-outro-actions,
-      .contact-hero-actions,
       .about-outro-actions,
       .systems-outro-actions
     ) {
