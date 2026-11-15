@@ -608,7 +608,7 @@
 }
 
 .systems-card--lawnex .systems-preview-image {
-  object-fit: contain;
+  object-fit: fill;
   transform: none;
 }
 
