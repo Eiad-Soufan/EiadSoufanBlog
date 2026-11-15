@@ -83,8 +83,8 @@
 
 .site-footer-identity small {
   margin-top: 0.18rem;
-  color: rgb(var(--color-muted) / 0.7);
-  font-size: 0.54rem;
+  color: rgb(var(--color-muted));
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.11em;
   text-transform: uppercase;
@@ -93,8 +93,8 @@
 .site-footer-brand > p {
   max-width: 28rem;
   margin: 1.25rem 0 0;
-  color: rgb(var(--color-muted) / 0.78);
-  font-size: 0.73rem;
+  color: rgb(var(--color-muted));
+  font-size: 0.8125rem;
   line-height: 1.75;
 }
 
@@ -102,10 +102,11 @@
 .site-footer-contact > p,
 .site-footer-social > p {
   margin: 0 0 1rem;
-  color: rgb(var(--color-text) / 0.38);
-  font-size: 0.53rem;
+  color: rgb(var(--color-muted));
+  font-size: 0.75rem;
   font-weight: 800;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.1em;
+  line-height: 1.5;
   text-transform: uppercase;
 }
 
@@ -120,8 +121,8 @@
 .site-footer-nav a,
 .site-footer-contact a,
 .site-footer-contact span {
-  color: rgb(var(--color-text) / 0.72);
-  font-size: 0.68rem;
+  color: rgb(var(--color-text) / 0.82);
+  font-size: 0.8125rem;
   font-weight: 650;
   line-height: 1.6;
 }
@@ -148,7 +149,7 @@
 }
 
 .site-footer-contact span {
-  color: rgb(var(--color-muted) / 0.58);
+  color: rgb(var(--color-muted));
 }
 
 .site-footer-social > div {
@@ -198,10 +199,11 @@
 
 .site-footer-bottom p {
   margin: 0;
-  color: rgb(var(--color-muted) / 0.5);
-  font-size: 0.54rem;
+  color: rgb(var(--color-muted));
+  font-size: 0.75rem;
   font-weight: 650;
   letter-spacing: 0.025em;
+  line-height: 1.55;
 }
 
 @media (hover: hover) and (pointer: fine) {

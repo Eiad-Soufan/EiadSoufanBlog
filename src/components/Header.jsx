@@ -1,29 +1,17 @@
-import { AnimatePresence, motion as Motion } from "framer-motion";
-import { useEffect, useId, useRef, useState } from "react";
+import { motion as Motion } from "framer-motion";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import useHydrationSafeReducedMotion from "../hooks/useHydrationSafeReducedMotion";
 import { useLocale } from "../i18n/LocaleContext";
 import BrandMark from "./BrandMark";
 import LanguageSwitcher from "./LanguageSwitcher";
 
-function MenuIcon({ open }) {
+function MenuIcon() {
   return (
-    <span className="relative block h-5 w-5" aria-hidden="true">
-      <span
-        className={`absolute left-0 top-[5px] h-px w-5 bg-current transition-transform duration-200 ease-premium ${
-          open ? "translate-y-[5px] rotate-45" : ""
-        }`}
-      />
-      <span
-        className={`absolute left-0 top-[10px] h-px w-5 bg-current transition-opacity duration-150 ${
-          open ? "opacity-0" : "opacity-100"
-        }`}
-      />
-      <span
-        className={`absolute left-0 top-[15px] h-px w-5 bg-current transition-transform duration-200 ease-premium ${
-          open ? "-translate-y-[5px] -rotate-45" : ""
-        }`}
-      />
+    <span className="header-menu-icon" aria-hidden="true">
+      <span />
+      <span />
+      <span />
     </span>
   );
 }
@@ -62,14 +50,12 @@ function DesktopNavLink({ to, children, end = false, reduceMotion = false }) {
 
 export default function Header() {
   const reduceMotion = useHydrationSafeReducedMotion();
-  const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
-  const menuId = useId();
   const menuRef = useRef(null);
   const triggerRef = useRef(null);
   const firstLinkRef = useRef(null);
-  const { copy, path } = useLocale();
+  const { copy, locale, path } = useLocale();
   const homePath = path("home");
   const navItems = [
     { to: homePath, label: copy.common.nav.home, end: true },
@@ -77,6 +63,13 @@ export default function Header() {
     { to: path("approach"), label: copy.common.nav.approach, end: true },
     { to: path("contact"), label: copy.common.nav.contact, end: true },
   ];
+
+  const closeMenu = useCallback((restoreFocus = false) => {
+    const menu = menuRef.current;
+    if (!menu?.open) return;
+    if (restoreFocus) triggerRef.current?.focus();
+    menu.open = false;
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -86,49 +79,24 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    setMenuOpen(false);
-  }, [location.key]);
-
-  useEffect(() => {
     const desktopQuery = window.matchMedia("(min-width: 1024px)");
     const closeOnDesktop = (event) => {
-      if (event.matches) setMenuOpen(false);
+      if (event.matches) closeMenu();
+    };
+    const closeOnHistory = () => closeMenu();
+    const closeOnOutsidePointer = (event) => {
+      if (!menuRef.current?.contains(event.target)) closeMenu();
     };
 
     desktopQuery.addEventListener("change", closeOnDesktop);
-    return () => desktopQuery.removeEventListener("change", closeOnDesktop);
-  }, []);
-
-  useEffect(() => {
-    if (!menuOpen) return undefined;
-
-    const focusTimer = window.setTimeout(() => firstLinkRef.current?.focus(), 80);
-
-    const onKeyDown = (event) => {
-      if (event.key !== "Escape") return;
-      setMenuOpen(false);
-      triggerRef.current?.focus();
-    };
-
-    const onPointerDown = (event) => {
-      if (
-        menuRef.current?.contains(event.target) ||
-        triggerRef.current?.contains(event.target)
-      ) {
-        return;
-      }
-      setMenuOpen(false);
-    };
-
-    document.addEventListener("keydown", onKeyDown);
-    document.addEventListener("pointerdown", onPointerDown);
-
+    window.addEventListener("popstate", closeOnHistory);
+    document.addEventListener("pointerdown", closeOnOutsidePointer);
     return () => {
-      window.clearTimeout(focusTimer);
-      document.removeEventListener("keydown", onKeyDown);
-      document.removeEventListener("pointerdown", onPointerDown);
+      desktopQuery.removeEventListener("change", closeOnDesktop);
+      window.removeEventListener("popstate", closeOnHistory);
+      document.removeEventListener("pointerdown", closeOnOutsidePointer);
     };
-  }, [menuOpen]);
+  }, [closeMenu]);
 
   return (
     <header className="sticky top-0 z-[200] isolate h-16 md:h-[72px]">
@@ -171,30 +139,32 @@ export default function Header() {
           <LanguageSwitcher className="ms-2" />
         </div>
 
-        <button
-          ref={triggerRef}
-          type="button"
-          className="grid h-11 w-11 place-items-center rounded-md text-muted transition-colors hover:text-ink aria-expanded:text-ink lg:hidden"
-          aria-label={menuOpen ? copy.common.nav.closeMenu : copy.common.nav.openMenu}
-          aria-expanded={menuOpen}
-          aria-controls={menuId}
-          onClick={() => setMenuOpen((current) => !current)}
+        <details
+          ref={menuRef}
+          className="header-mobile-menu lg:hidden"
+          suppressHydrationWarning
+          onToggle={(event) => {
+            if (event.target === event.currentTarget && event.currentTarget.open && document.activeElement === triggerRef.current) {
+              firstLinkRef.current?.focus({ preventScroll: true });
+            }
+          }}
+          onBlur={(event) => {
+            if (event.relatedTarget && !event.currentTarget.contains(event.relatedTarget)) closeMenu();
+          }}
+          onKeyDown={(event) => {
+            if (event.key !== "Escape" || !event.currentTarget.open) return;
+            event.preventDefault();
+            closeMenu(true);
+          }}
         >
-          <MenuIcon open={menuOpen} />
-        </button>
-      </div>
-
-      <AnimatePresence>
-        {menuOpen ? (
-          <Motion.div
-            ref={menuRef}
-            id={menuId}
-            initial={reduceMotion ? false : { opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
-            transition={{ duration: reduceMotion ? 0 : 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-x-0 top-full z-20 max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-b border-line/[0.24] bg-canvas/[0.86] px-[var(--site-gutter)] pb-5 pt-3 shadow-[0_28px_70px_-30px_rgb(0_0_0_/_0.95)] backdrop-blur-[24px] backdrop-saturate-[1.4] md:max-h-[calc(100dvh-4.5rem)] lg:hidden"
+          <summary
+            ref={triggerRef}
+            className="header-mobile-toggle grid h-11 w-11 cursor-pointer place-items-center rounded-md text-muted transition-colors hover:text-ink"
+            aria-label={copy.common.nav.mobileAria}
           >
+            <MenuIcon />
+          </summary>
+          <div className="header-mobile-panel absolute inset-x-0 top-full z-20 max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-b border-line/[0.24] bg-canvas/[0.86] px-[var(--site-gutter)] pb-5 pt-3 shadow-[0_28px_70px_-30px_rgb(0_0_0_/_0.95)] backdrop-blur-[24px] backdrop-saturate-[1.4] md:max-h-[calc(100dvh-4.5rem)]">
             <nav
               className="mx-auto flex max-w-[var(--site-width)] flex-col"
               aria-label={copy.common.nav.mobileAria}
@@ -206,7 +176,7 @@ export default function Header() {
                     key={item.to}
                     to={item.to}
                     end={item.end}
-                    onClick={() => setMenuOpen(false)}
+                    onClick={() => closeMenu(location.pathname === item.to && !location.hash)}
                     className={({ isActive }) =>
                       `header-mobile-nav-link ${
                         isActive ? "header-mobile-nav-link--active" : ""
@@ -221,12 +191,12 @@ export default function Header() {
             <div className="mx-auto mt-2 max-w-[var(--site-width)] border-t border-line/15 pt-1">
               <LanguageSwitcher
                 variant="mobile"
-                onSelect={() => setMenuOpen(false)}
+                onSelect={(nextLocale) => closeMenu(nextLocale === locale)}
               />
             </div>
-          </Motion.div>
-        ) : null}
-      </AnimatePresence>
+          </div>
+        </details>
+      </div>
     </header>
   );
 }

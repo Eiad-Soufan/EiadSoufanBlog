@@ -6,6 +6,12 @@ const ms = {
     location: "Kuala Lumpur, Malaysia",
     skipToContent: "Langkau ke kandungan",
     loading: "Halaman sedang dimuatkan…",
+    noscript: "JavaScript dinyahaktifkan. Anda masih boleh melayari portfolio, menukar bahasa dan menggunakan pautan hubungan langsung.",
+    pageLoadError: {
+      title: "Halaman ini tidak dapat dimuatkan",
+      message: "Cuba lagi untuk membuka halaman ini secara terus.",
+      retry: "Cuba lagi",
+    },
     nav: {
       home: "Laman utama",
       work: "Projek",
@@ -43,7 +49,7 @@ const ms = {
       "Pengguna aktif merentas aplikasi saya",
       "Unit data diurus pada skala besar",
       "Tahun pengalaman dalam kejuruteraan perisian",
-      "Penerbitan saintifik",
+      "Karya penyelidikan yang diterbitkan",
     ],
   },
   home: {
@@ -334,7 +340,7 @@ const ms = {
       },
       {
         value: "4",
-        label: "Penerbitan saintifik",
+        label: "Karya penyelidikan yang diterbitkan",
         detail:
           "Penyelidikan merangkumi keselamatan perisian, pendidikan, kesihatan awam dan pemikiran analitis.",
       },
@@ -345,6 +351,7 @@ const ms = {
       copy:
         "Empat kajian yang disemak rakan sebaya dalam keselamatan perisian, pendidikan, kesihatan awam dan pemikiran analitis.",
     },
+    technicalContribution: "Sumbangan teknikal",
     featuredPublication: {
       latest: "Penyelidikan terkini",
       peerReviewed: "Disemak rakan sebaya",

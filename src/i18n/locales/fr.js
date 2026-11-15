@@ -6,6 +6,12 @@ const fr = {
     location: "Kuala Lumpur, Malaisie",
     skipToContent: "Aller au contenu",
     loading: "Chargement de la page…",
+    noscript: "JavaScript est désactivé. Vous pouvez parcourir le portfolio, changer de langue et utiliser les liens de contact direct.",
+    pageLoadError: {
+      title: "Impossible de charger cette page",
+      message: "Réessayez pour ouvrir directement cette page.",
+      retry: "Réessayer",
+    },
     nav: {
       home: "Accueil",
       work: "Réalisations",
@@ -43,7 +49,7 @@ const fr = {
       "Utilisateurs actifs sur mes applications",
       "Unités de données gérées à grande échelle",
       "Années d’expérience en génie logiciel",
-      "Publications scientifiques",
+      "Travaux de recherche publiés",
     ],
   },
   home: {
@@ -341,7 +347,7 @@ const fr = {
       },
       {
         value: "4",
-        label: "Publications scientifiques",
+        label: "Travaux de recherche publiés",
         detail:
           "Des recherches couvrant la sécurité logicielle, l’éducation, la santé publique et la pensée analytique.",
       },
@@ -352,6 +358,7 @@ const fr = {
       copy:
         "Quatre études évaluées par les pairs en sécurité logicielle, éducation, santé publique et pensée analytique.",
     },
+    technicalContribution: "Contribution technique",
     featuredPublication: {
       latest: "Dernière publication",
       peerReviewed: "Évaluée par les pairs",

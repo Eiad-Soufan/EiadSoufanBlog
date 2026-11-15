@@ -121,7 +121,7 @@ export const recognitions = [
   },
   {
     value: "4",
-    label: "Scientific publications",
+    label: "Published research contributions",
     detail: "Research spanning software security, education, public health, and analytical thinking.",
   },
 ];
@@ -152,6 +152,7 @@ export const publications = [
   {
     year: "2020",
     journal: "AJSP Journal",
+    role: "technicalContributor",
     title:
       "The validity of public information about COVID-19 and its impact on disease spread",
     href:

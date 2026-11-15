@@ -158,7 +158,6 @@ function renderSeoBlock(locale, page, canonical, robots) {
 
 function renderLocalizedHtml(baseHtml, locale, page, canonical, robots) {
   let html = stripManagedSeo(baseHtml);
-  html = localizeNoscript(html, getSeoCopy(locale, page).noscript);
   html = html.replace(
     /<html\b[^>]*>/i,
     `<html lang="${locale}" dir="${LOCALE_META[locale].dir}">`,
@@ -177,7 +176,6 @@ function renderLocalizedHtml(baseHtml, locale, page, canonical, robots) {
 function renderNotFoundHtml(baseHtml, robots, locale = DEFAULT_LOCALE) {
   const seo = getSeoCopy(locale, "notFound");
   let html = stripManagedSeo(baseHtml);
-  html = localizeNoscript(html, seo.noscript);
   html = html.replace(
     /<html\b[^>]*>/i,
     `<html lang="${locale}" dir="${LOCALE_META[locale].dir}">`,
@@ -324,7 +322,11 @@ export async function generateSeoPages(outputDirectory = "dist") {
   });
 
   try {
-    const { render } = await vite.ssrLoadModule("/src/entry-server.jsx");
+    const [{ render }, { messages }] = await Promise.all([
+      vite.ssrLoadModule("/src/entry-server.jsx"),
+      vite.ssrLoadModule("/src/i18n/messages.js"),
+    ]);
+    const localizedShell = (locale) => localizeNoscript(baseHtml, messages[locale].common.noscript);
 
     for (const entry of getSitemapEntries()) {
       const pathname = new URL(entry.url).pathname;
@@ -335,7 +337,7 @@ export async function generateSeoPages(outputDirectory = "dist") {
       const localizedHtml = injectRenderedApp(
         injectRouteStyles(
           renderLocalizedHtml(
-            baseHtml,
+            localizedShell(entry.locale),
             entry.locale,
             entry.page,
             entry.url,
@@ -362,7 +364,7 @@ export async function generateSeoPages(outputDirectory = "dist") {
         "404.html",
       );
       const notFoundHtml = injectRenderedApp(
-        renderNotFoundHtml(baseHtml, notFoundRobots, locale),
+        renderNotFoundHtml(localizedShell(locale), notFoundRobots, locale),
         resolveBuiltAssetUrls(await render(`/${locale}/404`), manifest),
       );
       await mkdir(path.dirname(localeNotFoundPath), { recursive: true });

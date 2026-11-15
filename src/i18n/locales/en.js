@@ -6,6 +6,12 @@ const en = {
     location: "Kuala Lumpur, Malaysia",
     skipToContent: "Skip to content",
     loading: "Loading page…",
+    noscript: "JavaScript is disabled. You can still browse the portfolio, change language, and use the direct contact links.",
+    pageLoadError: {
+      title: "This page couldn’t load",
+      message: "Try again to open this page directly.",
+      retry: "Try again",
+    },
     nav: {
       home: "Home",
       work: "Work",
@@ -42,7 +48,7 @@ const en = {
       "Active users across my applications",
       "Data units managed at scale",
       "Years of software engineering experience",
-      "Scientific publications",
+      "Published research contributions",
     ],
   },
   home: {
@@ -323,7 +329,7 @@ const en = {
       },
       {
         value: "4",
-        label: "Scientific publications",
+        label: "Published research contributions",
         detail: "Research spanning software security, education, public health, and analytical thinking.",
       },
     ],
@@ -333,6 +339,7 @@ const en = {
       copy:
         "Four peer-reviewed studies spanning software security, education, public health, and analytical thinking.",
     },
+    technicalContribution: "Technical contribution",
     featuredPublication: {
       latest: "Latest research",
       peerReviewed: "Peer reviewed",

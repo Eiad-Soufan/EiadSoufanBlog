@@ -6,6 +6,12 @@ const de = {
     location: "Kuala Lumpur, Malaysia",
     skipToContent: "Zum Inhalt springen",
     loading: "Seite wird geladen…",
+    noscript: "JavaScript ist deaktiviert. Sie können das Portfolio ansehen, die Sprache wechseln und die direkten Kontaktlinks nutzen.",
+    pageLoadError: {
+      title: "Diese Seite konnte nicht geladen werden",
+      message: "Versuchen Sie erneut, diese Seite direkt zu öffnen.",
+      retry: "Erneut versuchen",
+    },
     nav: {
       home: "Startseite",
       work: "Projekte",
@@ -43,7 +49,7 @@ const de = {
       "Aktive Nutzer meiner Anwendungen",
       "Dateneinheiten in großem Maßstab verwaltet",
       "Jahre Erfahrung in der Softwareentwicklung",
-      "Wissenschaftliche Publikationen",
+      "Veröffentlichte Forschungsarbeiten",
     ],
   },
   home: {
@@ -334,7 +340,7 @@ const de = {
       },
       {
         value: "4",
-        label: "Wissenschaftliche Publikationen",
+        label: "Veröffentlichte Forschungsarbeiten",
         detail:
           "Forschung in den Bereichen Softwaresicherheit, Bildung, öffentliche Gesundheit und analytisches Denken.",
       },
@@ -345,6 +351,7 @@ const de = {
       copy:
         "Vier begutachtete Studien zu Softwaresicherheit, Bildung, öffentlicher Gesundheit und analytischem Denken.",
     },
+    technicalContribution: "Technischer Beitrag",
     featuredPublication: {
       latest: "Neueste Forschung",
       peerReviewed: "Begutachtet",

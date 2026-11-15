@@ -40,7 +40,7 @@
 
 .locale-switcher__trigger:hover,
 .locale-switcher__trigger:focus-visible,
-.locale-switcher--open .locale-switcher__trigger {
+.locale-switcher[open] > .locale-switcher__trigger {
   color: rgb(var(--color-text));
 }
 
@@ -79,7 +79,7 @@
   stroke-width: 1.5;
 }
 
-.locale-switcher--open .locale-switcher__chevron {
+.locale-switcher[open] .locale-switcher__chevron {
   transform: rotate(180deg);
 }
 

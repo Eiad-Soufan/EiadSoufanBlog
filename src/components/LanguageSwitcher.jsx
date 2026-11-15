@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { LOCALES, LOCALE_META, replaceLocaleInPath } from "../i18n/config";
 import { useLocale } from "../i18n/LocaleContext";
@@ -69,66 +69,42 @@ export default function LanguageSwitcher({
 }) {
   const { locale, localeMeta, switchLocale } = useLocale();
   const location = useLocation();
-  const [open, setOpen] = useState(false);
   const rootRef = useRef(null);
   const triggerRef = useRef(null);
   const itemRefs = useRef([]);
-  const focusIndexRef = useRef(null);
-  const menuId = useId();
   const labels = ACCESSIBLE_COPY[locale] || ACCESSIBLE_COPY.en;
 
   const focusItem = (index) => {
     const nextIndex = (index + LOCALES.length) % LOCALES.length;
-    focusIndexRef.current = nextIndex;
-    window.requestAnimationFrame(() => itemRefs.current[nextIndex]?.focus());
+    rootRef.current.open = true;
+    itemRefs.current[nextIndex]?.focus();
   };
 
-  const showMenu = (focusIndex = LOCALES.indexOf(locale)) => {
-    focusIndexRef.current = focusIndex;
-    setOpen(true);
-  };
-
-  const closeMenu = ({ restoreFocus = false } = {}) => {
-    focusIndexRef.current = null;
-    setOpen(false);
-    if (restoreFocus) {
-      window.requestAnimationFrame(() => triggerRef.current?.focus());
-    }
+  const closeMenu = (restoreFocus = false) => {
+    if (restoreFocus) triggerRef.current?.focus();
+    rootRef.current.open = false;
   };
 
   useEffect(() => {
-    if (!open) return undefined;
-
     const onPointerDown = (event) => {
-      if (!rootRef.current?.contains(event.target)) closeMenu();
+      const menu = rootRef.current;
+      if (menu?.open && !menu.contains(event.target)) menu.open = false;
     };
 
     document.addEventListener("pointerdown", onPointerDown);
-    return () => {
-      document.removeEventListener("pointerdown", onPointerDown);
-    };
-  }, [open]);
-
-  useEffect(() => {
-    setOpen(false);
-  }, [locale]);
-
-  useEffect(() => {
-    if (open && focusIndexRef.current !== null) {
-      focusItem(focusIndexRef.current);
-    }
-  }, [open]);
+    return () => document.removeEventListener("pointerdown", onPointerDown);
+  }, []);
 
   const handleTriggerKeyDown = (event) => {
     if (!["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) return;
     event.preventDefault();
 
     if (event.key === "ArrowUp" || event.key === "End") {
-      showMenu(LOCALES.length - 1);
+      focusItem(LOCALES.length - 1);
       return;
     }
 
-    showMenu(event.key === "Home" ? 0 : LOCALES.indexOf(locale));
+    focusItem(event.key === "Home" ? 0 : LOCALES.indexOf(locale));
   };
 
   const handleItemKeyDown = (event, index) => {
@@ -147,13 +123,11 @@ export default function LanguageSwitcher({
     } else if (event.key === " ") {
       event.preventDefault();
       selectLocale(LOCALES[index]);
-    } else if (event.key === "Tab") {
-      closeMenu();
     }
   };
 
   const selectLocale = (nextLocale) => {
-    closeMenu({ restoreFocus: !onSelect });
+    closeMenu(!onSelect);
     if (nextLocale !== locale) switchLocale(nextLocale);
     onSelect?.(nextLocale);
   };
@@ -178,26 +152,26 @@ export default function LanguageSwitcher({
   };
 
   const handleRootKeyDown = (event) => {
-    if (event.key !== "Escape" || !open) return;
+    if (event.key !== "Escape" || !event.currentTarget.open) return;
+    event.preventDefault();
     event.stopPropagation();
-    closeMenu({ restoreFocus: true });
+    closeMenu(true);
   };
 
   return (
-    <div
+    <details
       ref={rootRef}
-      className={`locale-switcher locale-switcher--${variant} ${open ? "locale-switcher--open" : ""} ${className}`.trim()}
+      className={`locale-switcher locale-switcher--${variant} ${className}`.trim()}
+      suppressHydrationWarning
       onKeyDown={handleRootKeyDown}
+      onBlur={(event) => {
+        if (event.relatedTarget && !event.currentTarget.contains(event.relatedTarget)) closeMenu();
+      }}
     >
-      <button
+      <summary
         ref={triggerRef}
-        type="button"
         className="locale-switcher__trigger"
         aria-label={`${labels.change}. ${labels.current}: ${localeMeta.label}`}
-        aria-haspopup="menu"
-        aria-expanded={open}
-        aria-controls={menuId}
-        onClick={() => (open ? closeMenu() : showMenu())}
         onKeyDown={handleTriggerKeyDown}
       >
         <span className="locale-switcher__globe">
@@ -212,52 +186,44 @@ export default function LanguageSwitcher({
         <span className="locale-switcher__chevron">
           <ChevronIcon />
         </span>
-      </button>
+      </summary>
 
-      <div
-        id={menuId}
-        className="locale-switcher__menu"
-        role="menu"
-        aria-label={labels.menu}
-        hidden={!open}
-      >
+      <div className="locale-switcher__menu">
         <span className="locale-switcher__menu-kicker" aria-hidden="true">
           {labels.change}
         </span>
-        <div className="locale-switcher__options">
+        <ul className="locale-switcher__options" aria-label={labels.menu}>
           {LOCALES.map((code, index) => {
             const option = LOCALE_META[code];
             const active = code === locale;
 
             return (
-              <a
-                key={code}
-                ref={(node) => {
-                  itemRefs.current[index] = node;
-                }}
-                href={localeHref(code)}
-                className={`locale-switcher__option ${active ? "locale-switcher__option--active" : ""}`}
-                role="menuitemradio"
-                aria-checked={active}
-                aria-current={active ? "page" : undefined}
-                dir="ltr"
-                onClick={(event) => handleLocaleClick(event, code)}
-                onKeyDown={(event) => handleItemKeyDown(event, index)}
-              >
-                <span className="locale-switcher__code" dir="ltr">
-                  {option.shortLabel}
-                </span>
-                <span className="locale-switcher__label" lang={code} dir={option.dir}>
-                  {option.label}
-                </span>
-                <span className="locale-switcher__check" aria-hidden="true">
-                  {active ? <CheckIcon /> : null}
-                </span>
-              </a>
+              <li key={code}>
+                <a
+                  ref={(node) => {
+                    itemRefs.current[index] = node;
+                  }}
+                  href={localeHref(code)}
+                  hrefLang={code}
+                  className={`locale-switcher__option ${active ? "locale-switcher__option--active" : ""}`}
+                  aria-current={active ? "page" : undefined}
+                  dir="ltr"
+                  onClick={(event) => handleLocaleClick(event, code)}
+                  onKeyDown={(event) => handleItemKeyDown(event, index)}
+                >
+                  <span className="locale-switcher__code" aria-hidden="true">{option.shortLabel}</span>
+                  <span className="locale-switcher__label" lang={code} dir={option.dir}>
+                    {option.label}
+                  </span>
+                  <span className="locale-switcher__check" aria-hidden="true">
+                    {active ? <CheckIcon /> : null}
+                  </span>
+                </a>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </div>
-    </div>
+    </details>
   );
 }

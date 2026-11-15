@@ -470,6 +470,9 @@ export default function AboutUs() {
                           <span>{content.featuredPublication.authorship}</span>
                         </span>
                       ) : null}
+                      {publication.role === "technicalContributor" && (
+                        <span className="publication-authorship">{content.technicalContribution}</span>
+                      )}
                       <strong
                         lang={publication.titleLanguage}
                         dir={publication.titleLanguage ? "ltr" : "auto"}

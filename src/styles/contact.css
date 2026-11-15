@@ -109,9 +109,13 @@ button.contact-action {
   padding-inline-end: 1rem;
 }
 
+.contact-hero-facts :is(dt, dd) {
+  overflow-wrap: anywhere;
+}
+
 .contact-hero-facts dt {
-  color: rgb(var(--color-text) / 0.38);
-  font-size: var(--inner-hero-meta-label-size);
+  color: rgb(var(--color-muted));
+  font-size: max(0.75rem, var(--inner-hero-meta-label-size));
   font-weight: 800;
   letter-spacing: 0.13em;
   text-transform: uppercase;
@@ -120,7 +124,7 @@ button.contact-action {
 .contact-hero-facts dd {
   margin: 0.38rem 0 0;
   color: rgb(var(--color-text) / 0.8);
-  font-size: var(--inner-hero-meta-value-size);
+  font-size: max(0.8125rem, var(--inner-hero-meta-value-size));
   font-weight: 700;
   line-height: 1.5;
 }
@@ -480,13 +484,13 @@ button.contact-action {
   justify-content: space-between;
   gap: 0.6rem;
   color: rgb(var(--color-text) / 0.76);
-  font-size: 0.68rem;
+  font-size: 0.8125rem;
   font-weight: 750;
 }
 
 .contact-field > span small {
   color: rgb(var(--color-muted));
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 600;
 }
 
@@ -609,10 +613,11 @@ button.contact-action {
 
 .contact-side-label {
   margin: 0 0 1rem;
-  color: rgb(var(--color-text) / 0.42);
-  font-size: 0.54rem;
+  color: rgb(var(--color-muted));
+  font-size: 0.75rem;
   font-weight: 800;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.1em;
+  line-height: 1.5;
   text-transform: uppercase;
 }
 
@@ -664,14 +669,12 @@ button.contact-action {
 .contact-channel small,
 .contact-channel strong {
   display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 
 .contact-channel small {
-  color: rgb(var(--color-text) / 0.38);
-  font-size: 0.51rem;
+  color: rgb(var(--color-muted));
+  font-size: 0.75rem;
   font-weight: 750;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -680,7 +683,7 @@ button.contact-action {
 .contact-channel strong {
   margin-top: 0.16rem;
   color: rgb(var(--color-text) / 0.78);
-  font-size: 0.66rem;
+  font-size: 0.8125rem;
   font-weight: 700;
 }
 
@@ -721,22 +724,22 @@ button.contact-action {
 }
 
 .contact-side-card--framework li > span {
-  color: rgb(var(--color-cyan) / 0.48);
-  font-size: 0.52rem;
+  color: rgb(var(--color-cyan) / 0.8);
+  font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.09em;
 }
 
 .contact-side-card--framework strong {
   color: rgb(var(--color-text) / 0.84);
-  font-size: 0.68rem;
+  font-size: 0.8125rem;
   font-weight: 750;
 }
 
 .contact-side-card--framework li p {
   margin: 0.26rem 0 0;
-  color: rgb(var(--color-muted) / 0.74);
-  font-size: 0.61rem;
+  color: rgb(var(--color-muted));
+  font-size: 0.8125rem;
   line-height: 1.65;
 }
 
@@ -953,10 +956,12 @@ button.contact-action {
 
   .contact-hero-facts div {
     display: grid;
-    grid-template-columns: 6.8rem minmax(0, 1fr);
+    grid-template-columns: min(42%, 7.5rem) minmax(0, 1fr);
     align-items: baseline;
+    column-gap: 0.65rem;
     border-bottom: 1px solid rgb(var(--color-line) / 0.08);
     padding-block: 0.68rem;
+    padding-inline-end: 0;
   }
 
   .contact-signal {
