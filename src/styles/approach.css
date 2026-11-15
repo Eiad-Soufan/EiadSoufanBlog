@@ -99,34 +99,6 @@
   -webkit-backdrop-filter: blur(12px);
 }
 
-.approach-hero-signals {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
-}
-
-.approach-hero-signals div {
-  display: flex;
-  min-width: 0;
-  align-items: baseline;
-  gap: 0.65rem;
-}
-
-.approach-hero-signals dt {
-  color: rgb(var(--color-cyan) / 0.6);
-  font-size: var(--inner-hero-meta-label-size);
-  font-weight: 800;
-  letter-spacing: 0.08em;
-}
-
-.approach-hero-signals dd {
-  margin: 0;
-  color: rgb(var(--color-text) / 0.76);
-  font-size: var(--inner-hero-meta-value-size);
-  font-weight: 700;
-  line-height: 1.5;
-}
-
 .system-blueprint {
   position: relative;
   width: 100%;
@@ -1257,16 +1229,6 @@
 
   .approach-action {
     width: 100%;
-  }
-
-  .approach-hero-signals {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
-
-  .approach-hero-signals div {
-    border-bottom: 1px solid rgb(var(--color-line) / 0.08);
-    padding-block: 0.68rem;
   }
 
   .system-blueprint {

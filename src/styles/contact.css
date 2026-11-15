@@ -99,36 +99,6 @@ button.contact-action {
   -webkit-backdrop-filter: blur(14px);
 }
 
-.contact-hero-facts {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.contact-hero-facts div {
-  min-width: 0;
-  padding-inline-end: 1rem;
-}
-
-.contact-hero-facts :is(dt, dd) {
-  overflow-wrap: anywhere;
-}
-
-.contact-hero-facts dt {
-  color: rgb(var(--color-muted));
-  font-size: max(0.75rem, var(--inner-hero-meta-label-size));
-  font-weight: 800;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-}
-
-.contact-hero-facts dd {
-  margin: 0.38rem 0 0;
-  color: rgb(var(--color-text) / 0.8);
-  font-size: max(0.8125rem, var(--inner-hero-meta-value-size));
-  font-weight: 700;
-  line-height: 1.5;
-}
-
 .contact-signal {
   position: relative;
   width: min(100%, 35rem);
@@ -947,21 +917,6 @@ button.contact-action {
 
   .contact-action {
     width: 100%;
-  }
-
-  .contact-hero-facts {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
-
-  .contact-hero-facts div {
-    display: grid;
-    grid-template-columns: min(42%, 7.5rem) minmax(0, 1fr);
-    align-items: baseline;
-    column-gap: 0.65rem;
-    border-bottom: 1px solid rgb(var(--color-line) / 0.08);
-    padding-block: 0.68rem;
-    padding-inline-end: 0;
   }
 
   .contact-signal {

@@ -1,4 +1,4 @@
-import HeroNova from "../components/HeroNova";
+import PageHero from "../components/PageHero";
 import ImpactMetrics from "../components/ImpactMetrics";
 import TrustMarquee from "../components/TrustMarquee";
 import SelectedSystems from "../components/systems/SelectedSystems";
@@ -6,7 +6,7 @@ import SelectedSystems from "../components/systems/SelectedSystems";
 export default function Home() {
   return (
     <div className="relative">
-      <HeroNova />
+      <PageHero page="home" />
       <div className="site-container py-8 lg:py-12">
         <ImpactMetrics />
       </div>

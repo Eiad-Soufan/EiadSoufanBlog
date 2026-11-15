@@ -5,7 +5,7 @@ import {
 } from "framer-motion";
 import { useMemo, useRef } from "react";
 import { Link } from "react-router-dom";
-import NeuralCosmos from "../components/NeuralCosmos";
+import PageHero from "../components/PageHero";
 import {
   capabilityPillars as baseCapabilityPillars,
   career as baseCareer,
@@ -33,14 +33,6 @@ function ArrowIcon({ external = false }) {
       ) : (
         <path d="M4 10h11m-4.5-4.5L15 10l-4.5 4.5" />
       )}
-    </svg>
-  );
-}
-
-function DownArrowIcon() {
-  return (
-    <svg viewBox="0 0 20 20" aria-hidden="true">
-      <path d="M10 4v11m-4.5-4.5L10 15l4.5-4.5" />
     </svg>
   );
 }
@@ -248,73 +240,7 @@ export default function AboutUs() {
 
   return (
     <div className="about-page">
-      <section className="page-hero">
-        <NeuralCosmos page="about" />
-        <div className="site-container page-hero-frame">
-          <Motion.div
-            className="page-hero-copy"
-            initial={reduceMotion ? false : "hidden"}
-            animate="visible"
-            transition={{ staggerChildren: reduceMotion ? 0 : 0.07 }}
-          >
-            <Motion.p
-              className="page-hero-eyebrow"
-              variants={reveal}
-              transition={{ duration: 0.5, ease: premiumEase }}
-            >
-              <span aria-hidden="true" /> {content.hero.eyebrow}
-            </Motion.p>
-
-            <Motion.h1
-              className="page-hero-title display-font"
-              variants={reveal}
-              transition={{ duration: 0.65, ease: premiumEase }}
-            >
-              <span>{content.hero.titleBefore}</span>{" "}
-              <em>{content.hero.titleAccent}</em>
-            </Motion.h1>
-
-            <Motion.p
-              className="page-hero-lead"
-              variants={reveal}
-              transition={{ duration: 0.62, ease: premiumEase }}
-            >
-              {content.hero.leadBefore} <strong>{copy.common.name}</strong>
-              {locale === "ar" ? "،" : ","}{" "}
-              {content.hero.leadAfter}
-            </Motion.p>
-
-            <Motion.div
-              className="page-hero-actions about-hero-actions"
-              variants={reveal}
-              transition={{ duration: 0.58, ease: premiumEase }}
-            >
-              <Link to={path("home", "#selected-work")} className="page-hero-action page-hero-action--primary">
-                {content.hero.explore} <ArrowIcon />
-              </Link>
-              <Link to={path("contact")} className="page-hero-action page-hero-action--secondary">
-                {content.hero.start}
-              </Link>
-              <Link to={path("about", "#publications")} className="page-hero-action about-action--text">
-                {content.hero.publications} <DownArrowIcon />
-              </Link>
-            </Motion.div>
-
-            <Motion.dl
-              className="page-hero-meta about-hero-facts"
-              variants={reveal}
-              transition={{ duration: 0.6, ease: premiumEase }}
-            >
-              {content.hero.facts.map((fact) => (
-                <div key={fact.label}>
-                  <dt>{fact.label}</dt>
-                  <dd>{fact.value}</dd>
-                </div>
-              ))}
-            </Motion.dl>
-          </Motion.div>
-        </div>
-      </section>
+      <PageHero page="about" />
 
       <section id="capabilities" className="about-capabilities">
         <div className="site-container">

@@ -2,14 +2,15 @@ import { readFile } from "node:fs/promises";
 
 const readSource = (file) => readFile(new URL(`../${file}`, import.meta.url), "utf8");
 const heroFiles = [
-  "src/components/HeroNova.jsx",
+  "src/pages/Home.jsx",
   "src/pages/AboutUs.jsx",
   "src/pages/WhyUs.jsx",
   "src/pages/Contact.jsx",
 ];
 const heroPages = ["home", "about", "approach", "contact"];
-const [heroes, header, metrics, base, cosmos] = await Promise.all([
+const [pages, hero, header, metrics, base, cosmos] = await Promise.all([
   Promise.all(heroFiles.map(readSource)),
+  readSource("src/components/PageHero.jsx"),
   readSource("src/components/Header.jsx"),
   readSource("src/components/ImpactMetrics.jsx"),
   readSource("src/styles/base.css"),
@@ -20,32 +21,38 @@ function assert(condition, message) {
   if (!condition) throw new Error(`Layout contract failed: ${message}`);
 }
 
-for (const [index, hero] of heroes.entries()) {
-  for (const hook of [
-    "page-hero",
-    "page-hero-frame",
-    "page-hero-copy",
-    "page-hero-eyebrow",
-    "page-hero-title",
-    "page-hero-lead",
-    "page-hero-actions",
-    "page-hero-meta",
-  ]) {
-    assert(hero.includes(hook), `${heroFiles[index]} is missing the ${hook} hook`);
-  }
-
+for (const [index, page] of pages.entries()) {
   assert(
-    !/(?:100vw|w-screen|-mx-)/.test(hero.split("</section>", 1)[0]),
-    `${heroFiles[index]} must keep its hero within the container gutters`,
-  );
-  assert(
-    hero.includes(`<NeuralCosmos page="${heroPages[index]}" />`),
-    `${heroFiles[index]} must share the hero background and supply its constellation fragment`,
+    page.includes(`<PageHero page="${heroPages[index]}" />`),
+    `${heroFiles[index]} must use the shared hero for ${heroPages[index]}`,
   );
 }
 
+for (const hook of [
+  "page-hero",
+  "page-hero-frame",
+  "page-hero-copy",
+  "page-hero-eyebrow",
+  "page-hero-title",
+  "page-hero-lead",
+  "page-hero-actions",
+  "page-hero-meta",
+]) {
+  assert(hero.includes(hook), `PageHero is missing the ${hook} hook`);
+}
+
 assert(
-  !/<(?:img|picture|SignatureField)\b/.test(heroes[0]),
+  !/(?:100vw|w-screen|-mx-)/.test(hero),
+  "PageHero must keep its content within the container gutters",
+);
+
+assert(
+  hero.includes("<NeuralCosmos page={page} />"),
+  "PageHero must supply the current page to its shared background",
+);
+
+assert(
+  !/<(?:img|picture|SignatureField)\b/.test(hero),
   "The homepage hero must use the shared text layout without side artwork",
 );
 assert(
